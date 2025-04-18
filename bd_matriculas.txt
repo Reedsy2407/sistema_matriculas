@@ -1,0 +1,158 @@
+use master
+go
+
+create database matriculas_bd
+go
+
+use matriculas_bd
+go
+
+create table tb_rol
+(
+    id_rol int IDENTITY(1,1) primary key,
+    nom_rol varchar(50) not null
+)
+go
+
+create table tb_usuario
+(
+    id_usuario int IDENTITY(1,1) primary key,
+	contrasena varchar(30) not null,
+	id_rol int, 
+	foreign key (id_rol) references tb_rol(id_rol) 
+)
+go
+
+create table tb_administrador
+(
+    id_usuario int primary key,
+    nom_administrador varchar(50) not null
+	foreign key (id_usuario) references tb_usuario(id_usuario)
+)
+go
+
+create table tb_docentes
+(
+    id_docente int IDENTITY(100,1) primary key,
+    nom_docente varchar(50) not null,
+    nom_especialidad varchar(50) not null,
+	activo bit not null,
+)
+go
+
+create table tb_carrera
+(
+    id_carrera int IDENTITY(1,1) primary key,
+    nom_carrera varchar(50) not null
+)
+go
+
+create table tb_alumno
+(
+    id_usuario int primary key,
+    nom_alumno varchar(50) not null,
+	id_carrera int,
+	foreign key (id_usuario) references tb_usuario(id_usuario),
+	foreign key (id_carrera) references tb_carrera(id_carrera)
+)
+go
+
+create table tb_curso
+(
+    id_curso int primary key,
+    nom_curso varchar(50) not null,
+	creditos_curso smallint,
+	id_carrera int,
+	foreign key (id_carrera) references tb_carrera(id_carrera)
+)
+go
+
+create table tb_aula
+(
+    cod_aula char(4) primary key CHECK (cod_aula LIKE '[A-Z][0-9][0-9][0-9]'),
+    capacidad_aula smallint,
+    disponibilidad bit
+)
+go
+
+create table tb_seccion
+(
+    cod_seccion char(4) primary key CHECK (cod_seccion LIKE '[A-Z][0-9][A-Z][A-Z]'),
+    cupos_disponible smallint,
+    cupos_maximos smallint,
+    horario_seccion char(5),
+    id_docente int,
+    cod_aula char(4),
+	id_curso int,
+    foreign key (id_docente) references tb_docentes(id_docente),
+    foreign key (cod_aula) references tb_aula(cod_aula),
+	foreign key (id_curso) references tb_curso(id_curso)
+)
+go
+
+create table tb_periodo
+(
+    id_periodo char(6) primary key CHECK (id_periodo LIKE '[2][0][2][0-9][-][1-2]'),
+	fcha_inicio DateTime not null,
+	fcha_fin DateTime not null,
+)
+go
+
+create table tb_matricula
+(
+    id_matricula int IDENTITY(1000,1) primary key,
+	id_usuario int,
+	id_periodo char(6),
+	foreign key (id_usuario) references tb_usuario(id_usuario),
+	foreign key (id_periodo) references tb_periodo(id_periodo)
+)
+go
+
+create table tb_detalle_matricula
+(
+    id_matricula int,
+	cod_seccion char(4),
+	id_curso int,
+	foreign key (id_matricula) references tb_matricula(id_matricula),
+	foreign key (id_curso) references tb_curso(id_curso),
+	foreign key (cod_seccion) references tb_seccion(cod_seccion)
+)
+
+/*PROCEDURES MANTENIMIENTO DOCENTES*/
+
+go
+create or alter procedure sp_listarDocentes
+as
+	select * from tb_docentes
+go
+
+create or alter procedure sp_añadirDocentes(@nomdoce varchar(50), @nomespe varchar(50), @activo bit)
+as
+	insert into tb_docentes values (@nomdoce, @nomespe, @activo)
+go
+
+create or alter procedure sp_actualizarDocentes
+	@id_docente int,
+    @nomdoce varchar(50),
+    @nomespe varchar(50),
+	@activo bit
+as
+begin
+    update tb_docentes
+    set nom_docente = @nomdoce,
+        nom_especialidad = @nomespe,
+		activo = @activo
+    where id_docente = @id_docente;
+end
+go
+
+/*PRUEBAS DE PROCEDURES MANTENIMIENTO DOCENTE*/
+
+exec sp_listarDocentes
+go
+
+exec sp_añadirDocentes 'Juan Saenz Velarde', 'Ingenieria de Sistemas', 0
+go
+
+exec sp_actualizarDocentes 100, 'Juan Saenz Velarde', 'Ingenieria de Software', 1
+go
