@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Home\\source\\repos\\Matriculas\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{80FC2A33-1AFE-4C41-BF7D-8291B12416B4}|Matriculas\\Matriculas.csproj|c:\\users\\home\\source\\repos\\matriculas\\matriculas\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{80FC2A33-1AFE-4C41-BF7D-8291B12416B4}|Matriculas\\Matriculas.csproj|solutionrelative:matriculas\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{80FC2A33-1AFE-4C41-BF7D-8291B12416B4}|Matriculas\\Matriculas.csproj|c:\\users\\home\\source\\repos\\matriculas\\matriculas\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{80FC2A33-1AFE-4C41-BF7D-8291B12416B4}|Matriculas\\Matriculas.csproj|solutionrelative:matriculas\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\Matriculas\\Matriculas\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Matriculas\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Home\\source\\repos\\Matriculas\\Matriculas\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Matriculas\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAGkAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T18:19:56.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "C:\\Users\\Home\\source\\repos\\Matriculas\\Matriculas\\Views\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "Matriculas\\Views\\_ViewStart.cshtml",
+              "ToolTip": "C:\\Users\\Home\\source\\repos\\Matriculas\\Matriculas\\Views\\_ViewStart.cshtml",
+              "RelativeToolTip": "Matriculas\\Views\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-18T18:19:53.215Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
