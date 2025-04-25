@@ -1,6 +1,9 @@
 use master
-
+ 
 create database matriculas_bd
+go
+
+use matriculas_bd
 go
 
 create table tb_rol
@@ -156,6 +159,24 @@ BEGIN
     INNER JOIN 
         tb_carrera ca ON c.id_carrera = ca.id_carrera
 END
+GO
+
+CREATE PROCEDURE USP_REGISTRAR_CURSO
+    @nom_curso VARCHAR(50),
+    @creditos_curso SMALLINT,
+    @id_carrera INT
+AS
+BEGIN
+    BEGIN TRY
+        INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera)
+        VALUES (@nom_curso, @creditos_curso, @id_carrera);
+
+        PRINT 'Curso registrado correctamente.';
+    END TRY
+    BEGIN CATCH
+        PRINT 'Error al registrar el curso: ' + ERROR_MESSAGE();
+    END CATCH
+END;
 GO
 
 --/PRUEBAS DE PROCEDURES MANTENIMIENTO DOCENTE/

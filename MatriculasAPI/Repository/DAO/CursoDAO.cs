@@ -46,8 +46,32 @@ namespace MatriculasAPI.Repository.DAO
         }
 
         public bool registrarCurso(Curso objC)
-        {
-            throw new NotImplementedException();
+        {           
+            bool exito = false;
+            SqlConnection con = new SqlConnection(cadena);
+            SqlCommand cmd = new SqlCommand("USP_REGISTRAR_CURSO", con);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@nom_curso", objC.nom_curso);
+            cmd.Parameters.AddWithValue("@creditos_curso", objC.creditos_curso);
+            cmd.Parameters.AddWithValue("@id_carrera", objC.id_carrera);
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+                exito = true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al registrar curso: " + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+                cmd.Dispose();
+            }
+            return exito;          
         }
     }
 }

@@ -15,5 +15,12 @@ namespace MatriculasAPI.Controllers
             var lista = await Task.Run(() => new CursoDAO().aCursos());
             return Ok(lista);
         }
+
+        [HttpPost("RegistrarCursos")]
+        public async Task<ActionResult<bool>> ListadoCursos(Curso objC)
+        {
+            var mensaje = await Task.Run(() => new CursoDAO().registrarCurso(objC));
+            return Ok(mensaje);
+        }
     }
 }
