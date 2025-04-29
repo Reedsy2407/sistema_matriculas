@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Matriculas.Models.Curso>
+
+@{
+    ViewData["Title"] = "listadoCursos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a asp-action="Create">Registrar Curso</a>
+</p>
+
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Example
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.id_curso)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nom_curso)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.creditos_curso)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nom_carrera)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.id_curso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nom_curso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.creditos_curso)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nom_carrera)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
