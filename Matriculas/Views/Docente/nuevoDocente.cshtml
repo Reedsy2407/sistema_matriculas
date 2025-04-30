@@ -1,0 +1,54 @@
+﻿@model Matriculas.Models.Docente
+
+@{
+    ViewData["Title"] = "Registrar Nuevo Docente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Registrar Nuevo Docente</h2>
+
+<div class="card shadow-sm p-4">
+    <form asp-action="nuevoDocente">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="nom_docente" class="form-label"></label>
+            <input asp-for="nom_docente" class="form-control" />
+            <span asp-validation-for="nom_docente" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="nom_especialidad" class="form-label"></label>
+            <input asp-for="nom_especialidad" class="form-control" />
+            <span asp-validation-for="nom_especialidad" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="activo" class="form-check-input" type="checkbox" />
+            <label asp-for="activo" class="form-check-label"></label>
+            <span asp-validation-for="activo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <input type="submit" value="Registrar" class="btn btn-success" />
+            <a asp-action="listadoCursos" class="btn btn-secondary ms-2">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        var msg = '@ViewBag.Mensaje';
+        if (msg) {
+          Swal.fire({
+            title: msg,
+            icon: msg.includes('correctamente') ? 'success' : 'error',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

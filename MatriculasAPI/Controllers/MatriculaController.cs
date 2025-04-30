@@ -22,5 +22,52 @@ namespace MatriculasAPI.Controllers
             var mensaje = await Task.Run(() => new CursoDAO().registrarCurso(objC));
             return Ok(mensaje);
         }
+
+        [HttpGet("BuscarCursos/{id}")]
+        public async Task<ActionResult<Curso>> BuscarCursos(int id)
+        {
+            var curso = await Task.Run(() => new CursoDAO().buscarCurso(id));
+            return Ok(curso);
+        }
+
+        [HttpPut("ActualizarCursos")]
+        public async Task<ActionResult<List<Curso>>> ActualizarCursos(Curso objC)
+        {
+            var lista = await Task.Run(() => new CursoDAO().actualizarCurso(objC));
+            return Ok(lista);
+        }
+
+        [HttpGet("ListadoDocentes")]
+        public async Task<ActionResult<List<Docente>>> ListadoDocentes()
+        {
+            var lista = await Task.Run(() => new DocenteDAO().aDocentes());
+            return Ok(lista);
+        }
+
+        [HttpPost("RegistrarDocentes")]
+        public async Task<ActionResult<bool>> ListadoDocentes(Docente objD)
+        {
+            var mensaje = await Task.Run(() => new DocenteDAO().registrarDocente(objD));
+            return Ok(mensaje);
+        }
+
+        [HttpGet("BuscarDocentes/{id}")]
+        public async Task<ActionResult<Docente>> BuscarDocentes(int id)
+        {
+            var docente = await Task.Run(() => new DocenteDAO().buscarDocente(id));
+            if (docente == null)
+                return NotFound();
+            return Ok(docente);
+        }
+
+        [HttpPut("ActualizarDocentes")]
+        public async Task<ActionResult<bool>> ActualizarDocentes(Docente objD)
+        {
+            var resultado = await Task.Run(() => new DocenteDAO().actualizarDocente(objD));
+            return Ok(resultado);
+        }
+
+
+
     }
 }

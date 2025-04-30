@@ -1,5 +1,5 @@
 use master
- 
+
 create database matriculas_bd
 go
 
@@ -19,14 +19,6 @@ create table tb_usuario
 	contrasena varchar(30) not null,
 	id_rol int, 
 	foreign key (id_rol) references tb_rol(id_rol) 
-)
-go
-
-create table tb_administrador
-(
-    id_usuario int primary key,
-    nom_administrador varchar(50) not null
-	foreign key (id_usuario) references tb_usuario(id_usuario)
 )
 go
 
@@ -58,7 +50,7 @@ go
 
 create table tb_curso
 (
-    id_curso int primary key,
+    id_curso int IDENTITY(1,1) primary key,
     nom_curso varchar(50) not null,
 	creditos_curso smallint,
 	id_carrera int,
@@ -120,17 +112,17 @@ create table tb_detalle_matricula
 --/PROCEDURES MANTENIMIENTO DOCENTES/
 
 go
-create or alter procedure sp_listarDocentes
+create or alter procedure usp_listarDocentes
 as
     select * from tb_docentes
 go
 
-create or alter procedure sp_añadirDocentes(@nomdoce varchar(50), @nomespe varchar(50), @activo bit)
+create or alter procedure usp_registrarDocentes(@nomdoce varchar(50), @nomespe varchar(50), @activo bit)
 as
     insert into tb_docentes values (@nomdoce, @nomespe, @activo)
 go
 
-create or alter procedure sp_actualizarDocentes
+create or alter procedure usp_actualizarDocentes
     @id_docente int,
     @nomdoce varchar(50),
     @nomespe varchar(50),
@@ -145,14 +137,28 @@ begin
 end
 go
 
-CREATE PROCEDURE USP_LISTAR_CURSOS
+CREATE OR ALTER PROCEDURE usp_buscarDocente
+    @id_docente INT
+AS
+BEGIN
+    SELECT 
+        id_docente,
+        nom_docente,
+        nom_especialidad,
+        activo
+    FROM tb_docentes
+    WHERE id_docente = @id_docente;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_listarCursos
 AS
 BEGIN
     SELECT 
         c.id_curso,
         c.nom_curso,
         c.creditos_curso,
-        c.id_carrera,
+		c.id_carrera,
         ca.nom_carrera
     FROM 
         tb_curso c
@@ -161,7 +167,14 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE USP_REGISTRAR_CURSO
+CREATE OR ALTER PROCEDURE usp_listarCursosO
+AS
+BEGIN
+	select * from tb_curso
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_registrarCurso
     @nom_curso VARCHAR(50),
     @creditos_curso SMALLINT,
     @id_carrera INT
@@ -179,37 +192,68 @@ BEGIN
 END;
 GO
 
+
+CREATE OR ALTER PROCEDURE usp_buscarCurso
+    @id_curso INT
+AS
+BEGIN
+    SELECT 
+        c.id_curso,
+        c.nom_curso,
+        c.creditos_curso,
+        c.id_carrera,
+        ca.nom_carrera
+    FROM tb_curso c
+    INNER JOIN tb_carrera ca ON c.id_carrera = ca.id_carrera
+    WHERE c.id_curso = @id_curso;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_actualizarCurso
+    @id_curso       INT,
+    @nom_curso      VARCHAR(50),
+    @creditos_curso SMALLINT,
+    @id_carrera     INT
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE tb_curso
+        SET 
+            nom_curso      = @nom_curso,
+            creditos_curso = @creditos_curso,
+            id_carrera     = @id_carrera
+        WHERE id_curso = @id_curso;
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
+END
+GO
+
 --/PRUEBAS DE PROCEDURES MANTENIMIENTO DOCENTE/
 
-exec sp_listarDocentes
+exec usp_listarDocentes
 go
 
-exec sp_añadirDocentes 'Juan Saenz Velarde', 'Ingenieria de Sistemas', 0
+exec usp_registrarDocentes 'Juan Saenz Velarde', 'Ingenieria de Sistemas', 0
 go
 
-exec sp_actualizarDocentes 100, 'Juan Saenz Velarde', 'Ingenieria de Software', 1
+exec usp_actualizarDocentes 100, 'Juan Saenz Velarde', 'Ingenieria de Software', 1
+
+--/PRUEBAS DE PROCEDURES DE MANTENIMIENTO CURSO/
+
+exec usp_listarCursos
+go
+exec usp_listarCursosO
+go
+exec usp_registrarCurso 'Introducción a la Algoritmia', 4, 1
+go
+exec usp_buscarCurso 2
+go
+usp_actualizarCurso 2, 'Matemática Básica', 20,1  
+go
 
 --INSERTS
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (1, 'Matemática Básica', 4, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (2, 'Física General', 3, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (3, 'Química Orgánica', 4, 2);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (4, 'Programación I', 5, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (5, 'Historia del Perú', 3, 3);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (6, 'Diseño Gráfico', 4, 4);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (7, 'Contabilidad General', 4, 5);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (8, 'Estadística Aplicada', 3, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (9, 'Base de Datos I', 4, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (10, 'Administración I', 3, 5);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (11, 'Programación II', 5, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (12, 'Redes de Computadoras', 4, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (13, 'Microeconomía', 3, 5);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (14, 'Macroeconomía', 3, 5);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (15, 'Ingeniería de Software', 4, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (16, 'Sistemas Operativos', 4, 1);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (17, 'Marketing Digital', 3, 5);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (18, 'Diseño UX/UI', 3, 4);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (19, 'Metodología de la Investigación', 3, 3);
-INSERT INTO tb_curso (id_curso, nom_curso, creditos_curso, id_carrera) VALUES (20, 'Taller de Emprendimiento', 2, 3);
 
 INSERT INTO tb_carrera (nom_carrera) VALUES ('Ingeniería de Software');
 INSERT INTO tb_carrera (nom_carrera) VALUES ('Ingeniería Industrial');
@@ -221,4 +265,27 @@ INSERT INTO tb_carrera (nom_carrera) VALUES ('Negocios Internacionales');
 INSERT INTO tb_carrera (nom_carrera) VALUES ('Psicología');
 INSERT INTO tb_carrera (nom_carrera) VALUES ('Arquitectura');
 INSERT INTO tb_carrera (nom_carrera) VALUES ('Medicina Humana');
-    
+
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Matemática Básica', 4, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Física General', 3, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Química Orgánica', 4, 2);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Programación I', 5, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Historia del Perú', 3, 3);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Diseño Gráfico', 4, 4);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Contabilidad General', 4, 5);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Estadística Aplicada', 3, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Base de Datos I', 4, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Administración I', 3, 5);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Programación II', 5, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Redes de Computadoras', 4, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Microeconomía', 3, 5);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Macroeconomía', 3, 5);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Ingeniería de Software', 4, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Sistemas Operativos', 4, 1);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Marketing Digital', 3, 5);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Diseño UX/UI', 3, 4);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Metodología de la Investigación', 3, 3);
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Taller de Emprendimiento', 2, 3);
+
+
+ 

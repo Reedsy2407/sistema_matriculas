@@ -6,6 +6,9 @@
     <title>Sistema de Matriculas</title>
     <!-- BOOTSTRAP STYLES-->
     <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <!-- Simple-DataTables con tema Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.bootstrap5.min.css"
+          rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
     <link href="~/css/font-awesome.css" rel="stylesheet" />
     <!-- MORRIS CHART STYLES-->
@@ -14,8 +17,7 @@
     <link href="~/css/custom.css" rel="stylesheet" />
 
     <!-- GOOGLE FONTS-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 
@@ -51,24 +53,30 @@
                     <li>
                         <a class="active-menu" href="index.html"> Dashboard</a>
                     </li>
+                    <li class="mt-3 text-muted px-3">CURSOS</li>
                     <li>
                         <a class="nav-link" href="@Url.Action("listadoCursos","Curso")">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Listado de Solicitudes
+                            <i class="fas fa-list"></i> Listado de Cursos
+                        </a>
                     </li>
                     <li>
-                        <a href="tab-panel.html">Tabs & Panels</a>
-                    </li>
-                    <li>
-                        <a href="chart.html"> Morris Charts</a>
-                    </li>
-                    <li>
-                        <a href="table.html"> Table Examples</a>
-                    </li>
-                    <li>
-                        <a href="form.html"> Forms </a>
+                        <a class="nav-link" href="@Url.Action("nuevoCurso","Curso")">
+                            <i class="fas fa-plus-circle"></i> Registrar Curso
+                        </a>
                     </li>
 
+
+                    <li class="mt-3 text-muted px-3">DOCENTES</li>
+                    <li>
+                        <a class="nav-link" href="@Url.Action("listadoDocentes","Docente")">
+                            <i class="fas fa-list"></i> Listado de Docentes
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="@Url.Action("nuevoDocente","Docente")">
+                            <i class="fas fa-user-plus"></i> Registrar Docente
+                        </a>
+                    </li>
 
                     <li>
                         <a href="#">Multi-Level Dropdown<span class="fa arrow"></span></a>
@@ -116,9 +124,12 @@
             </div>
         </div>
     </div>
+
     <script src="~/js/jquery-1.10.2.js"></script>
+    <!-- SweetAlert2 global -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- BOOTSTRAP SCRIPTS -->
-    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
     <!-- METISMENU SCRIPTS -->
     <script src="~/js/jquery.metisMenu.js"></script>
     <!-- MORRIS CHART SCRIPTS -->
@@ -127,10 +138,11 @@
     <!-- CUSTOM SCRIPTS -->
     <script src="~/js/custom.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="~/js/datatables-simple-demo.js"></script>
+
+    @RenderSection("Scripts", required: false)
 
 </body>
 </html>

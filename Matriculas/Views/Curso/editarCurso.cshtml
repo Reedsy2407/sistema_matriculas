@@ -1,0 +1,64 @@
+﻿@model Matriculas.Models.CursoO
+
+@{
+    ViewData["Title"] = "Editar Curso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Editar Curso</h2>
+
+<div class="card shadow-sm p-4">
+    <form asp-action="editarCurso">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="id_curso" class="form-label"></label>
+            <input asp-for="id_curso" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="nom_curso" class="form-label"></label>
+            <input asp-for="nom_curso" class="form-control" />
+            <span asp-validation-for="nom_curso" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="creditos_curso" class="form-label"></label>
+            <input asp-for="creditos_curso" class="form-control" />
+            <span asp-validation-for="creditos_curso" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="id_carrera" class="form-label"></label>
+            @Html.DropDownListFor(model => model.id_carrera, (SelectList)ViewBag.Carreras, "Seleccione Carrera",
+                     new { @class = "form-select" })
+            <span asp-validation-for="id_carrera" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <a asp-action="listadoCursos" class="btn btn-secondary ms-2">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        var msg = '@ViewBag.Mensaje';
+        if (msg) {
+            Swal.fire({
+                title: msg,
+                icon: msg.includes('correctamente') ? 'success' : 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
