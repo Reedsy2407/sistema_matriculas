@@ -6,8 +6,8 @@ namespace MatriculasAPI.Repository.Interfaces
     {
 
         IEnumerable<Docente> aDocentes();
-        Docente buscarDocente(int id);
-        bool registrarDocente(Docente objD);
-        bool actualizarDocente(Docente objD);
+        DocenteO buscarDocente(int id);
+        bool registrarDocente(DocenteO objD);
+        bool actualizarDocente(DocenteO objD);
     }
 }

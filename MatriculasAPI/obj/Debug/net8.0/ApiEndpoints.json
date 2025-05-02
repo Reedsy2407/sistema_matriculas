@@ -35,7 +35,7 @@
     "Parameters": [
       {
         "Name": "objD",
-        "Type": "MatriculasAPI.Models.Docente",
+        "Type": "MatriculasAPI.Models.DocenteO",
         "IsRequired": true
       }
     ],
@@ -145,6 +145,46 @@
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "Method": "ListadoDocentesO",
+    "RelativePath": "api/Matricula/ListadoDocentesO",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasAPI.Models.DocenteO, MatriculasAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "Method": "ListadoEspecialidad",
+    "RelativePath": "api/Matricula/ListadoEspecialidades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasAPI.Models.Especialidad, MatriculasAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
     "Method": "ListadoCursos",
     "RelativePath": "api/Matricula/RegistrarCursos",
     "HttpMethod": "POST",
@@ -179,7 +219,7 @@
     "Parameters": [
       {
         "Name": "objD",
-        "Type": "MatriculasAPI.Models.Docente",
+        "Type": "MatriculasAPI.Models.DocenteO",
         "IsRequired": true
       }
     ],

@@ -1,4 +1,4 @@
-﻿@model Matriculas.Models.Docente
+﻿@model Matriculas.Models.DocenteO
 
 @{
     ViewData["Title"] = "Registrar Nuevo Docente";
@@ -18,15 +18,16 @@
         </div>
 
         <div class="mb-3">
-            <label asp-for="nom_especialidad" class="form-label"></label>
-            <input asp-for="nom_especialidad" class="form-control" />
-            <span asp-validation-for="nom_especialidad" class="text-danger"></span>
+            <label asp-for="cod_especialidad" class="form-label"></label>
+            @Html.DropDownListFor(model => model.cod_especialidad, (SelectList)ViewBag.Especialidad, "Seleccione Especialidad",
+                     new { @class = "form-select" })
+            <span asp-validation-for="cod_especialidad" class="text-danger"></span>
         </div>
 
         <div class="form-check mb-3">
-            <input asp-for="activo" class="form-check-input" type="checkbox" />
-            <label asp-for="activo" class="form-check-label"></label>
-            <span asp-validation-for="activo" class="text-danger"></span>
+            <input asp-for="estado" class="form-check-input" type="checkbox" />
+            <label asp-for="estado" class="form-check-label"></label>
+            <span asp-validation-for="estado" class="text-danger"></span>
         </div>
 
         <div class="mb-3">

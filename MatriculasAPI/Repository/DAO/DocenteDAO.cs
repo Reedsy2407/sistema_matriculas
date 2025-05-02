@@ -13,7 +13,7 @@ namespace MatriculasAPI.Repository.DAO
             cadena = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("cn");
         }
 
-        public bool actualizarDocente(Docente objD)
+        public bool actualizarDocente(DocenteO objD)
         {
             bool exito = false;
             SqlConnection con = new SqlConnection(cadena);
@@ -22,8 +22,8 @@ namespace MatriculasAPI.Repository.DAO
 
             cmd.Parameters.AddWithValue("@id_docente", objD.id_docente);
             cmd.Parameters.AddWithValue("@nomdoce", objD.nom_docente);
-            cmd.Parameters.AddWithValue("@nomespe", objD.nom_especialidad);
-            cmd.Parameters.AddWithValue("@activo", objD.activo);
+            cmd.Parameters.AddWithValue("@codespe", objD.cod_especialidad);
+            cmd.Parameters.AddWithValue("@estado", objD.estado);
 
             try
             {
@@ -59,7 +59,7 @@ namespace MatriculasAPI.Repository.DAO
                     id_docente = int.Parse(dr[0].ToString()),
                     nom_docente = dr[1].ToString(),
                     nom_especialidad = dr[2].ToString(),
-                    activo = bool.Parse(dr[3].ToString()),
+                    estado = bool.Parse(dr[3].ToString()),
                 });
             }
             dr.Close();
@@ -68,9 +68,34 @@ namespace MatriculasAPI.Repository.DAO
             return lista;
         }
 
-        public Docente buscarDocente(int id)
+        public IEnumerable<DocenteO> aDocentesO()
         {
-            Docente docente = null;
+            List<DocenteO> lista = new List<DocenteO>();
+            SqlConnection con = new SqlConnection(cadena);
+            SqlCommand cmd = new SqlCommand("usp_listarDocentes", con);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new DocenteO
+                {
+                    id_docente = int.Parse(dr[0].ToString()),
+                    nom_docente = dr[1].ToString(),
+                    cod_especialidad = int.Parse(dr[2].ToString()),
+                    estado = bool.Parse(dr[3].ToString()),
+                });
+            }
+            dr.Close();
+            con.Close();
+            cmd.Dispose();
+            return lista;
+        }
+
+
+        public DocenteO buscarDocente(int id)
+        {
+            DocenteO docente = null;
             SqlConnection con = new SqlConnection(cadena);
             SqlCommand cmd = new SqlCommand("usp_buscarDocente", con);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -80,12 +105,12 @@ namespace MatriculasAPI.Repository.DAO
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                docente = new Docente
+                docente = new DocenteO
                 {
                     id_docente = int.Parse(dr[0].ToString()),
                     nom_docente = dr[1].ToString(),
-                    nom_especialidad = dr[2].ToString(),
-                    activo = bool.Parse(dr[3].ToString())
+                    cod_especialidad = int.Parse(dr[2].ToString()),
+                    estado = bool.Parse(dr[3].ToString())
                 };
             }
             dr.Close();
@@ -95,7 +120,7 @@ namespace MatriculasAPI.Repository.DAO
             return docente;
         }
 
-        public bool registrarDocente(Docente objD)
+        public bool registrarDocente(DocenteO objD)
         {
             bool exito = false;
             SqlConnection con = new SqlConnection(cadena);
@@ -103,8 +128,8 @@ namespace MatriculasAPI.Repository.DAO
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@nomdoce", objD.nom_docente);
-            cmd.Parameters.AddWithValue("@nomespe", objD.nom_especialidad);
-            cmd.Parameters.AddWithValue("@activo", objD.activo);
+            cmd.Parameters.AddWithValue("@codespe", objD.cod_especialidad);
+            cmd.Parameters.AddWithValue("@estado", objD.estado);
 
             try
             {
@@ -123,5 +148,6 @@ namespace MatriculasAPI.Repository.DAO
             }
             return exito;
         }
+
     }
 }

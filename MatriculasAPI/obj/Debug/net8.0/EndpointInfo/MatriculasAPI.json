@@ -226,6 +226,44 @@
         }
       }
     },
+    "/api/Matricula/ListadoDocentesO": {
+      "get": {
+        "tags": [
+          "Matricula"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocenteO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocenteO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocenteO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Matricula/RegistrarDocentes": {
       "post": {
         "tags": [
@@ -235,17 +273,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Docente"
+                "$ref": "#/components/schemas/DocenteO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Docente"
+                "$ref": "#/components/schemas/DocenteO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Docente"
+                "$ref": "#/components/schemas/DocenteO"
               }
             }
           }
@@ -323,17 +361,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Docente"
+                "$ref": "#/components/schemas/DocenteO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Docente"
+                "$ref": "#/components/schemas/DocenteO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Docente"
+                "$ref": "#/components/schemas/DocenteO"
               }
             }
           }
@@ -355,6 +393,44 @@
               "text/json": {
                 "schema": {
                   "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Matricula/ListadoEspecialidades": {
+      "get": {
+        "tags": [
+          "Matricula"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Especialidad"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Especialidad"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Especialidad"
+                  }
                 }
               }
             }
@@ -489,8 +565,43 @@
             "type": "string",
             "nullable": true
           },
-          "activo": {
+          "estado": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocenteO": {
+        "type": "object",
+        "properties": {
+          "id_docente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_docente": {
+            "type": "string",
+            "nullable": true
+          },
+          "cod_especialidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Especialidad": {
+        "type": "object",
+        "properties": {
+          "cod_especialidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_especialidad": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

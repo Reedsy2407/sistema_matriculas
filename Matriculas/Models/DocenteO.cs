@@ -3,20 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Matriculas.Models
 {
-    public class Docente
+    public class DocenteO
     {
-
         [DisplayName("DOCENTE")]
         [Required]
         public int id_docente { get; set; }
 
         [DisplayName("NOMBRES")]
         [Required]
-        public string nom_docente { get; set; }
+        public string? nom_docente { get; set; }
 
         [DisplayName("ESPECIALIDAD")]
         [Required]
-        public string nom_especialidad { get; set; }
+        public int cod_especialidad { get; set; }
 
         [DisplayName("ESTADO")]
         [Required]

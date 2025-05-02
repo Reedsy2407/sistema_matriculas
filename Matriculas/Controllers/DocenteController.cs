@@ -2,6 +2,7 @@
 using Matriculas.Models;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 
@@ -28,17 +29,37 @@ namespace Matriculas.Controllers
             return lista;
         }
 
+        public List<DocenteO> aDocenteO()
+        {
+            List<DocenteO> lista = new List<DocenteO>();
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/Matricula/ListadoDocentesO").Result;
+            var data = response.Content.ReadAsStringAsync().Result;
+            lista = JsonConvert.DeserializeObject<List<DocenteO>>(data);
+            return lista;
+        }
+
+        public List<Especialidad> aEspecialidad()
+        {
+            List<Especialidad> lista = new List<Especialidad>();
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/Matricula/ListadoEspecialidades").Result;
+            var data = response.Content.ReadAsStringAsync().Result;
+            lista = JsonConvert.DeserializeObject<List<Especialidad>>(data);
+            return lista;
+        }
+
         [HttpGet]
         public IActionResult nuevoDocente()
         {
-            return View(new Docente());
+            ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
+            return View(new DocenteO());
         }
 
         [HttpPost]
-        public async Task<IActionResult> nuevoDocente(Docente objD)
+        public async Task<IActionResult> nuevoDocente(DocenteO objD)
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
                 return View(objD);
             }
 
@@ -50,6 +71,7 @@ namespace Matriculas.Controllers
                 ? "Docente registrado correctamente"
                 : "Error al registrar docente";
 
+            ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
             return View(objD);
         }
 
@@ -62,22 +84,28 @@ namespace Matriculas.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
+                ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
                 ViewBag.Mensaje = "No se encontró el docente con ID " + id;
-                return View(new Docente());
+                return View(new DocenteO());
             }
 
             var content = await response.Content.ReadAsStringAsync();
-            var objD = JsonConvert.DeserializeObject<Docente>(content)
-                      ?? new Docente { id_docente = id };
+            var objD = JsonConvert.DeserializeObject<DocenteO>(content)
+                      ?? new DocenteO { id_docente = id };
 
+
+            ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
             return View(objD);
         }
 
         [HttpPost]
-        public async Task<IActionResult> editarDocente(Docente objD)
+        public async Task<IActionResult> editarDocente(DocenteO objD)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
                 return View(objD);
+            }
 
             var json = JsonConvert.SerializeObject(objD);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -87,6 +115,7 @@ namespace Matriculas.Controllers
                 ? "Docente modificado correctamente"
                 : "Error al modificar docente";
 
+            ViewBag.Especialidad = new SelectList(aEspecialidad(), "cod_especialidad", "nom_especialidad");
             return View(objD);
         }
 
