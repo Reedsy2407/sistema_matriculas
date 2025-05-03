@@ -9,6 +9,7 @@ namespace MatriculasAPI.Controllers
     [ApiController]
     public class MatriculaController : ControllerBase
     {
+        // CURSOS
         [HttpGet("ListadoCursos")]
         public async Task<ActionResult<List<Curso>>> ListadoCursos()
         {
@@ -37,6 +38,8 @@ namespace MatriculasAPI.Controllers
             return Ok(lista);
         }
 
+
+        // DOCENTES
         [HttpGet("ListadoDocentes")]
         public async Task<ActionResult<List<Docente>>> ListadoDocentes()
         {
@@ -74,11 +77,44 @@ namespace MatriculasAPI.Controllers
             return Ok(resultado);
         }
 
+        // ESPECIALIDADES
         [HttpGet("ListadoEspecialidades")]
         public async Task<ActionResult<List<Especialidad>>> ListadoEspecialidad()
         {
             var lista = await Task.Run(() => new EspecialidadDAO().aEspecialidad());
             return Ok(lista);
+        }
+
+        //AULAS
+
+        [HttpGet("ListadoAulas")]
+        public async Task<ActionResult<List<Aula>>> ListadoAulas()
+        {
+            var lista = await Task.Run(() => new AulaDAO().aAulas());
+            return Ok(lista);
+        }
+
+        [HttpPost("RegistrarAulas")]
+        public async Task<ActionResult<bool>> RegistrarAulas(Aula objA)
+        {
+            var mensaje = await Task.Run(() => new AulaDAO().registrarAula(objA));
+            return Ok(mensaje);
+        }
+
+        [HttpGet("BuscarAulas/{cod}")]
+        public async Task<ActionResult<Aula>> BuscarAulas(string cod)
+        {
+            var aula = await Task.Run(() => new AulaDAO().buscarAula(cod));
+            if (aula == null)
+                return NotFound();
+            return Ok(aula);
+        }
+
+        [HttpPut("ActualizarAulas")]
+        public async Task<ActionResult<bool>> ActualizarAulas(Aula objA)
+        {
+            var resultado = await Task.Run(() => new AulaDAO().actualizarAula(objA));
+            return Ok(resultado);
         }
 
 

@@ -1,0 +1,54 @@
+﻿@model Matriculas.Models.Aula
+
+@{
+    ViewData["Title"] = "Editar Aula";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Editar Aula</h2>
+
+<div class="card shadow-sm p-4">
+    <form asp-action="editarAula">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="cod_aula" class="form-label"></label>
+            <input asp-for="cod_aula" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="capacidad_aula" class="form-label"></label>
+            <input asp-for="capacidad_aula" class="form-control" />
+            <span asp-validation-for="capacidad_aula" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="es_disponible" class="form-check-input" />
+            <label asp-for="es_disponible" class="form-check-label"></label>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <a asp-action="listadoAulas" class="btn btn-secondary ms-2">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        var msg = '@ViewBag.Mensaje';
+        if (msg) {
+            Swal.fire({
+                title: msg,
+                icon: msg.includes('correctamente') ? 'success' : 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

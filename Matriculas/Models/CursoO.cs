@@ -10,7 +10,7 @@ namespace Matriculas.Models
         public int id_curso { get; set; }
         [DisplayName("NOMBRE")]
         [Required]
-        public string nom_curso { get; set; }
+        public string? nom_curso { get; set; }
         [DisplayName("CREDITOS")]
         [Required]
         public int creditos_curso { get; set; }

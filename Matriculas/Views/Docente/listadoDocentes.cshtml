@@ -38,18 +38,13 @@
                     </tr>
                 </thead>
                 <tbody>
-            @foreach (var item in Model) {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.id_docente)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nom_docente)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nom_especialidad)
-                        </td>
-                            <td class="text-center">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.id_docente</td>
+                            <td>@item.nom_docente</td>
+                            <td>@item.nom_especialidad</td>
+                            <td>
                                 @if (item.estado)
                                 {
                                     <i class="fas fa-check-circle text-success fa-lg"></i>
@@ -59,13 +54,13 @@
                                     <i class="far fa-circle text-secondary fa-lg"></i>
                                 }
                             </td>
-                        <td>
-                            @Html.ActionLink("Edit", "editarDocente", new { id = item.id_docente }, new { @class = "me-2" }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                        </td>
-                    </tr>
-            }
+                            <td>
+                                @Html.ActionLink("Editar", "editarDocente", new { id = item.id_docente }, new { @class = "me-2" }) |
+                                @Html.ActionLink("Detalles", "Detalles", new { id = item.id_docente }) |
+                                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.id_docente })
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

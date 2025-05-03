@@ -12,11 +12,11 @@ namespace Matriculas.Models
 
         [DisplayName("NOMBRES")]
         [Required]
-        public string nom_docente { get; set; }
+        public string? nom_docente { get; set; }
 
         [DisplayName("ESPECIALIDAD")]
         [Required]
-        public string nom_especialidad { get; set; }
+        public string? nom_especialidad { get; set; }
 
         [DisplayName("ESTADO")]
         [Required]
