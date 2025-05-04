@@ -7,7 +7,7 @@
 
 <h1 class="mt-4 mb-4">Listado de Aulas</h1>
 <div class="mb-3">
-    <a asp-action="nuevoAula" class="btn btn-primary">
+    <a asp-action="registrarAula" class="btn btn-primary">
         <i class="fas fa-plus-circle"></i> Registrar Aula
     </a>
 </div>
@@ -46,8 +46,6 @@
                             </td>
                             <td>
                                 @Html.ActionLink("Editar", "editarAula", new { cod = item.cod_aula }, new { @class = "me-2" })
-                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                             </td>
                         </tr>
                     }

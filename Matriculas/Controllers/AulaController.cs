@@ -8,7 +8,7 @@ namespace Matriculas.Controllers
 {
     public class AulaController : Controller
     {
-        Uri direccion = new Uri("https://localhost:7117/Aula");
+        Uri direccion = new Uri("https://localhost:7117/Aula/");
         private readonly HttpClient httpClient;
 
         public AulaController()
@@ -21,7 +21,7 @@ namespace Matriculas.Controllers
         {
             List<Aula> lista = new List<Aula>();
             HttpResponseMessage response = httpClient
-                .GetAsync(httpClient.BaseAddress + "/ListadoAulas")
+                .GetAsync(httpClient.BaseAddress + "ListadoAulas")
                 .Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<Aula>>(data);
@@ -39,35 +39,38 @@ namespace Matriculas.Controllers
         }
 
         [HttpGet]
-        public IActionResult nuevoAula()
+        public IActionResult registrarAula()
         {
             return View(new Aula());
         }
 
         [HttpPost]
-        public async Task<IActionResult> nuevoAula(Aula objA)
+        public async Task<IActionResult> registrarAula(Aula objA)
         {
             if (!ModelState.IsValid)
                 return View(objA);
 
             var json = JsonConvert.SerializeObject(objA);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient
-                .PostAsync("/RegistrarAulas", content);
+            var response = await httpClient.PostAsync("RegistrarAulas", content);
 
-            ViewBag.Mensaje = response.IsSuccessStatusCode
-                ? "Aula registrada correctamente"
-                : "Error al registrar aula";
-
-            return View(objA);
+            if (response.IsSuccessStatusCode)
+            {
+                ViewBag.Mensaje = "Aula registrada correctamente";
+                return View(new Aula());
+            }
+            else
+            {
+                ViewBag.Mensaje = "Error al registrar aula";
+                return View(objA);
+            }
         }
 
         // GET: Aula/editarAula/{cod}
         [HttpGet]
         public async Task<IActionResult> editarAula(string cod)
         {
-            HttpResponseMessage response = await httpClient
-                .GetAsync(httpClient.BaseAddress + "/BuscarAulas/" + cod);
+            var response = await httpClient.GetAsync($"BuscarAulas/{cod}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -91,7 +94,7 @@ namespace Matriculas.Controllers
             var json = JsonConvert.SerializeObject(objA);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient
-                .PutAsync("/ActualizarAulas", content);
+                .PutAsync("ActualizarAulas", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Aula modificada correctamente"
