@@ -168,3 +168,5 @@ C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\MatriculasAPI\obj\Debug\net8
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\MatriculasAPI\obj\Debug\net8.0\Matricul.62345D39.Up2Date
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.genruntimeconfig.cache
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\MatriculasAPI\obj\Debug\net8.0\ref\MatriculasAPI.dll
+C:\Users\uset\Desktop\servicios-web\MatriculasAPI\bin\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\uset\Desktop\servicios-web\MatriculasAPI\bin\Debug\net8.0\MatriculasMODELS.pdb
