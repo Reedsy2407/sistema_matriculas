@@ -11,7 +11,7 @@ namespace Matriculas.Controllers
     public class DocenteController : Controller
     {
 
-        Uri direccion = new Uri("https://localhost:44354/api");
+        Uri direccion = new Uri("https://localhost:44354/Docente");
         private readonly HttpClient httpClient;
 
         public DocenteController()
@@ -23,7 +23,7 @@ namespace Matriculas.Controllers
         public List<Docente> aDocente()
         {
             List<Docente> lista = new List<Docente>();
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/Matricula/ListadoDocentes").Result;
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/ListadoDocentes").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<Docente>>(data);
             return lista;
@@ -32,7 +32,7 @@ namespace Matriculas.Controllers
         public List<DocenteO> aDocenteO()
         {
             List<DocenteO> lista = new List<DocenteO>();
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/Matricula/ListadoDocentesO").Result;
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/ListadoDocentesO").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<DocenteO>>(data);
             return lista;
@@ -41,7 +41,7 @@ namespace Matriculas.Controllers
         public List<Especialidad> aEspecialidad()
         {
             List<Especialidad> lista = new List<Especialidad>();
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/Matricula/ListadoEspecialidades").Result;
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/ListadoEspecialidades").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<Especialidad>>(data);
             return lista;
@@ -65,7 +65,7 @@ namespace Matriculas.Controllers
 
             var json = JsonConvert.SerializeObject(objD);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("/api/Matricula/RegistrarDocentes", content);
+            var response = await httpClient.PostAsync("/RegistrarDocentes", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Docente registrado correctamente"
@@ -79,7 +79,7 @@ namespace Matriculas.Controllers
         public async Task<IActionResult> editarDocente(int id)
         {
             var response = await httpClient.GetAsync(
-                httpClient.BaseAddress + "/Matricula/BuscarDocentes/" + id
+                httpClient.BaseAddress + "/BuscarDocentes/" + id
             );
 
             if (!response.IsSuccessStatusCode)
@@ -109,7 +109,7 @@ namespace Matriculas.Controllers
 
             var json = JsonConvert.SerializeObject(objD);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PutAsync("/api/Matricula/ActualizarDocentes", content);
+            var response = await httpClient.PutAsync("/ActualizarDocentes", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Docente modificado correctamente"

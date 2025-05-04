@@ -8,7 +8,7 @@ namespace Matriculas.Controllers
 {
     public class AulaController : Controller
     {
-        Uri direccion = new Uri("https://localhost:44354/api");
+        Uri direccion = new Uri("https://localhost:44354/Aula");
         private readonly HttpClient httpClient;
 
         public AulaController()
@@ -21,7 +21,7 @@ namespace Matriculas.Controllers
         {
             List<Aula> lista = new List<Aula>();
             HttpResponseMessage response = httpClient
-                .GetAsync(httpClient.BaseAddress + "/Matricula/ListadoAulas")
+                .GetAsync(httpClient.BaseAddress + "/ListadoAulas")
                 .Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<Aula>>(data);
@@ -53,7 +53,7 @@ namespace Matriculas.Controllers
             var json = JsonConvert.SerializeObject(objA);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient
-                .PostAsync("/api/Matricula/RegistrarAulas", content);
+                .PostAsync("/RegistrarAulas", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Aula registrada correctamente"
@@ -67,7 +67,7 @@ namespace Matriculas.Controllers
         public async Task<IActionResult> editarAula(string cod)
         {
             HttpResponseMessage response = await httpClient
-                .GetAsync(httpClient.BaseAddress + "/Matricula/BuscarAulas/" + cod);
+                .GetAsync(httpClient.BaseAddress + "/BuscarAulas/" + cod);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -91,7 +91,7 @@ namespace Matriculas.Controllers
             var json = JsonConvert.SerializeObject(objA);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient
-                .PutAsync("/api/Matricula/ActualizarAulas", content);
+                .PutAsync("/ActualizarAulas", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Aula modificada correctamente"

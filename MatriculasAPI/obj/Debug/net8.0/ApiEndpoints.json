@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "ContainingType": "MatriculasAPI.Controllers.AulaController",
     "Method": "ActualizarAulas",
-    "RelativePath": "api/Matricula/ActualizarAulas",
+    "RelativePath": "Aula/ActualizarAulas",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -26,61 +26,9 @@
     ]
   },
   {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "ActualizarCursos",
-    "RelativePath": "api/Matricula/ActualizarCursos",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "objC",
-        "Type": "MatriculasMODELS.Curso",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "ActualizarDocentes",
-    "RelativePath": "api/Matricula/ActualizarDocentes",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "objD",
-        "Type": "MatriculasMODELS.DocenteO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Boolean",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "ContainingType": "MatriculasAPI.Controllers.AulaController",
     "Method": "BuscarAulas",
-    "RelativePath": "api/Matricula/BuscarAulas/{cod}",
+    "RelativePath": "Aula/BuscarAulas/{cod}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -104,61 +52,9 @@
     ]
   },
   {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "BuscarCursos",
-    "RelativePath": "api/Matricula/BuscarCursos/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "MatriculasMODELS.Curso",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "BuscarDocentes",
-    "RelativePath": "api/Matricula/BuscarDocentes/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "MatriculasMODELS.Docente",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "ContainingType": "MatriculasAPI.Controllers.AulaController",
     "Method": "ListadoAulas",
-    "RelativePath": "api/Matricula/ListadoAulas",
+    "RelativePath": "Aula/ListadoAulas",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -176,89 +72,9 @@
     ]
   },
   {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "ListadoCursos",
-    "RelativePath": "api/Matricula/ListadoCursos",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "ListadoDocentes",
-    "RelativePath": "api/Matricula/ListadoDocentes",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Docente, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "ListadoDocentesO",
-    "RelativePath": "api/Matricula/ListadoDocentesO",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.DocenteO, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
-    "Method": "ListadoEspecialidad",
-    "RelativePath": "api/Matricula/ListadoEspecialidades",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Especialidad, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "ContainingType": "MatriculasAPI.Controllers.AulaController",
     "Method": "RegistrarAulas",
-    "RelativePath": "api/Matricula/RegistrarAulas",
+    "RelativePath": "Aula/RegistrarAulas",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -282,9 +98,81 @@
     ]
   },
   {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
+    "Method": "ActualizarCursos",
+    "RelativePath": "Curso/ActualizarCursos",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "objC",
+        "Type": "MatriculasMODELS.Curso",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
+    "Method": "BuscarCursos",
+    "RelativePath": "Curso/BuscarCursos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MatriculasMODELS.Curso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
     "Method": "ListadoCursos",
-    "RelativePath": "api/Matricula/RegistrarCursos",
+    "RelativePath": "Curso/ListadoCursos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
+    "Method": "ListadoCursos",
+    "RelativePath": "Curso/RegistrarCursos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -308,9 +196,101 @@
     ]
   },
   {
-    "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
+    "ContainingType": "MatriculasAPI.Controllers.DocenteController",
+    "Method": "ActualizarDocentes",
+    "RelativePath": "Docente/ActualizarDocentes",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "objD",
+        "Type": "MatriculasMODELS.DocenteO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.DocenteController",
+    "Method": "BuscarDocentes",
+    "RelativePath": "Docente/BuscarDocentes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MatriculasMODELS.Docente",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.DocenteController",
     "Method": "ListadoDocentes",
-    "RelativePath": "api/Matricula/RegistrarDocentes",
+    "RelativePath": "Docente/ListadoDocentes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Docente, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.DocenteController",
+    "Method": "ListadoDocentesO",
+    "RelativePath": "Docente/ListadoDocentesO",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.DocenteO, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.DocenteController",
+    "Method": "ListadoDocentes",
+    "RelativePath": "Docente/RegistrarDocentes",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -324,6 +304,26 @@
     "ReturnTypes": [
       {
         "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.EspecialidadController",
+    "Method": "ListadoEspecialidad",
+    "RelativePath": "Especialidad/ListadoEspecialidades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Especialidad, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

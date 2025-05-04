@@ -48,24 +48,25 @@ namespace MatriculasAPI.Repository.DAO
         public IEnumerable<Docente> aDocentes()
         {
             List<Docente> lista = new List<Docente>();
-            SqlConnection con = new SqlConnection(cadena);
-            SqlCommand cmd = new SqlCommand("usp_listarDocentes", con);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            con.Open();
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            using (SqlConnection con = new SqlConnection(cadena))
             {
-                lista.Add(new Docente
+                SqlCommand cmd = new SqlCommand("usp_listarDocentes", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                con.Open();
+                using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    id_docente = int.Parse(dr[0].ToString()),
-                    nom_docente = dr[1].ToString(),
-                    nom_especialidad = dr[2].ToString(),
-                    estado = bool.Parse(dr[3].ToString()),
-                });
+                    while (dr.Read())
+                    {
+                        lista.Add(new Docente
+                        {
+                            id_docente = Convert.ToInt32(dr["id_docente"]),
+                            nom_docente = dr["nom_docente"].ToString(),
+                            nom_especialidad = dr["nom_especialidad"].ToString(),
+                            estado = Convert.ToInt32(dr["estado"]) == 1
+                        });
+                    }
+                }
             }
-            dr.Close();
-            con.Close();
-            cmd.Dispose();
             return lista;
         }
 
