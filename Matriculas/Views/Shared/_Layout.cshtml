@@ -80,7 +80,6 @@
                         </li>
                     @if (menus.Any())
                     {
-                        // Agrupar menús por categoría (primera palabra)
                         var grupos = menus.GroupBy(m => m.controlador);
 
                         @foreach (var grupo in grupos)

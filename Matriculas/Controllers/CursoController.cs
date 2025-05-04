@@ -47,14 +47,14 @@ namespace Matriculas.Controllers
         }
 
         [HttpGet]
-        public IActionResult nuevoCurso()
+        public IActionResult registrarCurso()
         {
             ViewBag.Carreras = new SelectList(aCarreras(), "Value", "Text");
             return View(new CursoO());
         }
 
         [HttpPost]
-        public async Task<IActionResult> nuevoCurso(CursoO objC)
+        public async Task<IActionResult> registrarCurso(CursoO objC)
         {
             if (!ModelState.IsValid)
             {

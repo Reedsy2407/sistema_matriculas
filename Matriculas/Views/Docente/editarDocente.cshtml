@@ -23,6 +23,18 @@
         </div>
 
         <div class="mb-3">
+            <label asp-for="ape_docente" class="form-label"></label>
+            <input asp-for="ape_docente" class="form-control" />
+            <span asp-validation-for="ape_docente" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="correo" class="form-label"></label>
+            <input asp-for="correo" class="form-control" />
+            <span asp-validation-for="correo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label asp-for="cod_especialidad" class="form-label"></label>
             @Html.DropDownListFor(model => model.cod_especialidad, (SelectList)ViewBag.Especialidad, "Seleccione Especialidad",
                      new { @class = "form-select" })

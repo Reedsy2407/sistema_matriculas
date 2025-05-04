@@ -48,8 +48,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cbGlzdGFkb0N1cnNvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Curso/nuevoCurso.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cbnVldm9DdXJzby5jc2h0bWw=
+[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Curso/registrarCurso.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29ccmVnaXN0cmFyQ3Vyc28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Docente/editarDocente.cshtml]
@@ -60,8 +60,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jZW50ZVxsaXN0YWRvRG9jZW50ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Docente/nuevoDocente.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jZW50ZVxudWV2b0RvY2VudGUuY3NodG1s
+[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Docente/registrarDocente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jZW50ZVxyZWdpc3RyYXJEb2NlbnRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Home/Index.cshtml]
