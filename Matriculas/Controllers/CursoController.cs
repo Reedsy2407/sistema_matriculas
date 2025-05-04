@@ -1,4 +1,4 @@
-﻿using Matriculas.Models;
+﻿using MatriculasMODELS;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -8,7 +8,7 @@ namespace Matriculas.Controllers
 {
     public class CursoController : Controller
     {
-        Uri direccion = new Uri("https://localhost:7117/api");
+        Uri direccion = new Uri("https://localhost:44354/api");
         private readonly HttpClient httpClient;
 
         public CursoController()
@@ -26,11 +26,11 @@ namespace Matriculas.Controllers
             return lista;
         }
 
-        public List<CursoApi> aCursoApi()
+        public List<Curso> aCursoApi()
         {
             HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/Matricula/ListadoCursos").Result;
             var data = response.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<List<CursoApi>>(data)!;
+            return JsonConvert.DeserializeObject<List<Curso>>(data)!;
         }
 
         public List<SelectListItem> aCarreras()
@@ -91,8 +91,8 @@ namespace Matriculas.Controllers
             var content = await response.Content.ReadAsStringAsync();
 
             var api = JsonConvert
-                .DeserializeObject<CursoApi>(content)
-                ?? new CursoApi { id_curso = id };
+                .DeserializeObject<Curso>(content)
+                ?? new Curso { id_curso = id };
 
             var curso = new CursoO
             {

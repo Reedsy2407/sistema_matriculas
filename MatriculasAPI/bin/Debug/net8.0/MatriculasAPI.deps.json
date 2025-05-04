@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "MatriculasAPI/1.0.0": {
         "dependencies": {
+          "MatriculasMODELS": "1.0.0",
           "Swashbuckle.AspNetCore": "6.4.0",
           "System.Data.SqlClient": "4.9.0"
         },
@@ -120,6 +121,14 @@
             "fileVersion": "4.900.24.56208"
           }
         }
+      },
+      "MatriculasMODELS/1.0.0": {
+        "runtime": {
+          "MatriculasMODELS.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -205,6 +214,11 @@
       "sha512": "sha512-j4KJO+vC62NyUtNHz854njEqXbT8OmAa5jb1nrGfYWBOcggyYUQE0w/snXeaCjdvkSKWuUD+hfvlbN8pTrJTXg==",
       "path": "system.data.sqlclient/4.9.0",
       "hashPath": "system.data.sqlclient.4.9.0.nupkg.sha512"
+    },
+    "MatriculasMODELS/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

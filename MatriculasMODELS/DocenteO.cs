@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-
-namespace MatriculasAPI.Models
+﻿namespace MatriculasMODELS
 {
     public class DocenteO
     {

@@ -152,6 +152,16 @@
             "rid": "win"
           }
         }
+      },
+      "MatriculasMODELS/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/MatriculasMODELS.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MatriculasMODELS.dll": {}
+        }
       }
     }
   },
@@ -580,32 +590,38 @@
         "system.data.sqlclient.4.9.0.nupkg.sha512",
         "system.data.sqlclient.nuspec"
       ]
+    },
+    "MatriculasMODELS/1.0.0": {
+      "type": "project",
+      "path": "../MatriculasMODELS/MatriculasMODELS.csproj",
+      "msbuildProject": "../MatriculasMODELS/MatriculasMODELS.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "MatriculasMODELS >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0",
       "System.Data.SqlClient >= 4.9.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\uset\\.nuget\\packages\\": {},
+    "C:\\Users\\Thazo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
       "projectName": "MatriculasAPI",
-      "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
-      "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasAPI\\obj\\",
+      "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
+      "packagesPath": "C:\\Users\\Thazo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Thazo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -619,7 +635,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
+              "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -630,9 +650,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -666,7 +686,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

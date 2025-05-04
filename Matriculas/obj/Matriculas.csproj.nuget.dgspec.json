@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj": {}
+    "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\Matriculas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj": {
+    "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
-        "projectName": "Matriculas",
-        "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
-        "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\obj\\",
+        "projectUniqueName": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
+        "projectName": "MatriculasMODELS",
+        "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
+        "packagesPath": "C:\\Users\\Thazo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Thazo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -42,9 +42,78 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\Matriculas.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\Matriculas.csproj",
+        "projectName": "Matriculas",
+        "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\Matriculas.csproj",
+        "packagesPath": "C:\\Users\\Thazo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Thazo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
+                "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -78,7 +147,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

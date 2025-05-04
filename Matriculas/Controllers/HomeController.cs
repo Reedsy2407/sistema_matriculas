@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Matriculas.Models;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Matriculas.Controllers

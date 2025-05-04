@@ -1,4 +1,5 @@
-﻿using MatriculasAPI.Models;
+﻿using MatriculasMODELS;
+
 
 namespace MatriculasAPI.Repository.Interfaces
 {

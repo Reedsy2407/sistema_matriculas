@@ -12,7 +12,6 @@ wwwroot\js\custom.js
 wwwroot\js\dataTables\dataTables.bootstrap.css
 wwwroot\js\dataTables\dataTables.bootstrap.js
 wwwroot\js\dataTables\jquery.dataTables.js
-wwwroot\js\datatables-docentes.js
 wwwroot\js\datatables-simple-demo.js
 wwwroot\js\jquery.metisMenu.js
 wwwroot\js\jquery-1.10.2.js

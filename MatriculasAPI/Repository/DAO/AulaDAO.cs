@@ -1,5 +1,5 @@
-﻿using MatriculasAPI.Models;
-using MatriculasAPI.Repository.Interfaces;
+﻿using MatriculasAPI.Repository.Interfaces;
+using MatriculasMODELS;
 using System.Data;
 using System.Data.SqlClient;
 

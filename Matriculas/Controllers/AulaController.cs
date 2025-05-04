@@ -1,4 +1,5 @@
-﻿using Matriculas.Models;
+﻿
+using MatriculasMODELS;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Matriculas.Controllers
 {
     public class AulaController : Controller
     {
-        Uri direccion = new Uri("https://localhost:7117/api");
+        Uri direccion = new Uri("https://localhost:44354/api");
         private readonly HttpClient httpClient;
 
         public AulaController()

@@ -1,4 +1,4 @@
-﻿namespace MatriculasAPI.Models
+﻿namespace MatriculasMODELS
 {
     public class Especialidad
     {

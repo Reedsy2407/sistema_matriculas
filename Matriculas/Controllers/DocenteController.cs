@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Matriculas.Models;
+using MatriculasMODELS;
 using Newtonsoft.Json;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +11,7 @@ namespace Matriculas.Controllers
     public class DocenteController : Controller
     {
 
-        Uri direccion = new Uri("https://localhost:7117/api");
+        Uri direccion = new Uri("https://localhost:44354/api");
         private readonly HttpClient httpClient;
 
         public DocenteController()

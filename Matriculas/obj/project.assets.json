@@ -1991,6 +1991,16 @@
             "rid": "win"
           }
         }
+      },
+      "MatriculasMODELS/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/MatriculasMODELS.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MatriculasMODELS.dll": {}
+        }
       }
     }
   },
@@ -5558,32 +5568,38 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "MatriculasMODELS/1.0.0": {
+      "type": "project",
+      "path": "../MatriculasMODELS/MatriculasMODELS.csproj",
+      "msbuildProject": "../MatriculasMODELS/MatriculasMODELS.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "MatriculasMODELS >= 1.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 8.0.7",
       "Newtonsoft.Json >= 13.0.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\uset\\.nuget\\packages\\": {},
+    "C:\\Users\\Thazo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
+      "projectUniqueName": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\Matriculas.csproj",
       "projectName": "Matriculas",
-      "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
-      "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\obj\\",
+      "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\Matriculas.csproj",
+      "packagesPath": "C:\\Users\\Thazo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Thazo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5597,7 +5613,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
+              "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -5608,9 +5628,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -5644,20 +5664,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1903",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "El paquete \"System.Text.Json\" 7.0.3 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
-      "libraryId": "System.Text.Json",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

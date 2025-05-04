@@ -1,5 +1,6 @@
-﻿using MatriculasAPI.Models;
+﻿
 using MatriculasAPI.Repository.Interfaces;
+using MatriculasMODELS;
 using System.Data.SqlClient;
 
 namespace MatriculasAPI.Repository.DAO

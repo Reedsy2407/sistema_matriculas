@@ -1,7 +1,7 @@
-﻿using MatriculasAPI.Models;
-using MatriculasAPI.Repository.DAO;
+﻿using MatriculasAPI.Repository.DAO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MatriculasMODELS;
 
 namespace MatriculasAPI.Controllers
 {

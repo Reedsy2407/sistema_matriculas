@@ -17,77 +17,77 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Matriculas
 build_property.RootNamespace = Matriculas
-build_property.ProjectDir = C:\Users\uset\Desktop\servicios-web\Matriculas\
+build_property.ProjectDir = C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\uset\Desktop\servicios-web\Matriculas
+build_property.MSBuildProjectDirectory = C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Aula/editarAula.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Aula/editarAula.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVsYVxlZGl0YXJBdWxhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Aula/listadoAulas.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Aula/listadoAulas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVsYVxsaXN0YWRvQXVsYXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Aula/nuevoAula.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Aula/nuevoAula.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVsYVxudWV2b0F1bGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Curso/editarCurso.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Curso/editarCurso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cZWRpdGFyQ3Vyc28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Curso/listadoCursos.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Curso/listadoCursos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cbGlzdGFkb0N1cnNvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Curso/nuevoCurso.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Curso/nuevoCurso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3Vyc29cbnVldm9DdXJzby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Docente/editarDocente.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Docente/editarDocente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jZW50ZVxlZGl0YXJEb2NlbnRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Docente/listadoDocentes.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Docente/listadoDocentes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jZW50ZVxsaXN0YWRvRG9jZW50ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Docente/nuevoDocente.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Docente/nuevoDocente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jZW50ZVxudWV2b0RvY2VudGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Home/Index.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Home/Privacy.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Shared/Error.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/_ViewImports.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/_ViewStart.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Shared/_Layout.cshtml]
+[C:/Users/Thazo/Desktop/Proyectos 2025/servicios-web/Matriculas/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-y9q4v08z1o
