@@ -8,13 +8,25 @@
 <h2 class="mb-4">Registrar Nuevo Docente</h2>
 
 <div class="card shadow-sm p-4">
-    <form asp-action="nuevoDocente">
+    <form asp-action="registrarDocente">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
         <div class="mb-3">
             <label asp-for="nom_docente" class="form-label"></label>
             <input asp-for="nom_docente" class="form-control" />
             <span asp-validation-for="nom_docente" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ape_docente" class="form-label"></label>
+            <input asp-for="ape_docente" class="form-control" />
+            <span asp-validation-for="ape_docente" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="correo" class="form-label"></label>
+            <input asp-for="correo" class="form-control" />
+            <span asp-validation-for="correo" class="text-danger"></span>
         </div>
 
         <div class="mb-3">

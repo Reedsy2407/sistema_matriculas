@@ -1,4 +1,24 @@
-use matriculas_bd
+create or alter procedure usp_listarEspecialidad
+as
+	Select * from tb_especialidad
+go
+
+
+	CREATE OR ALTER PROCEDURE usp_listarCursos
+	AS
+	BEGIN
+		SELECT 
+			c.id_curso,
+			c.nom_curso,
+			c.creditos_curso,
+			c.id_carrera,
+			ca.nom_carrera
+		FROM 
+			tb_curso c
+		INNER JOIN 
+			tb_carrera ca ON c.id_carrera = ca.id_carrera
+	END
+	GO
 
 create or alter procedure usp_listarDocentes
 as
@@ -87,3 +107,30 @@ BEGIN
         m.orden
 END
 GO
+
+create or alter procedure usp_registrarDocentes(
+    @nom_docente varchar(50),
+    @ape_docente varchar(50),
+    @correo varchar(100),
+    @cod_especialidad int,
+    @estado bit
+)
+as
+begin
+    insert into tb_usuario (
+        nom_usuario,
+        ape_usuario,
+        correo,
+        cod_especialidad,
+        id_rol,
+        estado
+    ) values (
+        @nom_docente,
+        @ape_docente,
+        @correo,
+        @cod_especialidad,
+        2,  -- ID 2 para rol docente
+        @estado
+    )
+end
+go

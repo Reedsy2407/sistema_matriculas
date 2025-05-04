@@ -289,6 +289,26 @@
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.DocenteController",
+    "Method": "ListadoEspecialidad",
+    "RelativePath": "Docente/ListadoEspecialidades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Especialidad, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.DocenteController",
     "Method": "ListadoDocentes",
     "RelativePath": "Docente/RegistrarDocentes",
     "HttpMethod": "POST",
@@ -304,26 +324,6 @@
     "ReturnTypes": [
       {
         "Type": "System.Boolean",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MatriculasAPI.Controllers.EspecialidadController",
-    "Method": "ListadoEspecialidad",
-    "RelativePath": "Especialidad/ListadoEspecialidades",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Especialidad, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

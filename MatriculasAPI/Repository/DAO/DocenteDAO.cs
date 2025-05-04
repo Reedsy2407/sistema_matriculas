@@ -22,8 +22,10 @@ namespace MatriculasAPI.Repository.DAO
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@id_docente", objD.id_docente);
-            cmd.Parameters.AddWithValue("@nomdoce", objD.nom_docente);
-            cmd.Parameters.AddWithValue("@codespe", objD.cod_especialidad);
+            cmd.Parameters.AddWithValue("@nom_docente", objD.nom_docente);
+            cmd.Parameters.AddWithValue("@ape_docente", objD.ape_docente);
+            cmd.Parameters.AddWithValue("@correo", objD.correo);
+            cmd.Parameters.AddWithValue("@cod_especialidad", objD.cod_especialidad);
             cmd.Parameters.AddWithValue("@estado", objD.estado);
 
             try
@@ -111,8 +113,10 @@ namespace MatriculasAPI.Repository.DAO
                 {
                     id_docente = int.Parse(dr[0].ToString()),
                     nom_docente = dr[1].ToString(),
-                    cod_especialidad = int.Parse(dr[2].ToString()),
-                    estado = bool.Parse(dr[3].ToString())
+                    ape_docente = dr[2].ToString(),
+                    correo = dr[3].ToString(),
+                    cod_especialidad = int.Parse(dr[4].ToString()),
+                    estado = bool.Parse(dr[6].ToString())
                 };
             }
             dr.Close();
@@ -129,8 +133,10 @@ namespace MatriculasAPI.Repository.DAO
             SqlCommand cmd = new SqlCommand("usp_registrarDocentes", con);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@nomdoce", objD.nom_docente);
-            cmd.Parameters.AddWithValue("@codespe", objD.cod_especialidad);
+            cmd.Parameters.AddWithValue("@nom_docente", objD.nom_docente);
+            cmd.Parameters.AddWithValue("@ape_docente", objD.ape_docente);
+            cmd.Parameters.AddWithValue("@correo", objD.correo);
+            cmd.Parameters.AddWithValue("@cod_especialidad", objD.cod_especialidad);
             cmd.Parameters.AddWithValue("@estado", objD.estado);
 
             try

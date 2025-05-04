@@ -10,7 +10,7 @@
     if (idRol.HasValue)
     {
         var httpClient = new HttpClient();
-        var response = await httpClient.GetAsync($"https://localhost:44354/Menu/ListarMenusPorRol/{idRol.Value}");
+        var response = await httpClient.GetAsync($"https://localhost:7117/Menu/ListarMenusPorRol/{idRol.Value}");
 
         if (response.IsSuccessStatusCode)
         {
@@ -80,7 +80,6 @@
                         </li>
                     @if (menus.Any())
                     {
-                        // Agrupar menús por categoría (primera palabra)
                         var grupos = menus.GroupBy(m => m.controlador);
 
                         @foreach (var grupo in grupos)

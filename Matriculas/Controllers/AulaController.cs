@@ -8,7 +8,7 @@ namespace Matriculas.Controllers
 {
     public class AulaController : Controller
     {
-        Uri direccion = new Uri("https://localhost:44354/Aula");
+        Uri direccion = new Uri("https://localhost:7117/Aula");
         private readonly HttpClient httpClient;
 
         public AulaController()

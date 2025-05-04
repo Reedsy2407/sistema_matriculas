@@ -17,6 +17,13 @@ namespace MatriculasAPI.Controllers
             return Ok(lista);
         }
 
+        [HttpGet("ListadoEspecialidades")]
+        public async Task<ActionResult<List<Especialidad>>> ListadoEspecialidad()
+        {
+            var lista = await Task.Run(() => new EspecialidadDAO().aEspecialidad());
+            return Ok(lista);
+        }
+
         [HttpGet("ListadoDocentesO")]
         public async Task<ActionResult<List<DocenteO>>> ListadoDocentesO()
         {

@@ -8,7 +8,7 @@ namespace Matriculas.Controllers
 {
     public class CursoController : Controller
     {
-        Uri direccion = new Uri("https://localhost:44354/Curso");
+        Uri direccion = new Uri("https://localhost:7117/Curso");
         private readonly HttpClient httpClient;
 
         public CursoController()
@@ -47,14 +47,14 @@ namespace Matriculas.Controllers
         }
 
         [HttpGet]
-        public IActionResult nuevoCurso()
+        public IActionResult registrarCurso()
         {
             ViewBag.Carreras = new SelectList(aCarreras(), "Value", "Text");
             return View(new CursoO());
         }
 
         [HttpPost]
-        public async Task<IActionResult> nuevoCurso(CursoO objC)
+        public async Task<IActionResult> registrarCurso(CursoO objC)
         {
             if (!ModelState.IsValid)
             {

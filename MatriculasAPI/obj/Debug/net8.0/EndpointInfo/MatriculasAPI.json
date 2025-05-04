@@ -399,6 +399,44 @@
         }
       }
     },
+    "/Docente/ListadoEspecialidades": {
+      "get": {
+        "tags": [
+          "Docente"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Especialidad"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Especialidad"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Especialidad"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Docente/ListadoDocentesO": {
       "get": {
         "tags": [
@@ -566,44 +604,6 @@
               "text/json": {
                 "schema": {
                   "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/Especialidad/ListadoEspecialidades": {
-      "get": {
-        "tags": [
-          "Especialidad"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Especialidad"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Especialidad"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Especialidad"
-                  }
                 }
               }
             }
@@ -783,6 +783,14 @@
             "format": "int32"
           },
           "nom_docente": {
+            "type": "string",
+            "nullable": true
+          },
+          "ape_docente": {
+            "type": "string",
+            "nullable": true
+          },
+          "correo": {
             "type": "string",
             "nullable": true
           },
