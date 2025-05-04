@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qi/sBlVPfYpnofU6b3qRVgcrI6SWWt4poqWshZDKmdA=",
+  "Hash": "e+3JjmUECa48cUIkbT8tg8aOdQetG+2rF2vGpfkspdg=",
   "Source": "Matriculas",
   "BasePath": "_content/Matriculas",
   "Mode": "Default",
@@ -122,6 +122,27 @@
       "OriginalItemSpec": "wwwroot\\css\\font-awesome.css"
     },
     {
+      "Identity": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\css\\Login.css",
+      "SourceId": "Matriculas",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\",
+      "BasePath": "_content/Matriculas",
+      "RelativePath": "css/Login#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "giryygafva",
+      "Integrity": "yMEdkKFVIFo2YmU3l6ycj/jE/ORX7y1kvujb5yASmFw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Login.css"
+    },
+    {
       "Identity": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\css\\sb-admin-2.css",
       "SourceId": "Matriculas",
       "SourceType": "Discovered",
@@ -199,8 +220,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "uwdqfx652y",
-      "Integrity": "7vv9weM7sXEQtNtq4xKezTL6EJKJnHa/8/w0tkfSIOg=",
+      "Fingerprint": "lmy27yxowd",
+      "Integrity": "M6XVwirJa/37RjHfJE+kZ1G/y1qfOB2ODp+1wxqptvk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\styles.css"
@@ -2008,6 +2029,88 @@
       ]
     },
     {
+      "Route": "css/Login.css",
+      "AssetFile": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\css\\Login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1466"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yMEdkKFVIFo2YmU3l6ycj/jE/ORX7y1kvujb5yASmFw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 04 May 2025 14:12:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yMEdkKFVIFo2YmU3l6ycj/jE/ORX7y1kvujb5yASmFw="
+        }
+      ]
+    },
+    {
+      "Route": "css/Login.giryygafva.css",
+      "AssetFile": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\css\\Login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1466"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yMEdkKFVIFo2YmU3l6ycj/jE/ORX7y1kvujb5yASmFw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 04 May 2025 14:12:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "giryygafva"
+        },
+        {
+          "Name": "label",
+          "Value": "css/Login.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yMEdkKFVIFo2YmU3l6ycj/jE/ORX7y1kvujb5yASmFw="
+        }
+      ]
+    },
+    {
       "Route": "css/sb-admin-2.css",
       "AssetFile": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\css\\sb-admin-2.css",
       "Selectors": [],
@@ -2264,7 +2367,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "225376"
+          "Value": "225378"
         },
         {
           "Name": "Content-Type",
@@ -2272,11 +2375,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"7vv9weM7sXEQtNtq4xKezTL6EJKJnHa/8/w0tkfSIOg=\""
+          "Value": "\"M6XVwirJa/37RjHfJE+kZ1G/y1qfOB2ODp+1wxqptvk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 04 May 2025 02:17:49 GMT"
+          "Value": "Sun, 04 May 2025 14:10:32 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2286,12 +2389,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-7vv9weM7sXEQtNtq4xKezTL6EJKJnHa/8/w0tkfSIOg="
+          "Value": "sha256-M6XVwirJa/37RjHfJE+kZ1G/y1qfOB2ODp+1wxqptvk="
         }
       ]
     },
     {
-      "Route": "css/styles.uwdqfx652y.css",
+      "Route": "css/styles.lmy27yxowd.css",
       "AssetFile": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\Matriculas\\wwwroot\\css\\styles.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2301,7 +2404,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "225376"
+          "Value": "225378"
         },
         {
           "Name": "Content-Type",
@@ -2309,11 +2412,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"7vv9weM7sXEQtNtq4xKezTL6EJKJnHa/8/w0tkfSIOg=\""
+          "Value": "\"M6XVwirJa/37RjHfJE+kZ1G/y1qfOB2ODp+1wxqptvk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 04 May 2025 02:17:49 GMT"
+          "Value": "Sun, 04 May 2025 14:10:32 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2323,7 +2426,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "uwdqfx652y"
+          "Value": "lmy27yxowd"
         },
         {
           "Name": "label",
@@ -2331,7 +2434,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-7vv9weM7sXEQtNtq4xKezTL6EJKJnHa/8/w0tkfSIOg="
+          "Value": "sha256-M6XVwirJa/37RjHfJE+kZ1G/y1qfOB2ODp+1wxqptvk="
         }
       ]
     },
