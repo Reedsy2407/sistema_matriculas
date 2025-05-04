@@ -1,6 +1,8 @@
 use matriculas_bd
 
-create or alter procedure usp_listarDocentes
+--DOCENTES
+
+CREATE or alter procedure usp_listarDocentes
 as
     select 
         U.id_usuario as id_docente, 
@@ -12,6 +14,59 @@ as
     where U.id_rol = 2  -- Rol Docente
 go
 
+
+--AULAS
+
+CREATE OR ALTER PROCEDURE usp_listarAulas
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+        cod_aula,
+        capacidad_aula,
+        es_disponible
+    FROM tb_aula;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_buscarAula
+    @cod_aula CHAR(4)
+AS
+BEGIN    
+    SELECT 
+        cod_aula,
+        capacidad_aula,
+        es_disponible
+    FROM tb_aula
+    WHERE cod_aula = @cod_aula;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_registrarAulas
+    @cod_aula       CHAR(4),
+    @capacidad_aula SMALLINT,
+    @es_disponible  BIT
+AS
+BEGIN    
+    INSERT INTO tb_aula (cod_aula, capacidad_aula, es_disponible)
+    VALUES (@cod_aula, @capacidad_aula, @es_disponible);
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_actualizarAulas
+    @cod_aula       CHAR(4),
+    @capacidad_aula SMALLINT,
+    @es_disponible  BIT
+AS
+BEGIN
+    UPDATE tb_aula
+    SET 
+        capacidad_aula = @capacidad_aula,
+        es_disponible  = @es_disponible
+    WHERE cod_aula = @cod_aula;
+END
+GO
 
 --LOGIN
 

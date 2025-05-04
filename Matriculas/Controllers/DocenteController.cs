@@ -11,7 +11,7 @@ namespace Matriculas.Controllers
     public class DocenteController : Controller
     {
 
-        Uri direccion = new Uri("https://localhost:44354/Docente");
+        Uri direccion = new Uri("https://localhost:7117/Docente");
         private readonly HttpClient httpClient;
 
         public DocenteController()

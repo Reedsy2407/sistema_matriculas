@@ -8,7 +8,7 @@ namespace Matriculas.Controllers
     public class LoginController : Controller
     {
         private readonly HttpClient _httpClient;
-        private readonly Uri _baseAddress = new Uri("https://localhost:44354/Login");
+        private readonly Uri _baseAddress = new Uri("https://localhost:7117/Login");
 
         public LoginController()
         {
