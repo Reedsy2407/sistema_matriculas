@@ -11,7 +11,8 @@ namespace MatriculasMODELS
         public int id_menu { get; set; }
         public string titulo_menu { get; set; }
         public string url_menu { get; set; }
+        public string controlador { get; set; }
         public int orden { get; set; }
-        public bool es_activo { get; set; }
+        
     }
 }

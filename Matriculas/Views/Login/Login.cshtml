@@ -1,4 +1,5 @@
-﻿@{
+﻿@model MatriculasMODELS.Login.LoginRequest
+@{
     Layout = null;
 }
 
@@ -7,36 +8,47 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login - Matrículas</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/Login.css" />
 </head>
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Matricula</h1>
+            <h1>Sistema de Matrículas</h1>
             <p>Ingrese sus credenciales para acceder al sistema</p>
         </div>
 
         <form asp-action="Login" method="post" class="login-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label for="username">Usuario</label>
-                <input type="text" id="username" name="username" required>
+                <label asp-for="correo" class="control-label"></label>
+                <input asp-for="correo" class="form-control" />
+                <span asp-validation-for="correo" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required>
+                <label asp-for="contrasena" class="control-label"></label>
+                <input asp-for="contrasena" type="password" class="form-control" />
+                <span asp-validation-for="contrasena" class="text-danger"></span>
             </div>
 
-            <button type="submit">Iniciar Sesión</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger btn-block">Iniciar Sesión</button>
+            </div>
         </form>
 
-        @if (!ViewData.ModelState.IsValid)
+        @if (ViewBag.ErrorMessage != null)
         {
             <div class="alert alert-danger">
-                @Html.ValidationSummary()
+                @ViewBag.ErrorMessage
             </div>
         }
     </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

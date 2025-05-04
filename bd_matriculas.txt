@@ -1,4 +1,5 @@
 use master
+go
 
 create database matriculas_bd
 go
@@ -13,23 +14,63 @@ create table tb_rol
 )
 go
 
-create table tb_usuario
-(
-    id_usuario int IDENTITY(1,1) primary key,
-	contrasena varchar(30) not null,
-	id_rol int, 
-	foreign key (id_rol) references tb_rol(id_rol) 
+INSERT INTO tb_rol (nom_rol) VALUES 
+('Administrador'),
+('Docente'),
+('Alumno')
+GO
+
+create table tb_menu(
+	id_menu int identity(1,1) primary key,
+	titulo_menu varchar(50) not null,
+	url_menu varchar(100),
+	controlador varchar(100),
+	orden smallint not null,
+	es_activo bit default 1
 )
 go
 
-create table tb_docentes
+INSERT INTO tb_menu (titulo_menu, url_menu, controlador,orden, es_activo) VALUES
+('Listado de Cursos', 'listadoCursos', 'Curso',1, 1),
+('Registrar Curso', 'registrarCurso', 'Curso', 2, 1),
+('Listado de Docentes', 'listadoDocentes', 'Docente', 3, 1),
+('Registrar Docente', 'registrarDocente', 'Docente', 4, 1),
+('Listado Aulas', 'listadoAulas', 'Aula', 5, 1),
+('Registrar Aulas', 'registrarAula', 'Aula', 6, 1),
+('Inscribirse a Clases', 'inscribirse', 'Clase', 7, 1)
+GO
+
+create table tb_menu_rol(
+	id_menu int not null,
+	id_rol int not null,
+	primary key (id_menu, id_rol),
+	foreign key (id_menu) references tb_menu(id_menu),
+	foreign key (id_rol) references tb_rol(id_rol)
+ )
+go
+INSERT INTO tb_menu_rol (id_menu, id_rol)
+SELECT id_menu, 1 FROM tb_menu
+GO
+
+INSERT INTO tb_menu_rol (id_menu, id_rol)
+values (7,3)
+GO
+
+create table tb_especialidad
 (
-    id_docente int IDENTITY(100,1) primary key,
-    nom_docente varchar(50) not null,
-    nom_especialidad varchar(50) not null,
-	activo bit not null,
+	cod_especialidad int IDENTITY(1,1) primary key,
+	nom_especialidad varchar(50) not null
 )
 go
+
+INSERT INTO tb_especialidad (nom_especialidad) VALUES
+('Especialidad 1'),
+('Especialidad 2'),
+('Especialidad 3'),
+('Especialidad 4'),
+('Especialidad 5')
+GO
+
 
 create table tb_carrera
 (
@@ -38,15 +79,53 @@ create table tb_carrera
 )
 go
 
-create table tb_alumno
+INSERT INTO tb_carrera (nom_carrera) VALUES
+('Carrera 1'),
+('Carrera 2'),
+('Carrera 3'),
+('Carrera 4'),
+('Carrera 5')
+GO
+
+create table tb_usuario
 (
-    id_usuario int primary key,
-    nom_alumno varchar(50) not null,
-	id_carrera int,
-	foreign key (id_usuario) references tb_usuario(id_usuario),
+    id_usuario int IDENTITY(1,1) primary key,
+	nom_usuario varchar(50) not null,
+	ape_usuario varchar(50) not null,
+	correo varchar(100) not null,
+	contrasena varchar(30) null,
+	cod_especialidad int null, --Docente
+	id_carrera int null, --Alumno
+	id_rol int not null, 
+	estado bit not null,
+	foreign key (id_rol) references tb_rol(id_rol),
+	foreign key (cod_especialidad) references tb_especialidad(cod_especialidad),
 	foreign key (id_carrera) references tb_carrera(id_carrera)
 )
 go
+
+-- Crear usuarios Administradores
+INSERT INTO tb_usuario (nom_usuario, ape_usuario, contrasena, correo, cod_especialidad, id_carrera, id_rol, estado)
+VALUES 
+('Admin', 'Principal', 'admin123', 'admin1@mail.com',NULL, NULL, 1, 1),
+('Soporte', 'Técnico', 'soporte456', 'admin2@mail.com',NULL, NULL, 1, 1)
+GO
+
+-- Crear usuarios Docentes (asociados a especialidades)
+INSERT INTO tb_usuario (nom_usuario, ape_usuario, contrasena, correo,cod_especialidad, id_carrera, id_rol, estado)
+VALUES 
+('Carlos', 'Mendoza', 'docente123', 'docente1@mail.com', 1, NULL, 2, 1),  
+('Laura', 'García', 'docente456', 2, NULL, 2, 1),    
+('Pedro', 'Martínez', 'docente789', 4, NULL, 2, 1)  
+GO
+
+-- Crear usuarios Alumnos (asociados a carreras)
+INSERT INTO tb_usuario (nom_usuario, ape_usuario, contrasena, correo, cod_especialidad, id_carrera, id_rol, estado)
+VALUES 
+('Juan', 'Pérez', 'alumno123', 'alumno1@mail.com',NULL, 1, 3, 1), 
+('María', 'López', 'alumno456', NULL, 2, 3, 1), 
+('Ana', 'Gómez', 'alumno789', NULL, 1, 3, 1)    
+GO
 
 create table tb_curso
 (
@@ -58,28 +137,50 @@ create table tb_curso
 )
 go
 
+INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES
+('Programación I', 4, 1),
+('Cálculo I', 4, 1),
+('Introducción a la Administración', 3, 2),
+('Derecho Civil', 5, 3)
+GO
+
 create table tb_aula
 (
-    cod_aula char(4) primary key CHECK (cod_aula LIKE '[A-Z][0-9][0-9][0-9]'),
+	id_aula int identity(1,1) primary key,
+    cod_aula char(4) CHECK (cod_aula LIKE '[A-E][0-9][0-9][0-9]'),
     capacidad_aula smallint,
-    disponibilidad bit
+    es_disponible bit
 )
 go
 
+INSERT INTO tb_aula (cod_aula, capacidad_aula, es_disponible) VALUES
+('A101', 30, 1),
+('B202', 25, 1),
+('C303', 40, 1),
+('D404', 20, 0)
+GO
+
+
 create table tb_seccion
 (
-    cod_seccion char(4) primary key CHECK (cod_seccion LIKE '[A-Z][0-9][A-Z][A-Z]'),
+	id_seccion int identity(1,1) primary key,
+    cod_seccion char(4) CHECK (cod_seccion LIKE '[A-Z][0-9][A-Z][A-Z]'),
     cupos_disponible smallint,
     cupos_maximos smallint,
     horario_seccion char(5),
-    id_docente int,
-    cod_aula char(4),
+    id_usuario int,
+    id_aula int,
 	id_curso int,
-    foreign key (id_docente) references tb_docentes(id_docente),
-    foreign key (cod_aula) references tb_aula(cod_aula),
-	foreign key (id_curso) references tb_curso(id_curso)
+    foreign key (id_usuario) references tb_usuario(id_usuario),
+	foreign key (id_curso) references tb_curso(id_curso),
+	foreign key (id_aula) references tb_aula(id_aula)
 )
 go
+
+INSERT INTO tb_seccion (cod_seccion, cupos_disponible, cupos_maximos, horario_seccion, id_usuario, id_aula, id_curso) VALUES
+('A1MA', 25, 30, '08:00', 3, 1, 1),  -- Docente Carlos Mendoza enseña Programación I
+('B1TG', 20, 25, '10:00', 4, 2, 2)   -- Docente Laura García enseña Cálculo I
+GO
 
 create table tb_periodo
 (
@@ -102,190 +203,9 @@ go
 create table tb_detalle_matricula
 (
     id_matricula int,
-	cod_seccion char(4),
+	id_seccion int,
 	id_curso int,
 	foreign key (id_matricula) references tb_matricula(id_matricula),
 	foreign key (id_curso) references tb_curso(id_curso),
-	foreign key (cod_seccion) references tb_seccion(cod_seccion)
+	foreign key (id_seccion) references tb_seccion(id_seccion)
 )
-
---/PROCEDURES MANTENIMIENTO DOCENTES/
-
-go
-create or alter procedure usp_listarDocentes
-as
-    select * from tb_docentes
-go
-
-create or alter procedure usp_registrarDocentes(@nomdoce varchar(50), @nomespe varchar(50), @activo bit)
-as
-    insert into tb_docentes values (@nomdoce, @nomespe, @activo)
-go
-
-create or alter procedure usp_actualizarDocentes
-    @id_docente int,
-    @nomdoce varchar(50),
-    @nomespe varchar(50),
-    @activo bit
-as
-begin
-    update tb_docentes
-    set nom_docente = @nomdoce,
-        nom_especialidad = @nomespe,
-        activo = @activo
-    where id_docente = @id_docente;
-end
-go
-
-CREATE OR ALTER PROCEDURE usp_buscarDocente
-    @id_docente INT
-AS
-BEGIN
-    SELECT 
-        id_docente,
-        nom_docente,
-        nom_especialidad,
-        activo
-    FROM tb_docentes
-    WHERE id_docente = @id_docente;
-END
-GO
-
-CREATE OR ALTER PROCEDURE usp_listarCursos
-AS
-BEGIN
-    SELECT 
-        c.id_curso,
-        c.nom_curso,
-        c.creditos_curso,
-		c.id_carrera,
-        ca.nom_carrera
-    FROM 
-        tb_curso c
-    INNER JOIN 
-        tb_carrera ca ON c.id_carrera = ca.id_carrera
-END
-GO
-
-CREATE OR ALTER PROCEDURE usp_listarCursosO
-AS
-BEGIN
-	select * from tb_curso
-END
-GO
-
-CREATE OR ALTER PROCEDURE usp_registrarCurso
-    @nom_curso VARCHAR(50),
-    @creditos_curso SMALLINT,
-    @id_carrera INT
-AS
-BEGIN
-    BEGIN TRY
-        INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera)
-        VALUES (@nom_curso, @creditos_curso, @id_carrera);
-
-        PRINT 'Curso registrado correctamente.';
-    END TRY
-    BEGIN CATCH
-        PRINT 'Error al registrar el curso: ' + ERROR_MESSAGE();
-    END CATCH
-END;
-GO
-
-
-CREATE OR ALTER PROCEDURE usp_buscarCurso
-    @id_curso INT
-AS
-BEGIN
-    SELECT 
-        c.id_curso,
-        c.nom_curso,
-        c.creditos_curso,
-        c.id_carrera,
-        ca.nom_carrera
-    FROM tb_curso c
-    INNER JOIN tb_carrera ca ON c.id_carrera = ca.id_carrera
-    WHERE c.id_curso = @id_curso;
-END
-GO
-
-CREATE OR ALTER PROCEDURE usp_actualizarCurso
-    @id_curso       INT,
-    @nom_curso      VARCHAR(50),
-    @creditos_curso SMALLINT,
-    @id_carrera     INT
-AS
-BEGIN
-    BEGIN TRY
-        UPDATE tb_curso
-        SET 
-            nom_curso      = @nom_curso,
-            creditos_curso = @creditos_curso,
-            id_carrera     = @id_carrera
-        WHERE id_curso = @id_curso;
-    END TRY
-    BEGIN CATCH
-        THROW;
-    END CATCH
-END
-GO
-
---/PRUEBAS DE PROCEDURES MANTENIMIENTO DOCENTE/
-
-exec usp_listarDocentes
-go
-
-exec usp_registrarDocentes 'Juan Saenz Velarde', 'Ingenieria de Sistemas', 0
-go
-
-exec usp_actualizarDocentes 100, 'Juan Saenz Velarde', 'Ingenieria de Software', 1
-
---/PRUEBAS DE PROCEDURES DE MANTENIMIENTO CURSO/
-
-exec usp_listarCursos
-go
-exec usp_listarCursosO
-go
-exec usp_registrarCurso 'Introducción a la Algoritmia', 4, 1
-go
-exec usp_buscarCurso 2
-go
-usp_actualizarCurso 2, 'Matemática Básica', 20,1  
-go
-
---INSERTS
-
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Ingeniería de Software');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Ingeniería Industrial');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Administración de Empresas');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Diseño Gráfico');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Contabilidad');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Ingeniería Electrónica');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Negocios Internacionales');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Psicología');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Arquitectura');
-INSERT INTO tb_carrera (nom_carrera) VALUES ('Medicina Humana');
-
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Matemática Básica', 4, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Física General', 3, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Química Orgánica', 4, 2);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Programación I', 5, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Historia del Perú', 3, 3);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Diseño Gráfico', 4, 4);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Contabilidad General', 4, 5);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Estadística Aplicada', 3, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Base de Datos I', 4, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Administración I', 3, 5);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Programación II', 5, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Redes de Computadoras', 4, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Microeconomía', 3, 5);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Macroeconomía', 3, 5);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Ingeniería de Software', 4, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Sistemas Operativos', 4, 1);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Marketing Digital', 3, 5);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Diseño UX/UI', 3, 4);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Metodología de la Investigación', 3, 3);
-INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES ('Taller de Emprendimiento', 2, 3);
-
-
- 

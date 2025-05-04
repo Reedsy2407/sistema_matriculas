@@ -48,8 +48,7 @@ namespace MatriculasAPI.Repository.DAO
                     id_menu = Convert.ToInt32(dr["id_menu"]),
                     titulo_menu = dr["titulo_menu"].ToString(),
                     url_menu = dr["url_menu"].ToString(),
-                    orden = Convert.ToInt32(dr["orden"]),
-                    es_activo = Convert.ToBoolean(dr["es_activo"])
+                    orden = Convert.ToInt32(dr["orden"])
                 });
             }
             return lista.OrderBy(m => m);
@@ -57,27 +56,31 @@ namespace MatriculasAPI.Repository.DAO
 
         public IEnumerable<Menu> listarMenusPorRol(int idRol)
         {
-            List<Menu> lista = new List<Menu>();
+            List<Menu> menus = new List<Menu>();
+
             using (SqlConnection con = new SqlConnection(cadena))
             {
-                SqlCommand cmd = new SqlCommand("usp_listarMenusPorRol", con);
+                SqlCommand cmd = new SqlCommand("sp_ObtenerMenusPorRol", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id_rol", idRol);
+
                 con.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
+
                 while (dr.Read())
                 {
-                    lista.Add(new Menu
+                    menus.Add(new Menu
                     {
                         id_menu = Convert.ToInt32(dr["id_menu"]),
                         titulo_menu = dr["titulo_menu"].ToString(),
                         url_menu = dr["url_menu"].ToString(),
-                        orden = Convert.ToInt32(dr["orden"]),
-                        es_activo = Convert.ToBoolean(dr["es_activo"])
+                        controlador = dr["controlador"].ToString(),
+                        orden = Convert.ToInt32(dr["orden"])
                     });
                 }
             }
-            return lista.OrderBy(m => m.orden);
+
+            return menus.OrderBy(m => m.orden).ToList();
         }
 
         public bool registrarMenu(Menu menu)
@@ -90,7 +93,6 @@ namespace MatriculasAPI.Repository.DAO
                 cmd.Parameters.AddWithValue("@titulo_menu", menu.titulo_menu);
                 cmd.Parameters.AddWithValue("@url_menu", menu.url_menu);
                 cmd.Parameters.AddWithValue("@orden", menu.orden);
-                cmd.Parameters.AddWithValue("@es_activo", menu.es_activo);
 
                 con.Open();
                 exito = cmd.ExecuteNonQuery() > 0;

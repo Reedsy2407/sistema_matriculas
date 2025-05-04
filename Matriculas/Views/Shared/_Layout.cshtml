@@ -1,4 +1,26 @@
-﻿    <!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var idRol = HttpContextAccessor.HttpContext.Request.Cookies["id_rol"] != null
+            ? int.Parse(HttpContextAccessor.HttpContext.Request.Cookies["id_rol"])
+            : (int?)null;
+    var menus = new List<Menu>();
+
+    if (idRol.HasValue)
+    {
+        var httpClient = new HttpClient();
+        var response = await httpClient.GetAsync($"https://localhost:44354/Menu/ListarMenusPorRol/{idRol.Value}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            menus = JsonConvert.DeserializeObject<List<Menu>>(content);
+        }
+    }
+}
+
+<!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
@@ -56,71 +78,33 @@
                         <li>
                             <a class="active-menu" href="index.html"> Dashboard</a>
                         </li>
-                        <li class="mt-3 text-muted px-3">CURSOS</li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("listadoCursos","Curso")">
-                                <i class="fas fa-list"></i> Listado de Cursos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("nuevoCurso","Curso")">
-                                <i class="fas fa-plus-circle"></i> Registrar Curso
-                            </a>
-                        </li>
+                    @if (menus.Any())
+                    {
+                        // Agrupar menús por categoría (primera palabra)
+                        var grupos = menus.GroupBy(m => m.controlador);
 
+                        @foreach (var grupo in grupos)
+                        {
+                            <li class="mt-3 text-muted px-3">@grupo.Key.ToUpper()</li>
 
-                        <li class="mt-3 text-muted px-3">DOCENTES</li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("listadoDocentes","Docente")">
-                                <i class="fas fa-list"></i> Listado de Docentes
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("nuevoDocente","Docente")">
-                                <i class="fas fa-user-plus"></i> Registrar Docente
-                            </a>
-                        </li>
-
-                        <li class="mt-3 text-muted px-3">AULAS</li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("listadoAulas","Aula")">
-                                <i class="fas fa-list"></i> Listado de Aulas
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="@Url.Action("nuevoAula","Aula")">
-                                <i class="fas fa-plus-circle"></i> Registrar Aula
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">Multi-Level Dropdown<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            @foreach (var menu in grupo.OrderBy(m => m.orden))
+                            {
                                 <li>
-                                    <a href="#">Second Level Link</a>
+                                    <a class="nav-link" href="@Url.Action(@menu.url_menu, menu.controlador) ">
+                                        @menu.titulo_menu
+                                    </a>
                                 </li>
-                                <li>
-                                    <a href="#">Second Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="#">Third Level Link</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Link</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Link</a>
-                                        </li>
-
-                                    </ul>
-
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                            }
+                        }
+                    }
+                    else if (idRol.HasValue)
+                    {
+                        <li class="text-danger px-3">No tiene menús asignados</li>
+                    }
+                    else
+                    {
+                        <li class="text-danger px-3">No autenticado</li>
+                    }
 
                 </div>
 

@@ -1,0 +1,89 @@
+use matriculas_bd
+
+create or alter procedure usp_listarDocentes
+as
+    select 
+        U.id_usuario as id_docente, 
+        U.nom_usuario + ' ' + U.ape_usuario as nom_docente, 
+        E.nom_especialidad,
+        U.estado
+    from tb_usuario as U
+    join tb_especialidad as E on U.cod_especialidad = E.cod_especialidad
+    where U.id_rol = 2  -- Rol Docente
+go
+
+
+--LOGIN
+
+CREATE PROCEDURE sp_LoginUsuario 
+    @correo VARCHAR(100),
+    @contrasena VARCHAR(30),
+    @login_exitoso BIT OUTPUT,
+    @mensaje VARCHAR(100) OUTPUT,
+    @id_usuario INT OUTPUT,
+    @id_rol INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SET @login_exitoso = 0;
+    SET @mensaje = '';
+    SET @id_usuario = 0;
+    SET @id_rol = 0;
+    
+    IF EXISTS (
+        SELECT 1 FROM tb_usuario 
+        WHERE correo = @correo 
+        AND contrasena = @contrasena
+        AND estado = 1
+    )
+    BEGIN
+        SELECT 
+            @id_usuario = id_usuario,
+            @id_rol = id_rol
+        FROM tb_usuario
+        WHERE correo = @correo
+        AND contrasena = @contrasena
+        AND estado = 1;
+        
+        IF @id_rol = 2
+        BEGIN
+            SET @mensaje = 'Acceso denegado para este tipo de usuario';
+            SET @login_exitoso = 0;
+            SET @id_usuario = 0;
+            SET @id_rol = 0;
+        END
+        ELSE
+        BEGIN
+            SET @mensaje = 'Login exitoso';
+            SET @login_exitoso = 1;
+        END
+    END
+    ELSE
+    BEGIN
+        SET @mensaje = 'Usuario o contraseña incorrectos, o usuario inactivo';
+    END
+END
+GO
+
+CREATE PROCEDURE sp_ObtenerMenusPorRol
+    @id_rol INT
+AS
+BEGIN
+    SELECT 
+        m.id_menu,
+        m.titulo_menu,
+        m.url_menu,
+        m.orden,
+		m.controlador
+    FROM 
+        tb_menu m
+    INNER JOIN 
+        tb_menu_rol mr ON m.id_menu = mr.id_menu
+    WHERE 
+        mr.id_rol = @id_rol
+        AND m.es_activo = 1
+    ORDER BY 
+        m.orden
+END
+GO
