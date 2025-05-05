@@ -7,7 +7,7 @@ namespace MatriculasAPI.Repository.Interfaces
 
         IEnumerable<Aula> aAulas();
 
-        Aula buscarAula(string cod);
+        Aula buscarAula(int cod);
         bool registrarAula(Aula objA);
         bool actualizarAula(Aula objA);
     }

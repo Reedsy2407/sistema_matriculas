@@ -26,9 +26,10 @@ namespace MatriculasAPI.Repository.DAO
             {
                 lista.Add(new Aula
                 {
-                    cod_aula = dr[0].ToString(),
-                    capacidad_aula = int.Parse(dr[1].ToString()),
-                    es_disponible = bool.Parse(dr[2].ToString())
+                    id_aula = int.Parse(dr[0].ToString()),
+                    cod_aula = dr[1].ToString(),
+                    capacidad_aula = int.Parse(dr[2].ToString()),
+                    es_disponible = bool.Parse(dr[3].ToString())
                 });
             }
             dr.Close();
@@ -37,22 +38,23 @@ namespace MatriculasAPI.Repository.DAO
             return lista;
         }
 
-        public Aula buscarAula(string cod)
+        public Aula buscarAula(int cod)
         {
             Aula aula = null;
             SqlConnection con = new SqlConnection(cadena);
             SqlCommand cmd = new SqlCommand("usp_buscarAula", con);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@cod_aula", cod);
+            cmd.Parameters.AddWithValue("@id_aula", cod);
             con.Open();
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
                 aula = new Aula
                 {
-                    cod_aula = dr[0].ToString(),
-                    capacidad_aula = int.Parse(dr[1].ToString()),
-                    es_disponible = bool.Parse(dr[2].ToString())
+                    id_aula = int.Parse(dr[0].ToString()),
+                    cod_aula = dr[1].ToString(),
+                    capacidad_aula = int.Parse(dr[2].ToString()),
+                    es_disponible = bool.Parse(dr[3].ToString())
                 };
             }
             dr.Close();
@@ -97,6 +99,7 @@ namespace MatriculasAPI.Repository.DAO
             SqlCommand cmd = new SqlCommand("usp_actualizarAulas", con);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+            cmd.Parameters.AddWithValue("@id_aula", objA.id_aula);
             cmd.Parameters.AddWithValue("@cod_aula", objA.cod_aula);
             cmd.Parameters.AddWithValue("@capacidad_aula", objA.capacidad_aula);
             cmd.Parameters.AddWithValue("@es_disponible", objA.es_disponible);

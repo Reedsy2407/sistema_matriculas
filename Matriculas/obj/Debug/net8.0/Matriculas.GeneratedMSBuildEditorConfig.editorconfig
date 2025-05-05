@@ -28,6 +28,18 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Alumno/editarAlumno.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx1bW5vXGVkaXRhckFsdW1uby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Alumno/listadoAlumnos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx1bW5vXGxpc3RhZG9BbHVtbm9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Alumno/registrarAlumno.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWx1bW5vXHJlZ2lzdHJhckFsdW1uby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/uset/Desktop/servicios-web/Matriculas/Views/Aula/editarAula.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVsYVxlZGl0YXJBdWxhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

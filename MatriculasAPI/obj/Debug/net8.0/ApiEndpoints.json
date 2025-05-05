@@ -1,5 +1,103 @@
 [
   {
+    "ContainingType": "MatriculasAPI.Controllers.AlumnoController",
+    "Method": "ActualizarAlumno",
+    "RelativePath": "Alumno/ActualizarAlumno",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "objA",
+        "Type": "MatriculasMODELS.AlumnoO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.AlumnoController",
+    "Method": "BuscarAlumno",
+    "RelativePath": "Alumno/BuscarAlumno/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MatriculasMODELS.AlumnoO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.AlumnoController",
+    "Method": "ListadoAlumnos",
+    "RelativePath": "Alumno/ListadoAlumnos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Alumno, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.AlumnoController",
+    "Method": "RegistrarAlumno",
+    "RelativePath": "Alumno/RegistrarAlumno",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "objA",
+        "Type": "MatriculasMODELS.AlumnoO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MatriculasAPI.Controllers.AulaController",
     "Method": "ActualizarAulas",
     "RelativePath": "Aula/ActualizarAulas",
@@ -35,7 +133,7 @@
     "Parameters": [
       {
         "Name": "cod",
-        "Type": "System.String",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

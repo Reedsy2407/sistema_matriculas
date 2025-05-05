@@ -68,19 +68,19 @@ namespace Matriculas.Controllers
 
         // GET: Aula/editarAula/{cod}
         [HttpGet]
-        public async Task<IActionResult> editarAula(string cod)
+        public async Task<IActionResult> editarAula(int cod)
         {
             var response = await httpClient.GetAsync($"BuscarAulas/{cod}");
 
             if (!response.IsSuccessStatusCode)
             {
                 ViewBag.Mensaje = "No se encontró el aula con código " + cod;
-                return View(new Aula { cod_aula = cod });
+                return View(new Aula { id_aula = cod });
             }
 
             var data = await response.Content.ReadAsStringAsync();
             var objA = JsonConvert.DeserializeObject<Aula>(data)
-                      ?? new Aula { cod_aula = cod };
+                      ?? new Aula { id_aula = cod };
             return View(objA);
         }
 

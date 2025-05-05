@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MatriculasMODELS.Alumno>
+
+@{
+    ViewData["Title"] = "listadoAlumnos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4 mb-4">Listado de Alumnos</h1>
+<div class="mb-3">
+    <a asp-action="registrarAlumno" class="btn btn-primary">
+        <i class="fas fa-plus-circle"></i> Registrar Alumno
+    </a>
+</div>
+
+<div class="container-fluid px-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Alumnos Registrados
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.id_usuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nom_usuario)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.correo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.contrasena)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.estado)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.id_usuario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nom_usuario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.correo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.contrasena)
+                            </td>
+                            <td>
+                                @if (item.estado)
+                                {
+                                    <i class="fas fa-check-circle text-success fa-lg"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-circle text-secondary fa-lg"></i>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "editarAlumno", new { id = item.id_usuario }, new { @class = "me-2" })
+                            </td>
+                        </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -3,7 +3,7 @@ as
 	Select * from tb_especialidad
 go
 
-
+--CURSOS
 	CREATE OR ALTER PROCEDURE usp_listarCursos
 	AS
 	BEGIN
@@ -20,73 +20,53 @@ go
 	END
 	GO
 
---DOCENTES
-
-CREATE or alter procedure usp_listarDocentes
-as
-    select 
-        U.id_usuario as id_docente, 
-        U.nom_usuario + ' ' + U.ape_usuario as nom_docente, 
-        E.nom_especialidad,
-        U.estado
-    from tb_usuario as U
-    join tb_especialidad as E on U.cod_especialidad = E.cod_especialidad
-    where U.id_rol = 2  -- Rol Docente
-go
-
-
---AULAS
-
-CREATE OR ALTER PROCEDURE usp_listarAulas
+CREATE OR ALTER PROCEDURE usp_registrarCurso
+    @nom_curso       VARCHAR(50),
+    @creditos_curso  SMALLINT,
+    @id_carrera      INT
 AS
 BEGIN
-    SET NOCOUNT ON;
-    
-    SELECT 
-        cod_aula,
-        capacidad_aula,
-        es_disponible
-    FROM tb_aula;
+
+    INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera)
+    VALUES (@nom_curso, @creditos_curso, @id_carrera);
 END
 GO
 
-CREATE OR ALTER PROCEDURE usp_buscarAula
-    @cod_aula CHAR(4)
-AS
-BEGIN    
-    SELECT 
-        cod_aula,
-        capacidad_aula,
-        es_disponible
-    FROM tb_aula
-    WHERE cod_aula = @cod_aula;
-END
-GO
-
-CREATE OR ALTER PROCEDURE usp_registrarAulas
-    @cod_aula       CHAR(4),
-    @capacidad_aula SMALLINT,
-    @es_disponible  BIT
-AS
-BEGIN    
-    INSERT INTO tb_aula (cod_aula, capacidad_aula, es_disponible)
-    VALUES (@cod_aula, @capacidad_aula, @es_disponible);
-END
-GO
-
-CREATE OR ALTER PROCEDURE usp_actualizarAulas
-    @cod_aula       CHAR(4),
-    @capacidad_aula SMALLINT,
-    @es_disponible  BIT
+CREATE OR ALTER PROCEDURE usp_buscarCurso
+    @id_curso INT
 AS
 BEGIN
-    UPDATE tb_aula
-    SET 
-        capacidad_aula = @capacidad_aula,
-        es_disponible  = @es_disponible
-    WHERE cod_aula = @cod_aula;
+    SELECT
+        c.id_curso,
+        c.nom_curso,
+        c.creditos_curso,
+        c.id_carrera,
+        ca.nom_carrera
+    FROM tb_curso AS c
+    INNER JOIN tb_carrera AS ca
+        ON c.id_carrera = ca.id_carrera
+    WHERE c.id_curso = @id_curso;
 END
 GO
+
+CREATE OR ALTER PROCEDURE usp_actualizarCurso
+    @id_curso        INT,
+    @nom_curso       VARCHAR(50),
+    @creditos_curso  SMALLINT,
+    @id_carrera      INT
+AS
+BEGIN
+
+    UPDATE tb_curso
+    SET
+        nom_curso      = @nom_curso,
+        creditos_curso = @creditos_curso,
+        id_carrera     = @id_carrera
+    WHERE id_curso = @id_curso;
+END
+GO
+
+
 
 --LOGIN
 
@@ -136,7 +116,7 @@ BEGIN
     END
     ELSE
     BEGIN
-        SET @mensaje = 'Usuario o contraseña incorrectos, o usuario inactivo';
+        SET @mensaje = 'Usuario o contraseÃ±a incorrectos, o usuario inactivo';
     END
 END
 GO
@@ -162,6 +142,23 @@ BEGIN
         m.orden
 END
 GO
+
+
+
+
+--DOCENTES
+create or alter procedure usp_listarDocentes
+as
+    select 
+        U.id_usuario as id_docente, 
+        U.nom_usuario + ' ' + U.ape_usuario as nom_docente, 
+        E.nom_especialidad,
+        U.estado
+    from tb_usuario as U
+    join tb_especialidad as E on U.cod_especialidad = E.cod_especialidad
+    where U.id_rol = 2  -- Rol Docente
+go
+
 
 create or alter procedure usp_registrarDocentes(
     @nom_docente varchar(50),
@@ -189,3 +186,173 @@ begin
     )
 end
 go
+
+CREATE OR ALTER PROCEDURE usp_actualizarDocentes
+    @id_docente INT,
+    @nom_docente VARCHAR(50),
+    @ape_docente VARCHAR(50),
+    @correo VARCHAR(100),
+    @cod_especialidad INT,
+    @estado BIT
+AS
+BEGIN
+    UPDATE tb_usuario
+    SET 
+        nom_usuario = @nom_docente,
+        ape_usuario = @ape_docente,
+        correo = @correo,
+        cod_especialidad = @cod_especialidad,
+        estado = @estado
+    WHERE 
+        id_usuario = @id_docente
+        AND id_rol = 2; 
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_buscarDocente
+    @id_docente INT
+AS
+BEGIN
+    SELECT 
+        U.id_usuario AS id_docente,
+        U.nom_usuario AS nom_docente,
+        U.ape_usuario AS ape_docente,
+        U.correo,
+        U.cod_especialidad,
+        E.nom_especialidad,
+        U.estado
+    FROM 
+        tb_usuario U
+    LEFT JOIN
+        tb_especialidad E ON U.cod_especialidad = E.cod_especialidad
+    WHERE 
+        U.id_usuario = @id_docente
+        AND U.id_rol = 2;  
+END
+GO
+
+--AULAS
+
+CREATE OR ALTER PROCEDURE usp_listarAulas
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT 
+		id_aula,
+        cod_aula,
+        capacidad_aula,
+        es_disponible
+    FROM tb_aula;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_buscarAula
+    @id_aula int
+AS
+BEGIN    
+    SELECT 
+		id_aula,
+        cod_aula,
+        capacidad_aula,
+        es_disponible
+    FROM tb_aula
+    WHERE id_aula = @id_aula;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_registrarAulas
+    @cod_aula       CHAR(4),
+    @capacidad_aula SMALLINT,
+    @es_disponible  BIT
+AS
+BEGIN    
+    INSERT INTO tb_aula (cod_aula, capacidad_aula, es_disponible)
+    VALUES (@cod_aula, @capacidad_aula, @es_disponible);
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_actualizarAulas
+	@id_aula		INT,
+    @cod_aula       CHAR(4),
+    @capacidad_aula SMALLINT,
+    @es_disponible  BIT
+AS
+BEGIN
+    UPDATE tb_aula
+    SET 
+		cod_aula       = @cod_aula,
+        capacidad_aula = @capacidad_aula,
+        es_disponible  = @es_disponible
+    WHERE id_aula = @id_aula;
+END
+GO
+
+--ALUMNOS
+
+CREATE OR ALTER PROCEDURE usp_listarAlumnos
+AS
+BEGIN
+    SELECT 
+        id_usuario,
+        nom_usuario + ' ' + ape_usuario as nom_usuario, 
+        correo,
+        contrasena,
+        estado
+    FROM tb_usuario
+    WHERE id_rol = 3;  -- Alumno
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_buscarAlumno
+    @id_usuario INT
+AS
+BEGIN
+    SELECT 
+        id_usuario,
+        nom_usuario,
+        ape_usuario,
+        correo,
+        contrasena,
+        estado
+    FROM tb_usuario
+    WHERE id_usuario = @id_usuario
+      AND id_rol = 3;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_registrarAlumno
+    @nom_usuario  VARCHAR(50),
+    @ape_usuario  VARCHAR(50),
+    @correo       VARCHAR(100),
+    @contrasena   VARCHAR(30),
+    @estado       BIT
+AS
+BEGIN
+    INSERT INTO tb_usuario
+        (nom_usuario, ape_usuario, correo, contrasena, cod_especialidad, id_rol, estado)
+    VALUES
+        (@nom_usuario, @ape_usuario, @correo, @contrasena, NULL, 3, @estado);
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_actualizarAlumno
+    @id_usuario   INT,
+    @nom_usuario  VARCHAR(50),
+    @ape_usuario  VARCHAR(50),
+    @correo       VARCHAR(100),
+    @contrasena   VARCHAR(30),
+    @estado       BIT
+AS
+BEGIN
+    UPDATE tb_usuario
+    SET 
+        nom_usuario = @nom_usuario,
+        ape_usuario = @ape_usuario,
+        correo      = @correo,
+        contrasena  = @contrasena,
+        estado      = @estado
+    WHERE id_usuario = @id_usuario
+      AND id_rol = 3;
+END
+GO

@@ -4,6 +4,9 @@ namespace MatriculasMODELS
 {
     public class Aula
     {
+        [DisplayName("ID")]
+        public int id_aula { get; set; }
+
         [DisplayName("AULA")]
         public string? cod_aula { get; set; }
 

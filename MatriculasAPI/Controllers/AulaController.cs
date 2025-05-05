@@ -26,7 +26,7 @@ namespace MatriculasAPI.Controllers
         }
 
         [HttpGet("BuscarAulas/{cod}")]
-        public async Task<ActionResult<Aula>> BuscarAulas(string cod)
+        public async Task<ActionResult<Aula>> BuscarAulas(int cod)
         {
             var aula = await Task.Run(() => new AulaDAO().buscarAula(cod));
             if (aula == null)

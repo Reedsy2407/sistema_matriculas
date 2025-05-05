@@ -5,6 +5,180 @@
     "version": "1.0"
   },
   "paths": {
+    "/Alumno/ListadoAlumnos": {
+      "get": {
+        "tags": [
+          "Alumno"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Alumno"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Alumno"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Alumno"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Alumno/BuscarAlumno/{id}": {
+      "get": {
+        "tags": [
+          "Alumno"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlumnoO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlumnoO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlumnoO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Alumno/RegistrarAlumno": {
+      "post": {
+        "tags": [
+          "Alumno"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Alumno/ActualizarAlumno": {
+      "put": {
+        "tags": [
+          "Alumno"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlumnoO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Aula/ListadoAulas": {
       "get": {
         "tags": [
@@ -102,7 +276,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -711,9 +886,82 @@
   },
   "components": {
     "schemas": {
+      "Alumno": {
+        "required": [
+          "contrasena",
+          "correo",
+          "estado",
+          "id_usuario",
+          "nom_usuario"
+        ],
+        "type": "object",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_usuario": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "correo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contrasena": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "estado": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AlumnoO": {
+        "required": [
+          "ape_usuario",
+          "contrasena",
+          "correo",
+          "estado",
+          "id_usuario",
+          "nom_usuario"
+        ],
+        "type": "object",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_usuario": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ape_usuario": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "correo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contrasena": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "estado": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "Aula": {
         "type": "object",
         "properties": {
+          "id_aula": {
+            "type": "integer",
+            "format": "int32"
+          },
           "cod_aula": {
             "type": "string",
             "nullable": true
@@ -776,6 +1024,13 @@
         "additionalProperties": false
       },
       "DocenteO": {
+        "required": [
+          "ape_docente",
+          "cod_especialidad",
+          "correo",
+          "id_docente",
+          "nom_docente"
+        ],
         "type": "object",
         "properties": {
           "id_docente": {
@@ -783,16 +1038,16 @@
             "format": "int32"
           },
           "nom_docente": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "ape_docente": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "correo": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "cod_especialidad": {
             "type": "integer",
