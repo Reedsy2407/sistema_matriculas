@@ -98,6 +98,26 @@
     ]
   },
   {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "BuscarPeriodoActual",
+    "RelativePath": "Clase/Periodo/ObtenerPeriodoActual",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "MatriculasMODELS.Periodo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MatriculasAPI.Controllers.CursoController",
     "Method": "ActualizarCursos",
     "RelativePath": "Curso/ActualizarCursos",

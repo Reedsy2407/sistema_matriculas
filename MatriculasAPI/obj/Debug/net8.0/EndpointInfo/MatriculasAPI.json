@@ -178,6 +178,35 @@
         }
       }
     },
+    "/Clase/Periodo/ObtenerPeriodoActual": {
+      "get": {
+        "tags": [
+          "Clase"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Periodo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Periodo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Periodo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Curso/ListadoCursos": {
       "get": {
         "tags": [
@@ -875,6 +904,28 @@
           "orden": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Periodo": {
+        "type": "object",
+        "properties": {
+          "id_periodo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_periodo": {
+            "type": "string",
+            "nullable": true
+          },
+          "fcha_inicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fcha_fin": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
