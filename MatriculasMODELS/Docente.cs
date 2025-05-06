@@ -7,13 +7,13 @@ namespace MatriculasMODELS
         [DisplayName("ID")]
         public int id_docente { get; set; }
 
-        [DisplayName("Nombre")]
+        [DisplayName("NOMBRE")]
         public string? nom_docente { get; set; }
 
-        [DisplayName("Especialidad")]
+        [DisplayName("ESPECIALIDAD")]
         public string? nom_especialidad { get; set; }
 
-        [DisplayName("Estado")]
+        [DisplayName("ESTADO")]
         public bool estado { get; set; }
     }
 }

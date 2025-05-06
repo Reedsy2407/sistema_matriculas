@@ -12,6 +12,11 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
         <div class="mb-3">
+            <label asp-for="id_aula" class="form-label"></label>
+            <input asp-for="id_aula" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
             <label asp-for="cod_aula" class="form-label"></label>
             <input asp-for="cod_aula" class="form-control"/>
         </div>

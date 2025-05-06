@@ -22,6 +22,7 @@
             <table id="datatablesSimple" class="table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>@Html.DisplayNameFor(m => m.First().id_aula)</th>
                         <th>@Html.DisplayNameFor(m => m.First().cod_aula)</th>
                         <th>@Html.DisplayNameFor(m => m.First().capacidad_aula)</th>
                         <th>@Html.DisplayNameFor(m => m.First().es_disponible)</th>
@@ -32,6 +33,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td>@item.id_aula</td>
                             <td>@item.cod_aula</td>
                             <td>@item.capacidad_aula</td>
                             <td>
@@ -45,7 +47,7 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Editar", "editarAula", new { cod = item.cod_aula }, new { @class = "me-2" })
+                                @Html.ActionLink("Editar", "editarAula", new { cod = item.id_aula }, new { @class = "me-2" })
                             </td>
                         </tr>
                     }

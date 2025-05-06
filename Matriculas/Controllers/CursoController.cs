@@ -1,6 +1,7 @@
 ﻿using MatriculasMODELS;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace Matriculas.Controllers
 {
     public class CursoController : Controller
     {
-        Uri direccion = new Uri("https://localhost:7117/Curso");
+        Uri direccion = new Uri("https://localhost:7117/Curso/");
         private readonly HttpClient httpClient;
 
         public CursoController()
@@ -20,7 +21,7 @@ namespace Matriculas.Controllers
         public List<Curso> aCurso()
         {
             List<Curso> lista = new List<Curso>();
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/ListadoCursos").Result;
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "ListadoCursos").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<Curso>>(data);
             return lista;
@@ -28,7 +29,7 @@ namespace Matriculas.Controllers
 
         public List<Curso> aCursoApi()
         {
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "/ListadoCursos").Result;
+            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "ListadoCursos").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Curso>>(data)!;
         }
@@ -64,7 +65,7 @@ namespace Matriculas.Controllers
 
             var json = JsonConvert.SerializeObject(objC);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("/RegistrarCursos", content);
+            var response = await httpClient.PostAsync("RegistrarCursos", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Curso registrado correctamente"
@@ -77,9 +78,7 @@ namespace Matriculas.Controllers
         [HttpGet]
         public async Task<IActionResult> editarCurso(int id)
         {
-            var response = await httpClient.GetAsync(
-                httpClient.BaseAddress + "/BuscarCursos/" + id
-            );
+            var response = await httpClient.GetAsync($"BuscarCursos/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -119,7 +118,8 @@ namespace Matriculas.Controllers
             }
             var json = JsonConvert.SerializeObject(objC);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PutAsync(httpClient.BaseAddress + "/ActualizarCursos", content);
+            var response = await httpClient
+                .PutAsync("ActualizarCursos", content);
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Curso modificado correctamente"
                 : "Error al modificar curso";

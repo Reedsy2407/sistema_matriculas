@@ -1,0 +1,62 @@
+﻿@model MatriculasMODELS.AlumnoO
+
+@{
+    ViewData["Title"] = "registrarAlumno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Registrar Nuevo Alumno</h2>
+
+<div class="card shadow-sm p-4">
+        <form asp-action="registrarAlumno">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nom_usuario" class="control-label"></label>
+                <input asp-for="nom_usuario" class="form-control" />
+                <span asp-validation-for="nom_usuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ape_usuario" class="control-label"></label>
+                <input asp-for="ape_usuario" class="form-control" />
+                <span asp-validation-for="ape_usuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="correo" class="control-label"></label>
+                <input asp-for="correo" class="form-control" />
+                <span asp-validation-for="correo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="contrasena" class="control-label"></label>
+                <input asp-for="contrasena" class="form-control" />
+                <span asp-validation-for="contrasena" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="estado" /> @Html.DisplayNameFor(model => model.estado)
+                </label>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check-circle"></i> Registrar
+                </button>
+                <a asp-action="listadoAlumnos" class="btn btn-secondary ms-2">
+                    <i class="fas fa-arrow-left"></i> Cancelar
+                </a>
+            </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        var msg = '@ViewBag.Mensaje';
+        if (msg) {
+            Swal.fire({
+                title: msg,
+                icon: msg.includes('correctamente') ? 'success' : 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
