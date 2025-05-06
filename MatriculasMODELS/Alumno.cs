@@ -34,5 +34,10 @@ namespace MatriculasMODELS
         [Required]
 
         public bool estado { get; set; }
+
+
+        [DisplayName("CARRERA")]
+        [Required]
+        public string? carreras { get; set; }
     }
 }

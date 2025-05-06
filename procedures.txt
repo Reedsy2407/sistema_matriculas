@@ -116,7 +116,7 @@ BEGIN
     END
     ELSE
     BEGIN
-        SET @mensaje = 'Usuario o contraseÃ±a incorrectos, o usuario inactivo';
+        SET @mensaje = 'Usuario o contraseña incorrectos, o usuario inactivo';
     END
 END
 GO
@@ -326,13 +326,18 @@ CREATE OR ALTER PROCEDURE usp_registrarAlumno
     @ape_usuario  VARCHAR(50),
     @correo       VARCHAR(100),
     @contrasena   VARCHAR(30),
-    @estado       BIT
+    @estado       BIT,
+	@new_id_usuario INT OUTPUT
+
 AS
 BEGIN
     INSERT INTO tb_usuario
         (nom_usuario, ape_usuario, correo, contrasena, cod_especialidad, id_rol, estado)
     VALUES
         (@nom_usuario, @ape_usuario, @correo, @contrasena, NULL, 3, @estado);
+
+	SET @new_id_usuario = SCOPE_IDENTITY();
+
 END
 GO
 
@@ -356,3 +361,70 @@ BEGIN
       AND id_rol = 3;
 END
 GO
+
+CREATE OR ALTER PROCEDURE usp_BuscarPeriodoActual
+AS
+BEGIN
+    SELECT 
+        id_periodo,
+        codigo_periodo,
+        fcha_inicio,
+        fcha_fin
+    FROM 
+        tb_periodo
+    WHERE 
+        CONVERT(DATE, GETDATE()) BETWEEN fcha_inicio AND fcha_fin;
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_listarCarreras
+AS
+BEGIN
+    SELECT id_carrera, nom_carrera
+    FROM tb_carrera
+    ORDER BY nom_carrera;
+END
+GO
+
+CREATE OR ALTER PROCEDURE uspListarCarrerasPorUsuario
+    @id_usuario INT
+AS
+BEGIN
+    SELECT 
+        c.id_carrera,
+        c.nom_carrera
+    FROM 
+        tb_usuario_carrera uc
+    INNER JOIN 
+        tb_carrera c ON uc.id_carrera = c.id_carrera
+    WHERE 
+        uc.id_usuario = @id_usuario
+    ORDER BY 
+        c.nom_carrera
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE usp_eliminarCarrerasUsuario
+    @id_usuario INT
+AS
+BEGIN
+    DELETE FROM tb_usuario_carrera
+    WHERE id_usuario = @id_usuario;
+END
+GO
+
+-- 4) Asignar una carrera a un usuario
+CREATE OR ALTER PROCEDURE usp_asignarCarreraUsuario
+    @id_usuario  INT,
+    @id_carrera  INT
+AS
+BEGIN
+    INSERT INTO tb_usuario_carrera (id_usuario, id_carrera)
+    VALUES (@id_usuario, @id_carrera);
+END
+GO
+
+select * from tb_usuario_carrera
+
+select * from tb_usuario

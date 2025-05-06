@@ -37,6 +37,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.estado)
                             </th>
+                            <th>Carreras</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -64,6 +65,9 @@
                                 {
                                     <i class="far fa-circle text-secondary fa-lg"></i>
                                 }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.carreras)
                             </td>
                             <td>
                                 @Html.ActionLink("Editar", "editarAlumno", new { id = item.id_usuario }, new { @class = "me-2" })

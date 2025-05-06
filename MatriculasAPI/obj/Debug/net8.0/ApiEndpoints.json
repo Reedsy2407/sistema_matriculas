@@ -196,6 +196,52 @@
     ]
   },
   {
+    "ContainingType": "MatriculasAPI.Controllers.CarreraController",
+    "Method": "ListadoCarreras",
+    "RelativePath": "Carrera/ListadoCarreras",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Carrera, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CarreraController",
+    "Method": "ListadoCarrerasPorUsuario",
+    "RelativePath": "Carrera/ListadoCarrerasPorUsuario/{idUsuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Carrera, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MatriculasAPI.Controllers.ClaseController",
     "Method": "BuscarPeriodoActual",
     "RelativePath": "Clase/Periodo/ObtenerPeriodoActual",

@@ -353,6 +353,93 @@
         }
       }
     },
+    "/Carrera/ListadoCarreras": {
+      "get": {
+        "tags": [
+          "Carrera"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Carrera/ListadoCarrerasPorUsuario/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Carrera"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Clase/Periodo/ObtenerPeriodoActual": {
       "get": {
         "tags": [
@@ -917,6 +1004,7 @@
     "schemas": {
       "Alumno": {
         "required": [
+          "carreras",
           "contrasena",
           "correo",
           "estado",
@@ -943,6 +1031,10 @@
           },
           "estado": {
             "type": "boolean"
+          },
+          "carreras": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -980,6 +1072,14 @@
           },
           "estado": {
             "type": "boolean"
+          },
+          "id_carreras": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1001,6 +1101,20 @@
           },
           "es_disponible": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Carrera": {
+        "type": "object",
+        "properties": {
+          "id_carrera": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_carrera": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

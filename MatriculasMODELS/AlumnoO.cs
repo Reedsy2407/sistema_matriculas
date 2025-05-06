@@ -38,5 +38,8 @@ namespace MatriculasMODELS
         [Required]
 
         public bool estado { get; set; }
+
+        public List<int> id_carreras { get; set; } = new();
+
     }
 }
