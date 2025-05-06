@@ -528,18 +528,8 @@ C:\Users\uset\Desktop\servicios-web\Matriculas\obj\Debug\net8.0\refint\Matricula
 C:\Users\uset\Desktop\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.pdb
 C:\Users\uset\Desktop\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.genruntimeconfig.cache
 C:\Users\uset\Desktop\servicios-web\Matriculas\obj\Debug\net8.0\ref\Matriculas.dll
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.csproj.AssemblyReference.cache
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.AssemblyInfoInputs.cache
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.AssemblyInfo.cs
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.csproj.CoreCompileInputs.cache
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.RazorAssemblyInfo.cache
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.RazorAssemblyInfo.cs
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.sourcelink.json
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.dll
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\refint\Matriculas.dll
-C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.pdb
+C:\Users\uset\Desktop\servicios-web\Matriculas\bin\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\uset\Desktop\servicios-web\Matriculas\bin\Debug\net8.0\MatriculasMODELS.pdb
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\appsettings.json
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\Matriculas.staticwebassets.runtime.json
@@ -746,6 +736,15 @@ C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\MatriculasMODELS.dll
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\bin\Debug\net8.0\MatriculasMODELS.pdb
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.csproj.AssemblyReference.cache
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.AssemblyInfoInputs.cache
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.AssemblyInfo.cs
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.csproj.CoreCompileInputs.cache
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.RazorAssemblyInfo.cache
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.RazorAssemblyInfo.cs
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.sourcelink.json
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\scopedcss\bundle\Matriculas.styles.css
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\scopedcss\projectbundle\Matriculas.bundle.scp.css
@@ -760,7 +759,8 @@ C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.csproj.Up2Date
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.dll
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\refint\Matriculas.dll
+C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.pdb
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\Matriculas.genruntimeconfig.cache
 C:\Users\Thazo\Desktop\Proyectos 2025\servicios-web\Matriculas\obj\Debug\net8.0\ref\Matriculas.dll
-C:\Users\uset\Desktop\servicios-web\Matriculas\bin\Debug\net8.0\MatriculasMODELS.dll
-C:\Users\uset\Desktop\servicios-web\Matriculas\bin\Debug\net8.0\MatriculasMODELS.pdb

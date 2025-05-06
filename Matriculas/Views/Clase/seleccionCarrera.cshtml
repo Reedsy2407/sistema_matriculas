@@ -1,1 +1,27 @@
-﻿asadadad
+﻿@{
+    ViewData["Title"] = "Selección de Carrera";
+}
+
+<div class="container mt-3">
+    <div class="alert alert-info d-flex align-items-center" role="alert">
+        <div>
+            <i class="bi bi-calendar-check me-2"></i>
+            @if (ViewBag.CodigoPeriodoActual != null)
+            {
+                <strong>Período actual:</strong> @ViewBag.CodigoPeriodoActual
+            }
+            else
+            {
+                <span>No hay un período activo actualmente</span>
+            }
+        </div>
+    </div>
+
+    <!-- Resto de tu contenido -->
+    <div>
+        asadadad <!-- (Este parece ser tu contenido existente) -->
+    </div>
+</div>
+
+<!-- Referencia a Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
