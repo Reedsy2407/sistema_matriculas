@@ -1,3 +1,5 @@
+use matriculas_bd
+
 create or alter procedure usp_listarEspecialidad
 as
 	Select * from tb_especialidad
@@ -447,3 +449,41 @@ BEGIN
         id_carrera = @id_carrera;
 END
 GO
+
+
+create or alter procedure uspListarHorariosPorCurso
+	@id_curso int
+as begin
+SELECT 
+        s.id_seccion,
+        s.cod_seccion,
+        CASE sh.dia_semana
+            WHEN 1 THEN 'Lunes'
+            WHEN 2 THEN 'Martes'
+            WHEN 3 THEN 'Miércoles'
+            WHEN 4 THEN 'Jueves'
+            WHEN 5 THEN 'Viernes'
+            WHEN 6 THEN 'Sábado'
+            ELSE 'Domingo'
+        END AS dia_semana,
+        CONVERT(VARCHAR(5), sh.hora_inicio, 108) AS hora_inicio,
+        CONVERT(VARCHAR(5), sh.hora_fin, 108) AS hora_fin,
+        sh.tipo_horario,
+        a.cod_aula,
+        u.nom_usuario + ' ' + u.ape_usuario AS nombre_docente,
+        s.cupos_disponible,
+        s.cupos_maximos,
+        c.nom_curso
+    FROM 
+        tb_seccion s
+    INNER JOIN 
+        tb_seccion_horario sh ON s.id_seccion = sh.id_seccion
+    INNER JOIN 
+        tb_aula a ON s.id_aula = a.id_aula
+    INNER JOIN 
+        tb_usuario u ON s.id_usuario = u.id_usuario
+    INNER JOIN 
+        tb_curso c ON s.id_curso = c.id_curso
+    WHERE 
+        s.id_curso = 1
+end

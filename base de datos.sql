@@ -196,7 +196,7 @@ create table tb_seccion
 go
 
 
-INSERT INTO tb_seccion (cod_seccion, cupos_disponible, cupos_maximos, horario_seccion, id_usuario, id_aula, id_curso) VALUES
+INSERT INTO tb_seccion (cod_seccion, cupos_disponible, cupos_maximos, id_usuario, id_aula, id_curso) VALUES
 ('A1MA', 25, 30, 3, 1, 1),  -- Docente Carlos Mendoza enseña Programación I
 ('B1TG', 20, 25, 4, 2, 2)   -- Docente Laura García enseña Cálculo I
 GO
@@ -264,37 +264,3 @@ CREATE TABLE tb_seccion_curso (
     FOREIGN KEY (id_seccion) REFERENCES tb_seccion(id_seccion),
     FOREIGN KEY (id_curso) REFERENCES tb_curso(id_curso)
 );
-
-SELECT 
-        s.id_seccion,
-        s.cod_seccion,
-        sh.dia_semana,
-        CASE sh.dia_semana
-            WHEN 1 THEN 'Lunes'
-            WHEN 2 THEN 'Martes'
-            WHEN 3 THEN 'Miércoles'
-            WHEN 4 THEN 'Jueves'
-            WHEN 5 THEN 'Viernes'
-            WHEN 6 THEN 'Sábado'
-            ELSE 'Domingo'
-        END AS nombre_dia,
-        CONVERT(VARCHAR(5), sh.hora_inicio, 108) AS hora_inicio,
-        CONVERT(VARCHAR(5), sh.hora_fin, 108) AS hora_fin,
-        sh.tipo_horario,
-        a.cod_aula,
-        u.nom_usuario + ' ' + u.ape_usuario AS nombre_docente,
-        s.cupos_disponible,
-        s.cupos_maximos,
-        c.nom_curso
-    FROM 
-        tb_seccion s
-    INNER JOIN 
-        tb_seccion_horario sh ON s.id_seccion = sh.id_seccion
-    INNER JOIN 
-        tb_aula a ON s.id_aula = a.id_aula
-    INNER JOIN 
-        tb_usuario u ON s.id_usuario = u.id_usuario
-    INNER JOIN 
-        tb_curso c ON s.id_curso = c.id_curso
-    WHERE 
-        s.id_curso = 2
