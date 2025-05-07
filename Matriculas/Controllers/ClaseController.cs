@@ -18,7 +18,7 @@ namespace Matriculas.Controllers
             httpClient.BaseAddress = direccion;
         }
 
-        public async Task<IActionResult> seleccionCarrera()
+        public async Task<IActionResult> SeleccionCarrera()
         {
             var periodoResponse = await httpClient.GetAsync("Periodo/ObtenerPeriodoActual");
             if (periodoResponse.IsSuccessStatusCode)
@@ -49,15 +49,25 @@ namespace Matriculas.Controllers
             return View();
         }
 
-        public async Task<IActionResult> seleccionarCursos()
+        [HttpPost]
+        public IActionResult procesarCarrera(int idCarrera)
         {
-            if (!Request.Cookies.ContainsKey("id_carrera") || !Request.Cookies.ContainsKey("id_usuario"))
+            if (idCarrera <= 0)
             {
-                TempData["ErrorMessage"] = "Debe seleccionar una carrera primero";
-                return RedirectToAction("seleccionCarrera");
+                TempData["ErrorMessage"] = "Debe seleccionar una carrera válida";
+                return RedirectToAction("SeleccionCarrera");
             }
 
-            var idCarrera = int.Parse(Request.Cookies["id_carrera"]);
+            return RedirectToAction("seleccionarCursos", new { idCarrera });
+        }
+
+        public async Task<IActionResult> seleccionarCursos(int idCarrera)
+        {
+            if (!Request.Cookies.ContainsKey("id_usuario"))
+            {
+                TempData["ErrorMessage"] = "Debe iniciar sesión primero";
+                return RedirectToAction("SeleccionCarrera");
+            }
 
             try
             {
@@ -80,6 +90,7 @@ namespace Matriculas.Controllers
 
                     ViewBag.Cursos = cursos;
                     ViewBag.CarreraSeleccionada = nombreCarrera;
+                    ViewBag.IdCarrera = idCarrera;
                     ViewBag.TotalCreditos = cursos.Sum(c => c.creditos_curso);
                 }
                 else
@@ -95,27 +106,10 @@ namespace Matriculas.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult ProcesarSeleccion(int idCarrera)
+        [HttpGet]
+        public async Task<IActionResult> seleccionarHorarios(int idCurso)
         {
-            if (idCarrera <= 0)
-            {
-                TempData["ErrorMessage"] = "Debe seleccionar una carrera válida";
-                return RedirectToAction("seleccionCarrera");
-            }
-
-            var cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1),
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict
-            };
-
-            Response.Cookies.Append("id_carrera", idCarrera.ToString(), cookieOptions);
-
-            return RedirectToAction("seleccionarCursos");
+            return View();
         }
-
     }
 }

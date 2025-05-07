@@ -605,23 +605,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Thazo\\.nuget\\packages\\": {},
+    "C:\\Users\\Carlos - Sistemas\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Carlos - Sistemas\\Desktop\\Proyectos\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
       "projectName": "MatriculasAPI",
-      "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
-      "packagesPath": "C:\\Users\\Thazo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasAPI\\obj\\",
+      "projectPath": "C:\\Users\\Carlos - Sistemas\\Desktop\\Proyectos\\servicios-web\\MatriculasAPI\\MatriculasAPI.csproj",
+      "packagesPath": "C:\\Users\\Carlos - Sistemas\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Carlos - Sistemas\\Desktop\\Proyectos\\servicios-web\\MatriculasAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Thazo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Carlos - Sistemas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -636,8 +636,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
-              "projectPath": "C:\\Users\\Thazo\\Desktop\\Proyectos 2025\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
+            "C:\\Users\\Carlos - Sistemas\\Desktop\\Proyectos\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
+              "projectPath": "C:\\Users\\Carlos - Sistemas\\Desktop\\Proyectos\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
             }
           }
         }
@@ -686,7 +686,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

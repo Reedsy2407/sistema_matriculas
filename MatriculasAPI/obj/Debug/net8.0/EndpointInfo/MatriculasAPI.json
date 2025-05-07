@@ -520,6 +520,55 @@
         }
       }
     },
+    "/Clase/Horario/ListarHorarioPorCurso/{idCurso}": {
+      "get": {
+        "tags": [
+          "Clase"
+        ],
+        "parameters": [
+          {
+            "name": "idCurso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioPorCurso"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioPorCurso"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioPorCurso"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Curso/ListadoCursos": {
       "get": {
         "tags": [
@@ -1258,6 +1307,56 @@
             "format": "int32"
           },
           "nom_especialidad": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HorarioPorCurso": {
+        "type": "object",
+        "properties": {
+          "id_seccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cod_seccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "dia_semana": {
+            "type": "string",
+            "nullable": true
+          },
+          "hora_inicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "hora_fin": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo_horario": {
+            "type": "string",
+            "nullable": true
+          },
+          "cod_aula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombre_docente": {
+            "type": "string",
+            "nullable": true
+          },
+          "cupos_disponible": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cupos_maximos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_curso": {
             "type": "string",
             "nullable": true
           }

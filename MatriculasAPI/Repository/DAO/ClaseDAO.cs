@@ -128,5 +128,43 @@ namespace MatriculasAPI.Repository.DAO
             }
             return null;
         }
+
+        public IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso)
+        {
+            var horarios = new List<HorarioPorCurso>();
+
+            using (var con = new SqlConnection(cadena))
+            {
+                using (var cmd = new SqlCommand("uspListarHorariosPorCurso", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_curso", id_curso);
+
+                    con.Open();
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            horarios.Add(new HorarioPorCurso
+                            {
+                                id_seccion = Convert.ToInt32(dr["id_seccion"]),
+                                cod_seccion = dr["cod_seccion"].ToString(),
+                                dia_semana = dr["dia_semana"].ToString(),
+                                hora_inicio = dr["hora_inicio"].ToString(),
+                                hora_fin = dr["hora_fin"].ToString(),
+                                tipo_horario = dr["tipo_horario"].ToString(),
+                                cod_aula = dr["cod_aula"].ToString(),
+                                nombre_docente = dr["nombre_docente"].ToString(),
+                                cupos_disponible = Convert.ToInt32(dr["cupos_disponible"]),
+                                cupos_maximos = Convert.ToInt32(dr["cupos_maximos"]),
+                                nom_curso = dr["nom_curso"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+
+            return horarios;
+        }
     }
 }
