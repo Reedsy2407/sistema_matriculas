@@ -353,6 +353,46 @@
         }
       }
     },
+    "/Carrera/BuscarCarrera/{id}": {
+      "get": {
+        "tags": [
+          "Carrera"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Carrera"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Carrera"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Carrera"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Clase/Periodo/ObtenerPeriodoActual": {
       "get": {
         "tags": [
@@ -375,6 +415,104 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Periodo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Clase/Carrera/ListarPorUsuario/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Clase"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Clase/Curso/ListarPorCarrera/{idCarrera}": {
+      "get": {
+        "tags": [
+          "Clase"
+        ],
+        "parameters": [
+          {
+            "name": "idCarrera",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
                 }
               }
             }
@@ -1005,6 +1143,20 @@
         },
         "additionalProperties": false
       },
+      "Carrera": {
+        "type": "object",
+        "properties": {
+          "id_carrera": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_carrera": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Curso": {
         "type": "object",
         "properties": {
@@ -1026,6 +1178,16 @@
           },
           "nom_carrera": {
             "type": "string",
+            "nullable": true
+          },
+          "fcha_inicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fcha_fin": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },

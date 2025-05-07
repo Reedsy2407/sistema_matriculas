@@ -196,6 +196,84 @@
     ]
   },
   {
+    "ContainingType": "MatriculasAPI.Controllers.CarreraController",
+    "Method": "BuscarCarrera",
+    "RelativePath": "Carrera/BuscarCarrera/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MatriculasMODELS.Carrera",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "GetCarrerasPorUsuario",
+    "RelativePath": "Clase/Carrera/ListarPorUsuario/{idUsuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Carrera, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "GetCursosPorCarrera",
+    "RelativePath": "Clase/Curso/ListarPorCarrera/{idCarrera}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCarrera",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MatriculasAPI.Controllers.ClaseController",
     "Method": "BuscarPeriodoActual",
     "RelativePath": "Clase/Periodo/ObtenerPeriodoActual",

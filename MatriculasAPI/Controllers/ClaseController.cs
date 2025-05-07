@@ -19,5 +19,24 @@ namespace MatriculasAPI.Controllers
 
             return Ok(periodo);
         }
+
+        [HttpGet("Carrera/ListarPorUsuario/{idUsuario}")]
+        public async Task<ActionResult<List<Carrera>>> GetCarrerasPorUsuario(int idUsuario)
+        {
+            var carreras = await Task.Run(() => new ClaseDAO().listarCarrerasPorUsuario(idUsuario));
+            return Ok(carreras);
+        }
+
+        [HttpGet("Curso/ListarPorCarrera/{idCarrera}")]
+        public async Task<ActionResult<List<Curso>>> GetCursosPorCarrera(int idCarrera)
+        {
+            var cursos = await Task.Run(() => new ClaseDAO().listarCursosPorCarrera(idCarrera));
+
+            if (cursos == null || !cursos.Any())
+                return NotFound("No se encontraron cursos para la carrera especificada");
+
+            return Ok(cursos);
+        }
+
     }
 }
