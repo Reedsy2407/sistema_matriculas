@@ -41,7 +41,7 @@
                                         @Convert.ToDateTime(curso.fcha_fin).ToString("dd/MM/yyyy")
                                     </td>
                                     <td>
-                                        <form asp-action="seleccionarHorarios" method="get" class="d-inline">
+                                        <form asp-action="procesarCurso" method="post" class="d-inline">
                                             <input type="hidden" name="idCurso" value="@curso.id_curso" />
                                             <input type="hidden" name="idCarrera" value="@ViewBag.IdCarrera" />
                                             <button type="submit" class="btn btn-primary btn-sm">

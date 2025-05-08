@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MatriculasAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42c5b7a8ad4dfb87f857bc06c046319940906cb0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+215658eb92375bf36895540c76d718558b35b77a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MatriculasAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MatriculasAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

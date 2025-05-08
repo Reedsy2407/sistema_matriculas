@@ -1,5 +1,6 @@
 ﻿using MatriculasAPI.Repository.DAO;
 using MatriculasMODELS;
+using MatriculasMODELS.Matricula;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,12 +42,23 @@ namespace MatriculasAPI.Controllers
         [HttpGet("Horario/ListarHorarioPorCurso/{idCurso}")]
         public async Task<ActionResult<List<HorarioPorCurso>>> GetHorariosPorCurso(int idCurso)
         {
-            var cursos = await Task.Run(() => new ClaseDAO().ListarHorariosPorCurso(idCurso));
+            var horarios = await Task.Run(() => new ClaseDAO().ListarHorariosPorCurso(idCurso));
 
-            if (cursos == null || !cursos.Any())
+            if (horarios == null || !horarios.Any())
                 return NotFound("No se encontraron horarios para el curso seleccionado");
 
-            return Ok(cursos);
+            return Ok(horarios); 
+        }
+
+        [HttpPost("Matricula/MatricularseHorario")]
+        public IActionResult InsertarMatricula([FromBody] MatriculaRequest request)
+        {
+            var response = new ClaseDAO().InsertarMatriculaAlumno(request);
+
+            if (response.Resultado)
+                return Ok(response);
+            else
+                return BadRequest(response);
         }
 
     }
