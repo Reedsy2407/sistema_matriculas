@@ -569,6 +569,37 @@
         }
       }
     },
+    "/Clase/Matricula/MatricularseHorario": {
+      "post": {
+        "tags": [
+          "Clase"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatriculaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatriculaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatriculaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/Curso/ListadoCursos": {
       "get": {
         "tags": [
@@ -1392,6 +1423,32 @@
             "format": "int32"
           },
           "id_rol": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MatriculaRequest": {
+        "type": "object",
+        "properties": {
+          "idAlumno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCarrera": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCurso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idSeccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idPeriodo": {
             "type": "integer",
             "format": "int32"
           }

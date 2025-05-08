@@ -301,6 +301,22 @@
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "InsertarMatricula",
+    "RelativePath": "Clase/Matricula/MatricularseHorario",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MatriculasMODELS.Matricula.MatriculaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
     "Method": "BuscarPeriodoActual",
     "RelativePath": "Clase/Periodo/ObtenerPeriodoActual",
     "HttpMethod": "GET",

@@ -1,4 +1,5 @@
 ﻿using MatriculasMODELS;
+using MatriculasMODELS.Matricula;
 
 namespace MatriculasAPI.Repository.Interfaces
 {
@@ -9,6 +10,9 @@ namespace MatriculasAPI.Repository.Interfaces
         IEnumerable<Curso> listarCursosPorCarrera(int idCarrera);
         Carrera buscarCarreraPorId(int idCarrera);
         IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso);
+
+        MatriculaResponse InsertarMatriculaAlumno(MatriculaRequest request);
+
 
     }
 }

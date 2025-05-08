@@ -2,6 +2,7 @@
 using MatriculasMODELS;
 using System.Data.SqlClient;
 using System.Data;
+using MatriculasMODELS.Matricula;
 
 namespace MatriculasAPI.Repository.DAO
 {
@@ -166,5 +167,46 @@ namespace MatriculasAPI.Repository.DAO
 
             return horarios;
         }
+
+        public MatriculaResponse InsertarMatriculaAlumno(MatriculaRequest request)
+        {
+            var response = new MatriculaResponse();
+
+            using (var con = new SqlConnection(cadena))
+            {
+                using (var cmd = new SqlCommand("uspInsertarMatriculaAlumno", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@id_alumno", request.IdAlumno);
+                    cmd.Parameters.AddWithValue("@id_carrera", request.IdCarrera);
+                    cmd.Parameters.AddWithValue("@id_curso", request.IdCurso);
+                    cmd.Parameters.AddWithValue("@id_seccion", request.IdSeccion);
+                    cmd.Parameters.AddWithValue("@id_periodo", request.IdPeriodo);
+
+                    var resultadoParam = new SqlParameter("@resultado", SqlDbType.Bit)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    var mensajeParam = new SqlParameter("@mensaje", SqlDbType.VarChar, 200)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    cmd.Parameters.Add(resultadoParam);
+                    cmd.Parameters.Add(mensajeParam);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                    response.Resultado = Convert.ToBoolean(resultadoParam.Value);
+                    response.Mensaje = mensajeParam.Value.ToString();
+                }
+            }
+
+            return response;
+        }
+
     }
 }

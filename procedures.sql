@@ -374,7 +374,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspListarCarrerasPorUsuario
+CREATE OR ALTER PROCEDURE uspListarCarrerasPorUsuario
     @id_usuario INT
 AS
 BEGIN
@@ -386,7 +386,7 @@ BEGIN
     INNER JOIN 
         tb_carrera c ON uc.id_carrera = c.id_carrera
     WHERE 
-        uc.id_usuario = 6
+        uc.id_usuario = @id_usuario
     ORDER BY 
         c.nom_carrera
 END
@@ -485,5 +485,264 @@ SELECT
     INNER JOIN 
         tb_curso c ON s.id_curso = c.id_curso
     WHERE 
-        s.id_curso = 1
+        s.id_curso = @id_curso
 end
+
+
+CREATE PROCEDURE uspInsertarMatriculaAlumno
+    @id_alumno INT,
+    @id_carrera INT,
+    @id_curso INT,
+    @id_seccion INT,
+    @id_periodo INT,
+    @resultado BIT OUTPUT,
+    @mensaje VARCHAR(200) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @existe_alumno BIT = 0;
+    DECLARE @existe_carrera BIT = 0;
+    DECLARE @existe_curso BIT = 0;
+    DECLARE @existe_seccion BIT = 0;
+    DECLARE @existe_periodo BIT = 0;
+    DECLARE @alumno_en_carrera BIT = 0;
+    DECLARE @cupos_disponibles BIT = 0;
+    DECLARE @conflicto_horario BIT = 0;
+    DECLARE @id_matricula_existente INT = NULL;
+    
+    -- Verificar si el alumno existe y es realmente un alumno
+    SELECT @existe_alumno = 1 
+    FROM tb_usuario 
+    WHERE id_usuario = @id_alumno AND id_rol = 3 AND estado = 1;
+    
+    -- Verificar si la carrera existe
+    SELECT @existe_carrera = 1 
+    FROM tb_carrera 
+    WHERE id_carrera = @id_carrera;
+    
+    -- Verificar si el curso existe y pertenece a la carrera
+    SELECT @existe_curso = 1 
+    FROM tb_curso 
+    WHERE id_curso = @id_curso AND id_carrera = @id_carrera;
+    
+    -- Verificar si la sección existe y pertenece al curso
+    SELECT @existe_seccion = 1 
+    FROM tb_seccion 
+    WHERE id_seccion = @id_seccion AND id_curso = @id_curso;
+    
+    -- Verificar si el periodo existe
+    SELECT @existe_periodo = 1 
+    FROM tb_periodo 
+    WHERE id_periodo = @id_periodo;
+    
+    -- Verificar si el alumno pertenece a la carrera
+    SELECT @alumno_en_carrera = 1 
+    FROM tb_usuario_carrera 
+    WHERE id_usuario = @id_alumno AND id_carrera = @id_carrera;
+    
+    -- Verificar si hay cupos disponibles en la sección
+    SELECT @cupos_disponibles = 1 
+    FROM tb_seccion 
+    WHERE id_seccion = @id_seccion AND cupos_disponible > 0;
+    
+    -- Verificar si el alumno ya está matriculado en esta sección en el mismo periodo
+    SELECT @id_matricula_existente = m.id_matricula
+    FROM tb_matricula m
+    INNER JOIN tb_detalle_matricula dm ON m.id_matricula = dm.id_matricula
+    WHERE m.id_usuario = @id_alumno 
+    AND m.id_periodo = @id_periodo
+    AND dm.id_seccion = @id_seccion;
+    
+    -- Verificar conflictos de horario (versión corregida)
+    IF EXISTS (
+        SELECT sh1.dia_semana, sh1.hora_inicio, sh1.hora_fin
+        FROM tb_seccion_horario sh1
+        WHERE sh1.id_seccion = @id_seccion
+        
+        INTERSECT
+        
+        SELECT sh2.dia_semana, sh2.hora_inicio, sh2.hora_fin
+        FROM tb_seccion_horario sh2
+        INNER JOIN tb_detalle_matricula dm ON sh2.id_seccion = dm.id_seccion
+        INNER JOIN tb_matricula m ON dm.id_matricula = m.id_matricula
+        WHERE m.id_usuario = @id_alumno
+        AND m.id_periodo = @id_periodo
+    )
+    BEGIN
+        SET @conflicto_horario = 1;
+    END
+    
+    -- Validar todas las condiciones
+    IF @existe_alumno = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'El alumno no existe o no tiene permisos para matricularse.';
+        RETURN;
+    END
+    
+    IF @existe_carrera = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'La carrera especificada no existe.';
+        RETURN;
+    END
+    
+    IF @existe_curso = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'El curso especificado no existe o no pertenece a la carrera.';
+        RETURN;
+    END
+    
+    IF @existe_seccion = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'La sección especificada no existe o no pertenece al curso.';
+        RETURN;
+    END
+    
+    IF @existe_periodo = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'El período académico especificado no existe.';
+        RETURN;
+    END
+    
+    IF @alumno_en_carrera = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'El alumno no pertenece a la carrera especificada.';
+        RETURN;
+    END
+    
+    IF @cupos_disponibles = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'No hay cupos disponibles en esta sección.';
+        RETURN;
+    END
+    
+    IF @id_matricula_existente IS NOT NULL
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'El alumno ya está matriculado en esta sección para el período actual.';
+        RETURN;
+    END
+    
+    IF @conflicto_horario = 1
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje = 'Existe un conflicto de horario con otra sección matriculada.';
+        RETURN;
+    END
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Verificar si el alumno ya tiene una matrícula para este período
+        DECLARE @id_matricula INT;
+        
+        SELECT @id_matricula = id_matricula 
+        FROM tb_matricula 
+        WHERE id_usuario = @id_alumno AND id_periodo = @id_periodo;
+        
+        -- Si no existe, crear una nueva matrícula
+        IF @id_matricula IS NULL
+        BEGIN
+            INSERT INTO tb_matricula (id_usuario, id_periodo)
+            VALUES (@id_alumno, @id_periodo);
+            
+            SET @id_matricula = SCOPE_IDENTITY();
+        END
+        
+        -- Insertar el detalle de matrícula
+        INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso)
+        VALUES (@id_matricula, @id_seccion, @id_curso);
+        
+        -- Disminuir los cupos disponibles en la sección
+        UPDATE tb_seccion
+        SET cupos_disponible = cupos_disponible - 1
+        WHERE id_seccion = @id_seccion;
+        
+        COMMIT TRANSACTION;
+        
+        SET @resultado = 1;
+        SET @mensaje = 'Matrícula registrada exitosamente.';
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+            
+        SET @resultado = 0;
+        SET @mensaje = 'Error al registrar la matrícula: ' + ERROR_MESSAGE();
+    END CATCH
+END;
+GO
+
+/*
+SELECT * FROM tb_usuario WHERE id_rol = 3; -- Alumnos
+SELECT * FROM tb_carrera;
+SELECT * FROM tb_curso;
+SELECT * FROM tb_seccion;
+SELECT * FROM tb_periodo;
+
+
+SELECT *
+FROM tb_usuario 
+WHERE id_usuario = 8 AND id_rol = 3 AND estado = 1;
+
+
+-- Matricular al alumno Juan Pérez (id 6) en Programación I (id_curso 1), sección A1MA (id_seccion 1)
+-- para el período 2025-1 (id_periodo 1) en la carrera 1
+-- Ejecución del procedimiento almacenado
+DECLARE @resultado BIT;
+DECLARE @mensaje VARCHAR(200);
+EXEC uspInsertarMatriculaAlumno 
+    @id_alumno = 13, 
+    @id_carrera = 2, 
+    @id_curso = 1, 
+    @id_seccion = 1,
+    @id_periodo = 1,
+    @resultado = @resultado OUTPUT,
+    @mensaje = @mensaje OUTPUT;
+
+SELECT @resultado AS Resultado, @mensaje AS Mensaje;
+GO
+
+-- Verificación de la matrícula creada
+SELECT * FROM tb_matricula WHERE id_usuario = 13;
+GO
+
+-- Verificación del detalle de matrícula
+SELECT * FROM tb_detalle_matricula WHERE id_matricula = 
+    (SELECT id_matricula FROM tb_matricula WHERE id_usuario = 13);
+GO
+
+-- Verificación de cupos disponibles en la sección
+SELECT cupos_disponible FROM tb_seccion WHERE id_seccion = 1;
+GO
+
+DECLARE @resultado BIT;
+DECLARE @mensaje VARCHAR(200);
+
+EXEC uspInsertarMatriculaAlumno
+    @id_alumno = 10,    -- Ana Gómez
+    @id_carrera = 5,   -- Ingeniería de Sistemas
+    @id_curso = 10,     -- Cálculo I
+    @id_seccion = 12,   -- Teoría Cálculo I
+    @id_periodo = 1,   -- 2025-1
+    @resultado = @resultado OUTPUT,
+    @mensaje = @mensaje OUTPUT;
+
+SELECT @resultado AS Resultado, @mensaje AS Mensaje;
+-- Consulta de horarios de sección
+SELECT * FROM tb_seccion_horario;
+select * from tb_matricula
+select * From tb_Detalle_matricula
+
+
+
+
+SELECT * FROM tb_usuario_carrera WHERE id_usuario = 8
+GO*/
