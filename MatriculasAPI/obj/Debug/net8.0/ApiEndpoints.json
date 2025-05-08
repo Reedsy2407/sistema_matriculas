@@ -197,15 +197,21 @@
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.CarreraController",
-    "Method": "ListadoCarreras",
-    "RelativePath": "Carrera/ListadoCarreras",
+    "Method": "BuscarCarrera",
+    "RelativePath": "Carrera/BuscarCarrera/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Carrera, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "MatriculasMODELS.Carrera",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -216,9 +222,9 @@
     ]
   },
   {
-    "ContainingType": "MatriculasAPI.Controllers.CarreraController",
-    "Method": "ListadoCarrerasPorUsuario",
-    "RelativePath": "Carrera/ListadoCarrerasPorUsuario/{idUsuario}",
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "GetCarrerasPorUsuario",
+    "RelativePath": "Clase/Carrera/ListarPorUsuario/{idUsuario}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -232,6 +238,58 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Carrera, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "GetCursosPorCarrera",
+    "RelativePath": "Clase/Curso/ListarPorCarrera/{idCarrera}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCarrera",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "GetHorariosPorCurso",
+    "RelativePath": "Clase/Horario/ListarHorarioPorCurso/{idCurso}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCurso",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.HorarioPorCurso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

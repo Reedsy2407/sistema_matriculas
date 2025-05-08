@@ -353,10 +353,21 @@
         }
       }
     },
-    "/Carrera/ListadoCarreras": {
+    "/Carrera/BuscarCarrera/{id}": {
       "get": {
         "tags": [
           "Carrera"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -364,26 +375,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Carrera"
-                  }
+                  "$ref": "#/components/schemas/Carrera"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Carrera"
-                  }
+                  "$ref": "#/components/schemas/Carrera"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Carrera"
-                  }
+                  "$ref": "#/components/schemas/Carrera"
                 }
               }
             }
@@ -391,10 +393,39 @@
         }
       }
     },
-    "/Carrera/ListadoCarrerasPorUsuario/{idUsuario}": {
+    "/Clase/Periodo/ObtenerPeriodoActual": {
       "get": {
         "tags": [
-          "Carrera"
+          "Clase"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Periodo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Periodo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Periodo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Clase/Carrera/ListarPorUsuario/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Clase"
         ],
         "parameters": [
           {
@@ -440,10 +471,21 @@
         }
       }
     },
-    "/Clase/Periodo/ObtenerPeriodoActual": {
+    "/Clase/Curso/ListarPorCarrera/{idCarrera}": {
       "get": {
         "tags": [
           "Clase"
+        ],
+        "parameters": [
+          {
+            "name": "idCarrera",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -451,17 +493,75 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Periodo"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Periodo"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Periodo"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Clase/Horario/ListarHorarioPorCurso/{idCurso}": {
+      "get": {
+        "tags": [
+          "Clase"
+        ],
+        "parameters": [
+          {
+            "name": "idCurso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioPorCurso"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioPorCurso"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioPorCurso"
+                  }
                 }
               }
             }
@@ -1004,7 +1104,6 @@
     "schemas": {
       "Alumno": {
         "required": [
-          "carreras",
           "contrasena",
           "correo",
           "estado",
@@ -1031,10 +1130,6 @@
           },
           "estado": {
             "type": "boolean"
-          },
-          "carreras": {
-            "minLength": 1,
-            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1072,14 +1167,6 @@
           },
           "estado": {
             "type": "boolean"
-          },
-          "id_carreras": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1140,6 +1227,16 @@
           },
           "nom_carrera": {
             "type": "string",
+            "nullable": true
+          },
+          "fcha_inicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fcha_fin": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
@@ -1210,6 +1307,56 @@
             "format": "int32"
           },
           "nom_especialidad": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HorarioPorCurso": {
+        "type": "object",
+        "properties": {
+          "id_seccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cod_seccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "dia_semana": {
+            "type": "string",
+            "nullable": true
+          },
+          "hora_inicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "hora_fin": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo_horario": {
+            "type": "string",
+            "nullable": true
+          },
+          "cod_aula": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombre_docente": {
+            "type": "string",
+            "nullable": true
+          },
+          "cupos_disponible": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cupos_maximos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom_curso": {
             "type": "string",
             "nullable": true
           }

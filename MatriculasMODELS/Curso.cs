@@ -9,5 +9,7 @@ namespace MatriculasMODELS
         public int creditos_curso { get; set; }
         public int id_carrera { get; set; }
         public string? nom_carrera { get; set; }
+        public DateTime? fcha_inicio { get; set; }
+        public DateTime? fcha_fin { get; set; }
     }
 }
