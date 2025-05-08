@@ -72,7 +72,7 @@ GO
 
 --LOGIN
 
-CREATE PROCEDURE sp_LoginUsuario 
+CREATE OR ALTER PROCEDURE sp_LoginUsuario 
     @correo VARCHAR(100),
     @contrasena VARCHAR(30),
     @login_exitoso BIT OUTPUT,
@@ -123,7 +123,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE sp_ObtenerMenusPorRol
+CREATE OR ALTER PROCEDURE sp_ObtenerMenusPorRol
     @id_rol INT
 AS
 BEGIN
@@ -359,7 +359,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE usp_BuscarPeriodoActual
+CREATE OR ALTER PROCEDURE usp_BuscarPeriodoActual
 AS
 BEGIN
     SELECT 
@@ -374,7 +374,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspListarCarrerasPorUsuario
+CREATE OR ALTER PROCEDURE uspListarCarrerasPorUsuario
     @id_usuario INT
 AS
 BEGIN
@@ -392,7 +392,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspListarCarrerasPorUsuario
+CREATE OR ALTER PROCEDURE uspListarCarrerasPorUsuario
     @id_usuario INT
 AS
 BEGIN
@@ -410,7 +410,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspListarCursosPorCarrera
+CREATE OR ALTER PROCEDURE uspListarCursosPorCarrera
     @id_carrera INT
 AS
 BEGIN
@@ -436,7 +436,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspBuscarCarreraPorId
+CREATE OR ALTER PROCEDURE uspBuscarCarreraPorId
     @id_carrera INT
 AS
 BEGIN
@@ -487,3 +487,54 @@ SELECT
     WHERE 
         s.id_curso = 1
 end
+
+
+----------------------------------------------LISTADO MATRICULA
+INSERT INTO tb_matricula (id_usuario, id_periodo)
+VALUES (7, 1); 
+
+INSERT INTO tb_seccion_curso (id_seccion, id_curso)
+VALUES (1, 1); 
+
+INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso)
+VALUES (1001, 1, 1);
+
+CREATE OR ALTER PROCEDURE usp_listarMatricula
+    @Id_matricula INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        M.id_matricula,
+        U.id_usuario,
+        U.nom_usuario + ' ' + U.ape_usuario AS nombre_completo,
+        P.codigo_periodo,
+        C.id_carrera,
+        C.nom_carrera,
+        CU.id_curso,
+        CU.nom_curso,
+        CU.creditos_curso,
+        S.id_seccion,
+        S.cod_seccion,
+        A.id_aula,
+        A.cod_aula
+    FROM tb_matricula M
+    INNER JOIN tb_usuario            U   ON M.id_usuario = U.id_usuario
+    INNER JOIN tb_periodo            P   ON M.id_periodo = P.id_periodo
+    INNER JOIN tb_detalle_matricula  DM  ON M.id_matricula = DM.id_matricula
+    INNER JOIN tb_seccion            S   ON DM.id_seccion = S.id_seccion
+    INNER JOIN tb_aula               A   ON S.id_aula = A.id_aula
+    INNER JOIN tb_curso              CU  ON DM.id_curso = CU.id_curso
+    INNER JOIN tb_carrera            C   ON CU.id_carrera = C.id_carrera
+    WHERE M.id_matricula = @Id_matricula
+    ORDER BY CU.nom_curso;
+END
+GO
+
+EXEC usp_listarMatricula 1001
+
+SELECT * FROM tb_usuario
+SELECT * FROM tb_seccion
+SELECT * FROM tb_seccion_curso
+SELECT * FROM tb_detalle_matricula

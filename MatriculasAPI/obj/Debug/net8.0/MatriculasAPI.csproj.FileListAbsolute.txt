@@ -215,3 +215,43 @@ C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasAPI\obj\Deb
 C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.pdb
 C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.genruntimeconfig.cache
 C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasAPI\obj\Debug\net8.0\ref\MatriculasAPI.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\appsettings.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasAPI.exe
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasAPI.deps.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasAPI.runtimeconfig.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasAPI.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasAPI.pdb
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\System.Data.SqlClient.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\bin\Debug\net8.0\MatriculasMODELS.pdb
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.csproj.AssemblyReference.cache
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.AssemblyInfoInputs.cache
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.AssemblyInfo.cs
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.csproj.CoreCompileInputs.cache
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets\msbuild.MatriculasAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets\msbuild.build.MatriculasAPI.props
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.MatriculasAPI.props
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.MatriculasAPI.props
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\scopedcss\bundle\MatriculasAPI.styles.css
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\Matricul.62345D39.Up2Date
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\refint\MatriculasAPI.dll
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.pdb
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.genruntimeconfig.cache
+C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\ref\MatriculasAPI.dll
