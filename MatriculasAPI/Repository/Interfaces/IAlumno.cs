@@ -8,5 +8,8 @@ namespace MatriculasAPI.Repository.Interfaces
         AlumnoO buscarAlumno(int id);
         bool registrarAlumno(AlumnoO objA);
         bool actualizarAlumno(AlumnoO objA);
+
+        string ObtenerHorariosyCursosMatriculados(int idUsuario, int? idPeriodo = null);
+
     }
 }

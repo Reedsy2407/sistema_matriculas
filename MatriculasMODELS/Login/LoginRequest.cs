@@ -10,9 +10,9 @@ namespace MatriculasMODELS.Login
     public class LoginRequest
     {
         [DisplayName("Correo electrónico")]
-        public string correo { get; set; }
+        public string? correo { get; set; }
 
         [DisplayName("Contraseña")]
-        public string contrasena { get; set; }
+        public string? contrasena { get; set; }
     }
 }

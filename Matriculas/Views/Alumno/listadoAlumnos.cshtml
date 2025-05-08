@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "listadoAlumnos";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var horariosDict = ViewBag.Horarios as Dictionary<int, string>;
 }
 
 <h1 class="mt-4 mb-4">Listado de Alumnos</h1>
@@ -38,6 +39,8 @@
                                 @Html.DisplayNameFor(model => model.estado)
                             </th>
                             <th>Carreras</th>
+                            <th>Horarios</th>
+
                             <th></th>
                         </tr>
                     </thead>
@@ -68,6 +71,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.carreras)
+                            </td>
+                            <td>
+                                @Html.Raw(((Dictionary<int, string>)ViewBag.Horarios)[item.id_usuario])
                             </td>
                             <td>
                                 @Html.ActionLink("Editar", "editarAlumno", new { id = item.id_usuario }, new { @class = "me-2" })

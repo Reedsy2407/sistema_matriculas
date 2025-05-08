@@ -2,6 +2,7 @@
 using MatriculasMODELS;
 using System.Data.SqlClient;
 using System.Data;
+using System.Text;
 
 namespace MatriculasAPI.Repository.DAO
 {
@@ -184,5 +185,37 @@ namespace MatriculasAPI.Repository.DAO
             return exito;
         }
 
+        public string ObtenerHorariosyCursosMatriculados(int idUsuario, int?idPeriodo = null)
+        {
+            var sb = new StringBuilder();
+            using (var cn = new SqlConnection(cadena))
+            using (var cmd = new SqlCommand("usp_listarCursosYHorariosMatriculados", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id_usuario", idUsuario);
+                cmd.Parameters.AddWithValue("@id_periodo", idPeriodo.HasValue ? (object)idPeriodo.Value : DBNull.Value);
+
+                cn.Open();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    if (!dr.HasRows)
+                    {
+                        return "<span class=\"text-muted\">Sin matrícula</span>";
+                    }
+
+                    sb.Append("<ul class=\"list-unstyled mb-0\">");
+                    while (dr.Read())
+                    {
+                        var curso = dr.GetString(0);
+                        var dia = dr.GetString(1);
+                        var hi = dr.GetString(2);
+                        var hf = dr.GetString(3);
+                        sb.AppendFormat("<li><strong>{0}</strong> — {1} ({2}–{3})</li>", curso, dia, hi, hf);
+                    }
+                    sb.Append("</ul>");
+                }
+            }
+            return sb.ToString();
+        }
     }
 }

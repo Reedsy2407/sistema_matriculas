@@ -51,7 +51,21 @@ namespace Matriculas.Controllers
 
         public IActionResult listadoAlumnos()
         {
-            return View(aAlumnos());
+            var alumnos = aAlumnos();
+
+            var dict = new Dictionary<int, string>();
+            foreach (var a in alumnos)
+            {
+                var resp = httpClient
+                    .GetAsync($"Alumno/HorariosMatriculados/{a.id_usuario}?idPeriodo=1")
+                    .Result;
+
+                dict[a.id_usuario] = resp.IsSuccessStatusCode
+                    ? resp.Content.ReadAsStringAsync().Result
+                    : "<span class=\"text-muted\">Error al cargar horarios</span>";
+            }
+            ViewBag.Horarios = dict;
+            return View(alumnos);
         }
 
         [HttpGet]

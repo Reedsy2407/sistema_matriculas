@@ -13,12 +13,12 @@ namespace MatriculasMODELS
         public int IdMatricula { get; set; }
         public int IdUsuario { get; set; }
         [DisplayName("USUARIO")]
-        public string NombreCompleto { get; set; }
+        public string? NombreCompleto { get; set; }
         [DisplayName("PERIODO")]
-        public string CodigoPeriodo { get; set; }
+        public string? CodigoPeriodo { get; set; }
         public int IdCarrera { get; set; }
         [DisplayName("CARRERA")]
-        public string NomCarrera { get; set; }
+        public string? NomCarrera { get; set; }
         public int IdCurso { get; set; }
         [DisplayName("CURSO")]
         public string NomCurso { get; set; }
@@ -26,9 +26,9 @@ namespace MatriculasMODELS
         public int CreditosCurso { get; set; }
         public int IdSeccion { get; set; }
         [DisplayName("SECCION")]
-        public string CodSeccion { get; set; }
+        public string? CodSeccion { get; set; }
         public int IdAula { get; set; }
         [DisplayName("CODIGO AULA")]
-        public string CodAula { get; set; }
+        public string? CodAula { get; set; }
     }
 }

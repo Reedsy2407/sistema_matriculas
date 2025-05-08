@@ -70,7 +70,7 @@ GO
 
 --LOGIN
 
-CREATE OR ALTER PROCEDURE sp_LoginUsuario 
+CREATE PROCEDURE sp_LoginUsuario 
     @correo VARCHAR(100),
     @contrasena VARCHAR(30),
     @login_exitoso BIT OUTPUT,
@@ -121,7 +121,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE sp_ObtenerMenusPorRol
+CREATE PROCEDURE sp_ObtenerMenusPorRol
     @id_rol INT
 AS
 BEGIN
@@ -142,8 +142,6 @@ BEGIN
         m.orden
 END
 GO
-
-
 
 
 --DOCENTES
@@ -326,13 +324,16 @@ CREATE OR ALTER PROCEDURE usp_registrarAlumno
     @ape_usuario  VARCHAR(50),
     @correo       VARCHAR(100),
     @contrasena   VARCHAR(30),
-    @estado       BIT
+    @estado       BIT,
+	@new_id_usuario INT OUTPUT
+
 AS
 BEGIN
     INSERT INTO tb_usuario
         (nom_usuario, ape_usuario, correo, contrasena, cod_especialidad, id_rol, estado)
     VALUES
         (@nom_usuario, @ape_usuario, @correo, @contrasena, NULL, 3, @estado);
+	SET @new_id_usuario = SCOPE_IDENTITY();
 END
 GO
 
@@ -419,7 +420,7 @@ END
 GO
 
 
-CREATE OR ALTER OR ALTER PROCEDURE uspListarCursosPorCarrera
+CREATE OR ALTER PROCEDURE uspListarCursosPorCarrera
     @id_carrera INT
 AS
 BEGIN
@@ -496,7 +497,55 @@ SELECT
     WHERE 
         s.id_curso = 1
 end
+GO
 
+select * from tb_matricula
+INSERT INTO tb_matricula (id_usuario, id_periodo)
+VALUES (6, 1);
+
+
+INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso)
+VALUES 
+  (1001, 1, 1),  -- Programación I
+  (1001, 2, 2);  -- Cálculo I
+  GO
+
+CREATE OR ALTER PROCEDURE usp_listarCursosYHorariosMatriculados
+    @id_usuario INT,
+    @id_periodo INT = NULL
+AS
+BEGIN
+    SELECT
+        C.nom_curso,
+        CASE SH.dia_semana
+            WHEN 1 THEN 'Lunes'    WHEN 2 THEN 'Martes'
+            WHEN 3 THEN 'Miércoles' WHEN 4 THEN 'Jueves'
+            WHEN 5 THEN 'Viernes'   WHEN 6 THEN 'Sábado'
+            ELSE 'Domingo'
+        END AS dia_semana,
+        CONVERT(VARCHAR(5), SH.hora_inicio, 108) AS hora_inicio,
+        CONVERT(VARCHAR(5), SH.hora_fin,    108) AS hora_fin
+    FROM tb_matricula M
+    INNER JOIN tb_detalle_matricula DM 
+        ON M.id_matricula = DM.id_matricula
+    INNER JOIN tb_seccion         S  
+        ON DM.id_seccion = S.id_seccion
+    INNER JOIN tb_seccion_horario SH 
+        ON S.id_seccion  = SH.id_seccion
+    INNER JOIN tb_curso           C  
+        ON DM.id_curso   = C.id_curso
+    WHERE M.id_usuario = @id_usuario
+      AND (
+           @id_periodo IS NULL 
+           OR M.id_periodo = @id_periodo
+      )
+    ORDER BY C.nom_curso, SH.dia_semana, SH.hora_inicio;
+END
+GO
+
+EXEC usp_listarCursosYHorariosMatriculados 
+     @id_usuario = 7, 
+     @id_periodo = 1;
 
 ----------------------------------------------LISTADO MATRICULA
 INSERT INTO tb_matricula (id_usuario, id_periodo)
@@ -506,7 +555,8 @@ INSERT INTO tb_seccion_curso (id_seccion, id_curso)
 VALUES (1, 1); 
 
 INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso)
-VALUES (1001, 1, 1);
+VALUES (1000, 1, 1);
+GO
 
 CREATE OR ALTER PROCEDURE usp_listarMatricula
     @Id_matricula INT
@@ -541,9 +591,10 @@ BEGIN
 END
 GO
 
-EXEC usp_listarMatricula 1001
+EXEC usp_listarMatricula 1000
 
 SELECT * FROM tb_usuario
 SELECT * FROM tb_seccion
 SELECT * FROM tb_seccion_curso
-SELECT * FROM tb_detalle_matricula
+SELECT * FROM tb_detalle_matricula	
+select * from tb_periodo

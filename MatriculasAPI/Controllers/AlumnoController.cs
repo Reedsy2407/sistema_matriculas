@@ -38,5 +38,12 @@ namespace MatriculasAPI.Controllers
             return Ok(resultado);
         }
 
+        [HttpGet("HorariosMatriculados/{idUsuario}")]
+        public ActionResult<string> HorariosMatriculadosHtml(int idUsuario, [FromQuery] int? idPeriodo = null)
+        {
+            var html = new AlumnoDAO().ObtenerHorariosyCursosMatriculados(idUsuario, idPeriodo);
+            return Ok(html);
+        }
+
     }
 }

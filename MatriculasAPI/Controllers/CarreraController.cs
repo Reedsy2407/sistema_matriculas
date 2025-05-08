@@ -19,6 +19,8 @@ namespace MatriculasAPI.Controllers
 
             return Ok(carrera);
 
+        }
+
         [HttpGet("ListadoCarreras")]
         public async Task<ActionResult<List<Carrera>>> ListadoCarreras()
         {

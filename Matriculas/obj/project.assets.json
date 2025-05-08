@@ -5583,19 +5583,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marku\\.nuget\\packages\\": {}
+    "C:\\Users\\uset\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\Matriculas.csproj",
+      "projectUniqueName": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
       "projectName": "Matriculas",
-      "projectPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\Matriculas.csproj",
-      "packagesPath": "C:\\Users\\marku\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\obj\\",
+      "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
+      "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\marku\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5609,8 +5614,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
-              "projectPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
+            "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
+              "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
             }
           }
         }
@@ -5623,8 +5628,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "direct"
-      }
+        "auditMode": "all"
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -5658,8 +5664,20 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"System.Text.Json\" 7.0.3 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-hh2w-p6rv-4g7w",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

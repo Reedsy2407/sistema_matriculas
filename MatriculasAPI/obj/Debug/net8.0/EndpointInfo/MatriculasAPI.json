@@ -179,6 +179,54 @@
         }
       }
     },
+    "/Alumno/HorariosMatriculados/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Alumno"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idPeriodo",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Aula/ListadoAulas": {
       "get": {
         "tags": [
@@ -386,6 +434,93 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Carrera"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Carrera/ListadoCarreras": {
+      "get": {
+        "tags": [
+          "Carrera"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Carrera/ListadoCarrerasPorUsuario/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Carrera"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Carrera"
+                  }
                 }
               }
             }
@@ -1050,6 +1185,54 @@
         }
       }
     },
+    "/api/Matricula/ListadoMatricula": {
+      "get": {
+        "tags": [
+          "Matricula"
+        ],
+        "parameters": [
+          {
+            "name": "id_matricula",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Matricula"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Matricula"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Matricula"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Menu/ListarMenusPorRol/{idRol}": {
       "get": {
         "tags": [
@@ -1104,6 +1287,7 @@
     "schemas": {
       "Alumno": {
         "required": [
+          "carreras",
           "contrasena",
           "correo",
           "estado",
@@ -1130,6 +1314,10 @@
           },
           "estado": {
             "type": "boolean"
+          },
+          "carreras": {
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1167,6 +1355,14 @@
           },
           "estado": {
             "type": "boolean"
+          },
+          "id_carreras": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1394,6 +1590,64 @@
           "id_rol": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Matricula": {
+        "type": "object",
+        "properties": {
+          "idMatricula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUsuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreCompleto": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoPeriodo": {
+            "type": "string",
+            "nullable": true
+          },
+          "idCarrera": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomCarrera": {
+            "type": "string",
+            "nullable": true
+          },
+          "idCurso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomCurso": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditosCurso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idSeccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codSeccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "idAula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codAula": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

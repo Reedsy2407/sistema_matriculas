@@ -9,7 +9,7 @@ namespace MatriculasMODELS
     public class Periodo
     {
         public int id_periodo { get; set; }
-        public string codigo_periodo { get; set; }
+        public string? codigo_periodo { get; set; }
         public DateTime fcha_inicio { get; set; }
         public DateTime fcha_fin { get; set; }
     }
