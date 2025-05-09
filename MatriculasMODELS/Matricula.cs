@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MatriculasMODELS
 {
-    public class Matricula
+    public class Matriculas
     {
         [DisplayName("ID")]
         public int IdMatricula { get; set; }

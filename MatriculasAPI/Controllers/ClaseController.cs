@@ -61,5 +61,34 @@ namespace MatriculasAPI.Controllers
                 return BadRequest(response);
         }
 
+        // En MatriculasAPI.Controllers.ClaseController
+        [HttpDelete("Matricula/EliminarMatricula")]
+        public IActionResult EliminarMatricula([FromBody] MatriculaDeleteRequest request)
+        {
+            var response = new ClaseDAO().EliminarMatriculaAlumno(request);
+
+            if (response.Resultado)
+                return Ok(response);
+            else
+                return BadRequest(response);
+        }
+
+        // En MatriculasAPI.Controllers.ClaseController
+        [HttpGet("Matricula/VerificarMatricula/{idAlumno}/{idSeccion}/{idPeriodo}")]
+        public async Task<ActionResult<bool>> VerificarMatricula(int idAlumno, int idSeccion, int idPeriodo)
+        {
+            try
+            {
+                var estaMatriculado = await Task.Run(() =>
+                    new ClaseDAO().VerificarMatriculaAlumno(idAlumno, idSeccion, idPeriodo));
+
+                return Ok(estaMatriculado);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al verificar matrícula: {ex.Message}");
+            }
+        }
+
     }
 }

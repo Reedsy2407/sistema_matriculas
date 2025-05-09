@@ -16,9 +16,9 @@ namespace MatriculasAPI.Repository.DAO
                 .GetConnectionString("cn");
         }
 
-        public IEnumerable<Matricula> aMatricula(int id_matricula)
+        public IEnumerable<Matriculas> aMatricula(int id_matricula)
         {
-            List<Matricula> lista = new List<Matricula>();
+            List<Matriculas> lista = new List<Matriculas>();
             using (SqlConnection con = new SqlConnection(cadena))
             {
                 SqlCommand cmd = new SqlCommand("usp_listarMatricula", con);
@@ -30,7 +30,7 @@ namespace MatriculasAPI.Repository.DAO
                 {
                     while (dr.Read())
                     {
-                        lista.Add(new Matricula
+                        lista.Add(new Matriculas
                         {
                             IdMatricula = Convert.ToInt32(dr["id_matricula"]),
                             IdUsuario = Convert.ToInt32(dr["id_usuario"]),

@@ -144,7 +144,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Matricula, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Matriculas, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -404,6 +404,22 @@
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "EliminarMatricula",
+    "RelativePath": "Clase/Matricula/EliminarMatricula",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MatriculasMODELS.Matricula.MatriculaDeleteRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
     "Method": "InsertarMatricula",
     "RelativePath": "Clase/Matricula/MatricularseHorario",
     "HttpMethod": "POST",
@@ -417,6 +433,42 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.ClaseController",
+    "Method": "VerificarMatricula",
+    "RelativePath": "Clase/Matricula/VerificarMatricula/{idAlumno}/{idSeccion}/{idPeriodo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idAlumno",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idSeccion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idPeriodo",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.ClaseController",

@@ -12,6 +12,9 @@ namespace MatriculasAPI.Repository.Interfaces
         IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso);
 
         MatriculaResponse InsertarMatriculaAlumno(MatriculaRequest request);
+        MatriculaResponse EliminarMatriculaAlumno(MatriculaDeleteRequest request);
+        bool VerificarMatriculaAlumno(int idAlumno, int idSeccion, int idPeriodo);
+
 
 
     }

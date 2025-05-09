@@ -126,7 +126,11 @@ namespace Matriculas.Controllers
         {
             try
             {
+                // Obtener ID de usuario
+                var idUsuario = int.Parse(Request.Cookies["id_usuario"]);
+                ViewBag.IdUsuario = idUsuario;
 
+                // Obtener periodo actual
                 var periodoResponse = await httpClient.GetAsync("Periodo/ObtenerPeriodoActual");
                 if (periodoResponse.IsSuccessStatusCode)
                 {
@@ -134,37 +138,49 @@ namespace Matriculas.Controllers
                     var periodo = JsonConvert.DeserializeObject<Periodo>(periodoContent);
                     ViewBag.CodigoPeriodoActual = periodo?.id_periodo;
                 }
+
                 idCarrera = idCarrera != 0 ? idCarrera : (TempData["idCarrera"] as int?) ?? 0;
-                TempData["idCarrera"] = idCarrera; 
+                TempData["idCarrera"] = idCarrera;
 
+                // Obtener horarios
                 var response = await httpClient.GetAsync($"Horario/ListarHorarioPorCurso/{idCurso}");
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var horarios = JsonConvert.DeserializeObject<List<HorarioPorCurso>>(content);
-
-                    if (horarios == null || !horarios.Any())
-                    {
-                        ViewBag.ErrorMessage = "No se encontraron horarios para este curso";
-                        return View(new List<HorarioPorCurso>());
-                    }
-
-                    var horariosAgrupados = horarios.GroupBy(h => h.id_seccion)
-                                                  .ToDictionary(g => g.Key, g => g.ToList());
-
-                    ViewBag.HorariosAgrupados = horariosAgrupados;
-                    ViewBag.NombreCurso = horarios.First().nom_curso;
-                    ViewBag.IdCarrera = idCarrera;
-                    ViewBag.IdCurso = idCurso;
-
-                    return View(horarios);
-                }
-                else
+                if (!response.IsSuccessStatusCode)
                 {
                     ViewBag.ErrorMessage = "No se pudieron cargar los horarios";
                     return View(new List<HorarioPorCurso>());
                 }
+
+                var content = await response.Content.ReadAsStringAsync();
+                var horarios = JsonConvert.DeserializeObject<List<HorarioPorCurso>>(content);
+
+                if (horarios == null || !horarios.Any())
+                {
+                    ViewBag.ErrorMessage = "No se encontraron horarios para este curso";
+                    return View(new List<HorarioPorCurso>());
+                }
+
+                // Verificar matrículas
+                var matriculados = new Dictionary<int, bool>();
+                foreach (var horario in horarios)
+                {
+                    var matriculaResponse = await httpClient.GetAsync(
+                        $"Matricula/VerificarMatricula/{idUsuario}/{horario.id_seccion}/{ViewBag.CodigoPeriodoActual}");
+
+                    if (matriculaResponse.IsSuccessStatusCode)
+                    {
+                        var matriculaContent = await matriculaResponse.Content.ReadAsStringAsync();
+                        matriculados[horario.id_seccion] = JsonConvert.DeserializeObject<bool>(matriculaContent);
+                    }
+                }
+
+                ViewBag.HorariosAgrupados = horarios.GroupBy(h => h.id_seccion)
+                                                  .ToDictionary(g => g.Key, g => g.ToList());
+                ViewBag.Matriculados = matriculados;
+                ViewBag.NombreCurso = horarios.First().nom_curso;
+                ViewBag.IdCarrera = idCarrera;
+                ViewBag.IdCurso = idCurso;
+
+                return View(horarios);
             }
             catch (Exception ex)
             {
@@ -172,47 +188,50 @@ namespace Matriculas.Controllers
                 return View(new List<HorarioPorCurso>());
             }
         }
-
         [HttpPost]
         public async Task<IActionResult> MatricularseHorario(
-     int id_carrera,
-     int id_curso,
-     int id_seccion,
-     int id_periodo)
+            [FromForm] int idAlumno,
+            [FromForm] int idCarrera,
+            [FromForm] int idCurso,
+            [FromForm] int idSeccion,
+            [FromForm] int idPeriodo)
         {
             try
             {
-                // Leer el ID del alumno desde la cookie
-                int id_alumno = int.Parse(Request.Cookies["id_usuario"]);
-                Console.WriteLine($"Enrollment attempt: Student ID: {id_alumno}, Career: {id_carrera}, Course: {id_curso}, Section: {id_seccion}, Period: {id_periodo}");
-
                 var matriculaData = new
                 {
-                    id_alumno,
-                    id_carrera,
-                    id_curso,
-                    id_seccion,
-                    id_periodo
+                    idAlumno,
+                    idCarrera,
+                    idCurso,
+                    idSeccion,
+                    idPeriodo
                 };
 
                 var json = JsonConvert.SerializeObject(matriculaData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await httpClient.PostAsync("Matricula/MatricularseHorario", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                // Deserializar la respuesta
+                var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsStringAsync();
-                    var responseObj = JsonConvert.DeserializeObject<dynamic>(result);
-
-                    TempData["SuccessMessage"] = (responseObj.resultado == true)
-                        ? responseObj.mensaje
-                        : responseObj.mensaje;
+                    if (result.resultado == true)
+                    {
+                        TempData["SuccessMessage"] = result.mensaje.ToString();
+                    }
+                    else
+                    {
+                        // Para mensajes de validación (como matrícula existente)
+                        TempData["InfoMessage"] = result.mensaje.ToString(); // Usamos InfoMessage en lugar de ErrorMessage
+                    }
                 }
                 else
                 {
-                    var errorBody = await response.Content.ReadAsStringAsync();
-                    TempData["ErrorMessage"] = $"Error al conectar con el servicio de matrícula. Detalles: {errorBody}";
+                    // Solo para errores reales del servidor
+                    TempData["ErrorMessage"] = "Ocurrió un error al procesar la matrícula";
                 }
             }
             catch (Exception ex)
@@ -220,8 +239,54 @@ namespace Matriculas.Controllers
                 TempData["ErrorMessage"] = $"Error interno: {ex.Message}";
             }
 
-            return RedirectToAction("seleccionarHorarios", new { idCurso = id_curso, id_carrera });
+            return RedirectToAction("seleccionarHorarios", new { idCurso = idCurso, idCarrera = idCarrera });
         }
+
+        [HttpPost("EliminarMatriculaPost")]
+        public async Task<IActionResult> EliminarMatriculaPost(
+    [FromForm] int idAlumno,
+    [FromForm] int idSeccion,
+    [FromForm] int idPeriodo,
+    [FromForm] int idCurso,
+    [FromForm] int idCarrera)
+        {
+            try
+            {
+                // Serializa con camelCase para que coincida con tu DTO MatriculaDeleteRequest
+                var deletePayload = new
+                {
+                    idAlumno = idAlumno,
+                    idSeccion = idSeccion,
+                    idPeriodo = idPeriodo
+                };
+                var json = JsonConvert.SerializeObject(deletePayload);
+                Console.WriteLine("JSON Enviado: " + json);
+
+                // Construye la petición DELETE con body
+                var request = new HttpRequestMessage(HttpMethod.Delete, "Matricula/EliminarMatricula")
+                {
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                };
+
+                var response = await httpClient.SendAsync(request);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Respuesta del servidor: " + responseContent);
+
+                var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                if (response.IsSuccessStatusCode && result.resultado == true)
+                    TempData["SuccessMessage"] = (string)result.mensaje;
+                else
+                    TempData["ErrorMessage"] = (string)result.mensaje ?? "Ocurrió un error al procesar la eliminación";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error interno: " + ex);
+                TempData["ErrorMessage"] = $"Error interno: {ex.Message}";
+            }
+
+            return RedirectToAction("seleccionarHorarios", new { idCurso, idCarrera });
+        }
+
 
     }
 }

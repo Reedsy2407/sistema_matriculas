@@ -18,7 +18,7 @@ INSERT INTO tb_rol (nom_rol) VALUES
 ('Administrador'),
 ('Docente'),
 ('Alumno')
-GO
+GO	
 
 create table tb_menu(
 	id_menu int identity(1,1) primary key,

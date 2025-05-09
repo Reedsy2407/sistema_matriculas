@@ -208,5 +208,67 @@ namespace MatriculasAPI.Repository.DAO
             return response;
         }
 
+        public MatriculaResponse EliminarMatriculaAlumno(MatriculaDeleteRequest request)
+        {
+            var response = new MatriculaResponse();
+
+            using (var con = new SqlConnection(cadena))
+            {
+                using (var cmd = new SqlCommand("uspEliminarMatriculaAlumno", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@id_alumno", request.IdAlumno);
+                    cmd.Parameters.AddWithValue("@id_seccion", request.IdSeccion);
+                    cmd.Parameters.AddWithValue("@id_periodo", request.IdPeriodo);
+
+                    var resultadoParam = new SqlParameter("@resultado", SqlDbType.Bit)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    var mensajeParam = new SqlParameter("@mensaje", SqlDbType.VarChar, 200)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    cmd.Parameters.Add(resultadoParam);
+                    cmd.Parameters.Add(mensajeParam);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                    response.Resultado = Convert.ToBoolean(resultadoParam.Value);
+                    response.Mensaje = mensajeParam.Value.ToString();
+                }
+            }
+
+            return response;
+        }
+
+        public bool VerificarMatriculaAlumno(int idAlumno, int idSeccion, int idPeriodo)
+        {
+            using (var con = new SqlConnection(cadena))
+            {
+                using (var cmd = new SqlCommand("uspVerificarMatriculaAlumno", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id_alumno", idAlumno);
+                    cmd.Parameters.AddWithValue("@id_seccion", idSeccion);
+                    cmd.Parameters.AddWithValue("@id_periodo", idPeriodo);
+
+                    var existeParam = new SqlParameter("@existe", SqlDbType.Bit)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(existeParam);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                    return Convert.ToBoolean(existeParam.Value);
+                }
+            }
+        }
     }
 }

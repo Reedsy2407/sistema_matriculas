@@ -1,5 +1,5 @@
 use matriculas_bd
-
+select * from tb_usuario
 create or alter procedure usp_listarEspecialidad
 as
 	Select * from tb_especialidad
@@ -487,31 +487,32 @@ SELECT
     WHERE 
         s.id_curso = @id_curso
 end
+GO
 
-
-CREATE PROCEDURE uspInsertarMatriculaAlumno
-    @id_alumno INT,
-    @id_carrera INT,
-    @id_curso INT,
-    @id_seccion INT,
-    @id_periodo INT,
-    @resultado BIT OUTPUT,
-    @mensaje VARCHAR(200) OUTPUT
+CREATE OR ALTER PROCEDURE uspInsertarMatriculaAlumno
+    @id_alumno      INT,
+    @id_carrera     INT,
+    @id_curso       INT,
+    @id_seccion     INT,
+    @id_periodo     INT,
+    @resultado      BIT OUTPUT,
+    @mensaje        VARCHAR(200) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
     
-    DECLARE @existe_alumno BIT = 0;
-    DECLARE @existe_carrera BIT = 0;
-    DECLARE @existe_curso BIT = 0;
-    DECLARE @existe_seccion BIT = 0;
-    DECLARE @existe_periodo BIT = 0;
-    DECLARE @alumno_en_carrera BIT = 0;
-    DECLARE @cupos_disponibles BIT = 0;
-    DECLARE @conflicto_horario BIT = 0;
-    DECLARE @id_matricula_existente INT = NULL;
+    DECLARE 
+        @existe_alumno           BIT = 0,
+        @existe_carrera          BIT = 0,
+        @existe_curso            BIT = 0,
+        @existe_seccion          BIT = 0,
+        @existe_periodo          BIT = 0,
+        @alumno_en_carrera       BIT = 0,
+        @cupos_disponibles       BIT = 0,
+        @conflicto_horario       BIT = 0,
+        @id_matricula_existente  INT = NULL;
     
-    -- Verificar si el alumno existe y es realmente un alumno
+    -- Verificar si el alumno existe y es alumno activo
     SELECT @existe_alumno = 1 
     FROM tb_usuario 
     WHERE id_usuario = @id_alumno AND id_rol = 3 AND estado = 1;
@@ -531,7 +532,7 @@ BEGIN
     FROM tb_seccion 
     WHERE id_seccion = @id_seccion AND id_curso = @id_curso;
     
-    -- Verificar si el periodo existe
+    -- Verificar si el período existe
     SELECT @existe_periodo = 1 
     FROM tb_periodo 
     WHERE id_periodo = @id_periodo;
@@ -541,64 +542,207 @@ BEGIN
     FROM tb_usuario_carrera 
     WHERE id_usuario = @id_alumno AND id_carrera = @id_carrera;
     
-    -- Verificar si hay cupos disponibles en la sección
+    -- Verificar cupos disponibles en la sección
     SELECT @cupos_disponibles = 1 
     FROM tb_seccion 
     WHERE id_seccion = @id_seccion AND cupos_disponible > 0;
     
-    -- Verificar si el alumno ya está matriculado en esta sección en el mismo periodo
+    -- Verificar si el alumno ya está matriculado en esta misma sección
     SELECT @id_matricula_existente = m.id_matricula
+    FROM tb_matricula m
+    INNER JOIN tb_detalle_matricula dm ON m.id_matricula = dm.id_matricula
+    WHERE m.id_usuario  = @id_alumno 
+      AND m.id_periodo  = @id_periodo
+      AND dm.id_seccion = @id_seccion;
+    
+    -- Verificar conflictos de horario
+    IF EXISTS (
+        SELECT sh1.dia_semana, sh1.hora_inicio, sh1.hora_fin
+        FROM tb_seccion_horario sh1
+        WHERE sh1.id_seccion = @id_seccion
+        INTERSECT
+        SELECT sh2.dia_semana, sh2.hora_inicio, sh2.hora_fin
+        FROM tb_seccion_horario sh2
+        INNER JOIN tb_detalle_matricula dm ON sh2.id_seccion = dm.id_seccion
+        INNER JOIN tb_matricula m ON dm.id_matricula = m.id_matricula
+        WHERE m.id_usuario = @id_alumno
+          AND m.id_periodo = @id_periodo
+    )
+    BEGIN
+        SET @conflicto_horario = 1;
+    END
+    
+    -- ► NUEVA VALIDACIÓN: un solo horario por curso en el período
+    IF EXISTS (
+        SELECT 1
+        FROM tb_matricula m
+        JOIN tb_detalle_matricula dm ON m.id_matricula = dm.id_matricula
+        WHERE m.id_usuario  = @id_alumno
+          AND m.id_periodo  = @id_periodo
+          AND dm.id_curso   = @id_curso
+    )
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'Ya estás matriculado en otro horario de este mismo curso para el período actual.';
+        RETURN;
+    END
+    
+    -- Validaciones de error anteriores
+    IF @existe_alumno = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'El alumno no existe o no tiene permisos para matricularse.';
+        RETURN;
+    END
+
+    IF @existe_carrera = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'La carrera especificada no existe.';
+        RETURN;
+    END
+
+    IF @existe_curso = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'El curso especificado no existe o no pertenece a la carrera.';
+        RETURN;
+    END
+
+    IF @existe_seccion = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'La sección especificada no existe o no pertenece al curso.';
+        RETURN;
+    END
+
+    IF @existe_periodo = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'El período académico especificado no existe.';
+        RETURN;
+    END
+
+    IF @alumno_en_carrera = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'El alumno no pertenece a la carrera especificada.';
+        RETURN;
+    END
+
+    IF @cupos_disponibles = 0
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'No hay cupos disponibles en esta sección.';
+        RETURN;
+    END
+
+    IF @id_matricula_existente IS NOT NULL
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'El alumno ya está matriculado en esta sección para el período actual.';
+        RETURN;
+    END
+
+    IF @conflicto_horario = 1
+    BEGIN
+        SET @resultado = 0;
+        SET @mensaje   = 'Existe un conflicto de horario con otra sección matriculada.';
+        RETURN;
+    END
+
+    -- Inserción de matrícula y detalle
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        DECLARE @id_matricula INT;
+        SELECT @id_matricula = id_matricula 
+        FROM tb_matricula 
+        WHERE id_usuario = @id_alumno 
+          AND id_periodo = @id_periodo;
+
+        IF @id_matricula IS NULL
+        BEGIN
+            INSERT INTO tb_matricula (id_usuario, id_periodo)
+            VALUES (@id_alumno, @id_periodo);
+
+            SET @id_matricula = SCOPE_IDENTITY();
+        END
+        
+        INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso)
+        VALUES (@id_matricula, @id_seccion, @id_curso);
+        
+        UPDATE tb_seccion
+        SET cupos_disponible = cupos_disponible - 1
+        WHERE id_seccion = @id_seccion;
+        
+        COMMIT TRANSACTION;
+
+        SET @resultado = 1;
+        SET @mensaje   = 'Matrícula registrada exitosamente.';
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        SET @resultado = 0;
+        SET @mensaje   = 'Error al registrar la matrícula: ' + ERROR_MESSAGE();
+    END CATCH
+END
+GO
+
+
+		CREATE OR ALTER PROCEDURE uspEliminarMatriculaAlumno
+    @id_alumno INT,
+    @id_seccion INT,
+    @id_periodo INT,
+    @resultado BIT OUTPUT,
+    @mensaje VARCHAR(200) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @existe_alumno BIT = 0;
+    DECLARE @existe_seccion BIT = 0;
+    DECLARE @existe_periodo BIT = 0;
+    DECLARE @id_matricula INT = NULL;
+    DECLARE @id_curso INT = NULL;
+    
+    -- Verificar si el alumno existe y es realmente un alumno
+    SELECT @existe_alumno = 1 
+    FROM tb_usuario 
+    WHERE id_usuario = @id_alumno AND id_rol = 3 AND estado = 1;
+    
+    -- Verificar si la sección existe
+    SELECT @existe_seccion = 1 
+    FROM tb_seccion 
+    WHERE id_seccion = @id_seccion;
+    
+    -- Verificar si el periodo existe
+    SELECT @existe_periodo = 1 
+    FROM tb_periodo 
+    WHERE id_periodo = @id_periodo;
+    
+    -- Verificar si existe la matrícula y obtener el id_curso
+    SELECT 
+        @id_matricula = m.id_matricula,
+        @id_curso = dm.id_curso
     FROM tb_matricula m
     INNER JOIN tb_detalle_matricula dm ON m.id_matricula = dm.id_matricula
     WHERE m.id_usuario = @id_alumno 
     AND m.id_periodo = @id_periodo
     AND dm.id_seccion = @id_seccion;
     
-    -- Verificar conflictos de horario (versión corregida)
-    IF EXISTS (
-        SELECT sh1.dia_semana, sh1.hora_inicio, sh1.hora_fin
-        FROM tb_seccion_horario sh1
-        WHERE sh1.id_seccion = @id_seccion
-        
-        INTERSECT
-        
-        SELECT sh2.dia_semana, sh2.hora_inicio, sh2.hora_fin
-        FROM tb_seccion_horario sh2
-        INNER JOIN tb_detalle_matricula dm ON sh2.id_seccion = dm.id_seccion
-        INNER JOIN tb_matricula m ON dm.id_matricula = m.id_matricula
-        WHERE m.id_usuario = @id_alumno
-        AND m.id_periodo = @id_periodo
-    )
-    BEGIN
-        SET @conflicto_horario = 1;
-    END
-    
     -- Validar todas las condiciones
     IF @existe_alumno = 0
     BEGIN
         SET @resultado = 0;
-        SET @mensaje = 'El alumno no existe o no tiene permisos para matricularse.';
-        RETURN;
-    END
-    
-    IF @existe_carrera = 0
-    BEGIN
-        SET @resultado = 0;
-        SET @mensaje = 'La carrera especificada no existe.';
-        RETURN;
-    END
-    
-    IF @existe_curso = 0
-    BEGIN
-        SET @resultado = 0;
-        SET @mensaje = 'El curso especificado no existe o no pertenece a la carrera.';
+        SET @mensaje = 'El alumno no existe o no tiene permisos para esta acción.';
         RETURN;
     END
     
     IF @existe_seccion = 0
     BEGIN
         SET @resultado = 0;
-        SET @mensaje = 'La sección especificada no existe o no pertenece al curso.';
+        SET @mensaje = 'La sección especificada no existe.';
         RETURN;
     END
     
@@ -609,77 +753,76 @@ BEGIN
         RETURN;
     END
     
-    IF @alumno_en_carrera = 0
+    IF @id_matricula IS NULL OR @id_curso IS NULL
     BEGIN
         SET @resultado = 0;
-        SET @mensaje = 'El alumno no pertenece a la carrera especificada.';
-        RETURN;
-    END
-    
-    IF @cupos_disponibles = 0
-    BEGIN
-        SET @resultado = 0;
-        SET @mensaje = 'No hay cupos disponibles en esta sección.';
-        RETURN;
-    END
-    
-    IF @id_matricula_existente IS NOT NULL
-    BEGIN
-        SET @resultado = 0;
-        SET @mensaje = 'El alumno ya está matriculado en esta sección para el período actual.';
-        RETURN;
-    END
-    
-    IF @conflicto_horario = 1
-    BEGIN
-        SET @resultado = 0;
-        SET @mensaje = 'Existe un conflicto de horario con otra sección matriculada.';
+        SET @mensaje = 'No se encontró la matrícula del alumno en esta sección para el período actual.';
         RETURN;
     END
     
     BEGIN TRY
         BEGIN TRANSACTION;
         
-        -- Verificar si el alumno ya tiene una matrícula para este período
-        DECLARE @id_matricula INT;
+        -- Eliminar el detalle de matrícula (usando la clave compuesta)
+        DELETE FROM tb_detalle_matricula
+        WHERE id_matricula = @id_matricula 
+        AND id_seccion = @id_seccion
+        AND id_curso = @id_curso;
         
-        SELECT @id_matricula = id_matricula 
-        FROM tb_matricula 
-        WHERE id_usuario = @id_alumno AND id_periodo = @id_periodo;
-        
-        -- Si no existe, crear una nueva matrícula
-        IF @id_matricula IS NULL
-        BEGIN
-            INSERT INTO tb_matricula (id_usuario, id_periodo)
-            VALUES (@id_alumno, @id_periodo);
-            
-            SET @id_matricula = SCOPE_IDENTITY();
-        END
-        
-        -- Insertar el detalle de matrícula
-        INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso)
-        VALUES (@id_matricula, @id_seccion, @id_curso);
-        
-        -- Disminuir los cupos disponibles en la sección
+        -- Aumentar los cupos disponibles en la sección
         UPDATE tb_seccion
-        SET cupos_disponible = cupos_disponible - 1
+        SET cupos_disponible = cupos_disponible + 1
         WHERE id_seccion = @id_seccion;
+        
+        -- Verificar si quedan más detalles en la matrícula
+        IF NOT EXISTS (SELECT 1 FROM tb_detalle_matricula WHERE id_matricula = @id_matricula)
+        BEGIN
+            -- Si no quedan más detalles, eliminar la matrícula principal
+            DELETE FROM tb_matricula
+            WHERE id_matricula = @id_matricula;
+        END
         
         COMMIT TRANSACTION;
         
         SET @resultado = 1;
-        SET @mensaje = 'Matrícula registrada exitosamente.';
+        SET @mensaje = 'Matrícula eliminada exitosamente.';
     END TRY
     BEGIN CATCH
         IF @@TRANCOUNT > 0
             ROLLBACK TRANSACTION;
             
         SET @resultado = 0;
-        SET @mensaje = 'Error al registrar la matrícula: ' + ERROR_MESSAGE();
+        SET @mensaje = 'Error al eliminar la matrícula: ' + ERROR_MESSAGE();
     END CATCH
 END;
 GO
 
+CREATE OR ALTER PROCEDURE uspVerificarMatriculaAlumno
+    @id_alumno INT,
+    @id_seccion INT,
+    @id_periodo INT,
+    @existe BIT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    IF EXISTS (
+        SELECT 1 
+        FROM tb_matricula m
+        INNER JOIN tb_detalle_matricula dm ON m.id_matricula = dm.id_matricula
+        WHERE m.id_usuario = @id_alumno 
+        AND m.id_periodo = @id_periodo
+        AND dm.id_seccion = @id_seccion
+    )
+    BEGIN
+        SET @existe = 1;
+    END
+    ELSE
+    BEGIN
+        SET @existe = 0;
+    END
+END;
+GO
 /*
 SELECT * FROM tb_usuario WHERE id_rol = 3; -- Alumnos
 SELECT * FROM tb_carrera;
