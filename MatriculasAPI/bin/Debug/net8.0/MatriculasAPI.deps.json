@@ -124,7 +124,14 @@
       },
       "MatriculasMODELS/1.0.0": {
         "runtime": {
+<<<<<<< HEAD
           "MatriculasMODELS.dll": {}
+=======
+          "MatriculasMODELS.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
         }
       }
     }

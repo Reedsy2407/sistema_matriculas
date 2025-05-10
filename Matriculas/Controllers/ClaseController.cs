@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net;
 using Newtonsoft.Json;
 using MatriculasMODELS;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -216,21 +217,19 @@ namespace Matriculas.Controllers
                 // Deserializar la respuesta
                 var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
 
-                if (response.IsSuccessStatusCode)
+                if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    if (result.resultado == true)
-                    {
-                        TempData["SuccessMessage"] = result.mensaje.ToString();
-                    }
-                    else
-                    {
-                        // Para mensajes de validación (como matrícula existente)
-                        TempData["InfoMessage"] = result.mensaje.ToString(); // Usamos InfoMessage en lugar de ErrorMessage
-                    }
+                    // Validación de negocio (p.ej. ya matriculado en otro horario)
+                    TempData["InfoMessage"] = result.mensaje.ToString();
+                }
+                else if (response.IsSuccessStatusCode && result.resultado == true)
+                {
+                    // Matrícula registrada exitosamente
+                    TempData["SuccessMessage"] = result.mensaje.ToString();
                 }
                 else
                 {
-                    // Solo para errores reales del servidor
+                    // Cualquier otro error (500, etc.)
                     TempData["ErrorMessage"] = "Ocurrió un error al procesar la matrícula";
                 }
             }
@@ -239,16 +238,16 @@ namespace Matriculas.Controllers
                 TempData["ErrorMessage"] = $"Error interno: {ex.Message}";
             }
 
-            return RedirectToAction("seleccionarHorarios", new { idCurso = idCurso, idCarrera = idCarrera });
+            return RedirectToAction("seleccionarHorarios", new { idCurso, idCarrera });
         }
 
         [HttpPost("EliminarMatriculaPost")]
         public async Task<IActionResult> EliminarMatriculaPost(
-    [FromForm] int idAlumno,
-    [FromForm] int idSeccion,
-    [FromForm] int idPeriodo,
-    [FromForm] int idCurso,
-    [FromForm] int idCarrera)
+        [FromForm] int idAlumno,
+        [FromForm] int idSeccion,
+        [FromForm] int idPeriodo,
+        [FromForm] int idCurso,
+        [FromForm] int idCarrera)
         {
             try
             {
@@ -271,12 +270,25 @@ namespace Matriculas.Controllers
                 var response = await httpClient.SendAsync(request);
                 var responseContent = await response.Content.ReadAsStringAsync();
                 Console.WriteLine("Respuesta del servidor: " + responseContent);
-
                 var result = JsonConvert.DeserializeObject<dynamic>(responseContent);
-                if (response.IsSuccessStatusCode && result.resultado == true)
-                    TempData["SuccessMessage"] = (string)result.mensaje;
+
+
+
+                if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    // Validación de negocio (p.ej. no existe la matrícula)
+                    TempData["InfoMessage"] = result.mensaje.ToString();
+                }
+                else if (response.IsSuccessStatusCode && result.resultado == true)
+                {
+                    // Eliminación exitosa
+                    TempData["SuccessMessage"] = result.mensaje.ToString();
+                }
                 else
-                    TempData["ErrorMessage"] = (string)result.mensaje ?? "Ocurrió un error al procesar la eliminación";
+                {
+                    // Cualquier otro error de servidor
+                    TempData["ErrorMessage"] = "Ocurrió un error al procesar la eliminación";
+                }
             }
             catch (Exception ex)
             {

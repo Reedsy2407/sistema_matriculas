@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {}
   },
   "projects": {
@@ -12,9 +13,27 @@
         "projectPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
         "packagesPath": "C:\\Users\\marku\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\obj\\",
+=======
+    "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
+        "projectName": "MatriculasMODELS",
+        "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
+        "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\obj\\",
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
         "projectStyle": "PackageReference",
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\marku\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,8 +57,14 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
+<<<<<<< HEAD
           "auditMode": "direct"
         }
+=======
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
       },
       "frameworks": {
         "net8.0": {
@@ -60,7 +85,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
         }
       }
     }

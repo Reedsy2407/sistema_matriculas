@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "Vg7pgZxEiyYXF9sBf8a866U/hzIvjk0s1r3YwaPNGGO9scYapzHawoGkBdJEdv0vmWilfQufYPPA5WmLz85OYw==",
   "success": true,
   "projectFilePath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
+=======
+  "dgSpecHash": "Yw2St8ZpMw4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
   "expectedPackageFiles": [],
   "logs": []
 }

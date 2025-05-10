@@ -8,6 +8,10 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MatriculasMODELS
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\
+=======
+build_property.ProjectDir = C:\Users\uset\Desktop\servicios-web\MatriculasMODELS\
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

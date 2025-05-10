@@ -328,13 +328,15 @@ CREATE OR ALTER PROCEDURE usp_registrarAlumno
     @ape_usuario  VARCHAR(50),
     @correo       VARCHAR(100),
     @contrasena   VARCHAR(30),
-    @estado       BIT
+    @estado       BIT,
+	@new_id_usuario INT OUTPUT
 AS
 BEGIN
     INSERT INTO tb_usuario
         (nom_usuario, ape_usuario, correo, contrasena, cod_especialidad, id_rol, estado)
     VALUES
         (@nom_usuario, @ape_usuario, @correo, @contrasena, NULL, 3, @estado);
+	SET @new_id_usuario = SCOPE_IDENTITY();
 END
 GO
 
@@ -374,21 +376,12 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE uspListarCarrerasPorUsuario
-    @id_usuario INT
+CREATE OR ALTER PROCEDURE usp_listarCarreras
 AS
 BEGIN
-    SELECT 
-        c.id_carrera,
-        c.nom_carrera
-    FROM 
-        tb_usuario_carrera uc
-    INNER JOIN 
-        tb_carrera c ON uc.id_carrera = c.id_carrera
-    WHERE 
-        uc.id_usuario = @id_usuario
-    ORDER BY 
-        c.nom_carrera
+    SELECT id_carrera, nom_carrera
+    FROM tb_carrera
+    ORDER BY nom_carrera;
 END
 GO
 
@@ -410,7 +403,31 @@ BEGIN
 END
 GO
 
+<<<<<<< HEAD
 CREATE OR ALTER PROCEDURE uspListarCursosPorCarrera
+=======
+CREATE OR ALTER PROCEDURE usp_asignarCarreraUsuario
+    @id_usuario  INT,
+    @id_carrera  INT
+AS
+BEGIN
+    INSERT INTO tb_usuario_carrera (id_usuario, id_carrera)
+    VALUES (@id_usuario, @id_carrera);
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_eliminarCarrerasUsuario
+    @id_usuario INT
+AS
+BEGIN
+    DELETE FROM tb_usuario_carrera
+    WHERE id_usuario = @id_usuario;
+END
+GO
+
+
+CREATE PROCEDURE uspListarCursosPorCarrera
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
     @id_carrera INT
 AS
 BEGIN
@@ -488,6 +505,40 @@ SELECT
         s.id_curso = @id_curso
 end
 GO
+
+CREATE OR ALTER PROCEDURE usp_listarCursosYHorariosMatriculados
+    @id_usuario INT,
+    @id_periodo INT = NULL
+AS
+BEGIN
+    SELECT
+        C.nom_curso,
+        CASE SH.dia_semana
+            WHEN 1 THEN 'Lunes'    WHEN 2 THEN 'Martes'
+            WHEN 3 THEN 'Miércoles' WHEN 4 THEN 'Jueves'
+            WHEN 5 THEN 'Viernes'   WHEN 6 THEN 'Sábado'
+            ELSE 'Domingo'
+        END AS dia_semana,
+        CONVERT(VARCHAR(5), SH.hora_inicio, 108) AS hora_inicio,
+        CONVERT(VARCHAR(5), SH.hora_fin,    108) AS hora_fin
+    FROM tb_matricula M
+    INNER JOIN tb_detalle_matricula DM 
+        ON M.id_matricula = DM.id_matricula
+    INNER JOIN tb_seccion         S  
+        ON DM.id_seccion = S.id_seccion
+    INNER JOIN tb_seccion_horario SH 
+        ON S.id_seccion  = SH.id_seccion
+    INNER JOIN tb_curso           C  
+        ON DM.id_curso   = C.id_curso
+    WHERE M.id_usuario = @id_usuario
+      AND (
+           @id_periodo IS NULL 
+           OR M.id_periodo = @id_periodo
+      )
+    ORDER BY C.nom_curso, SH.dia_semana, SH.hora_inicio;
+END
+GO
+
 
 CREATE OR ALTER PROCEDURE uspInsertarMatriculaAlumno
     @id_alumno      INT,
@@ -690,7 +741,7 @@ END
 GO
 
 
-		CREATE OR ALTER PROCEDURE uspEliminarMatriculaAlumno
+CREATE OR ALTER PROCEDURE uspEliminarMatriculaAlumno
     @id_alumno INT,
     @id_seccion INT,
     @id_periodo INT,
@@ -823,40 +874,53 @@ BEGIN
     END
 END;
 GO
-/*
-SELECT * FROM tb_usuario WHERE id_rol = 3; -- Alumnos
-SELECT * FROM tb_carrera;
-SELECT * FROM tb_curso;
-SELECT * FROM tb_seccion;
-SELECT * FROM tb_periodo;
 
-
-SELECT *
-FROM tb_usuario 
-WHERE id_usuario = 8 AND id_rol = 3 AND estado = 1;
-
-
--- Matricular al alumno Juan Pérez (id 6) en Programación I (id_curso 1), sección A1MA (id_seccion 1)
--- para el período 2025-1 (id_periodo 1) en la carrera 1
--- Ejecución del procedimiento almacenado
-DECLARE @resultado BIT;
-DECLARE @mensaje VARCHAR(200);
-EXEC uspInsertarMatriculaAlumno 
-    @id_alumno = 13, 
-    @id_carrera = 2, 
-    @id_curso = 1, 
-    @id_seccion = 1,
-    @id_periodo = 1,
-    @resultado = @resultado OUTPUT,
-    @mensaje = @mensaje OUTPUT;
-
-SELECT @resultado AS Resultado, @mensaje AS Mensaje;
+CREATE OR ALTER PROCEDURE usp_listarMatricula
+    @Id_matricula INT
+AS
+BEGIN
+    SELECT 
+        M.id_matricula,
+        U.id_usuario,
+        U.nom_usuario + ' ' + U.ape_usuario AS nombre_completo,
+        P.codigo_periodo,
+        C.id_carrera,
+        C.nom_carrera,
+        CU.id_curso,
+        CU.nom_curso,
+        CU.creditos_curso,
+        S.id_seccion,
+        S.cod_seccion,
+        A.id_aula,
+        A.cod_aula,
+        H.hora_inicio,
+        H.hora_fin,
+        H.tipo_horario,
+		CASE H.dia_semana
+            WHEN 1 THEN 'Lunes'
+            WHEN 2 THEN 'Martes'
+            WHEN 3 THEN 'Miércoles'
+            WHEN 4 THEN 'Jueves'
+            WHEN 5 THEN 'Viernes'
+            WHEN 6 THEN 'Sábado'
+            ELSE 'Domingo'
+        END AS dia_semana
+    FROM tb_matricula M
+    INNER JOIN tb_usuario             U   ON M.id_usuario = U.id_usuario
+    INNER JOIN tb_periodo            P   ON M.id_periodo = P.id_periodo
+    INNER JOIN tb_detalle_matricula  DM  ON M.id_matricula = DM.id_matricula
+    INNER JOIN tb_seccion            S   ON DM.id_seccion = S.id_seccion
+    INNER JOIN tb_aula               A   ON S.id_aula = A.id_aula
+    INNER JOIN tb_curso              CU  ON DM.id_curso = CU.id_curso
+    INNER JOIN tb_carrera            C   ON CU.id_carrera = C.id_carrera
+    INNER JOIN tb_seccion_horario    H   ON S.id_seccion = H.id_seccion
+    WHERE M.id_matricula = @Id_matricula
+    ORDER BY CU.nom_curso, H.dia_semana, H.hora_inicio;
+END
 GO
 
--- Verificación de la matrícula creada
-SELECT * FROM tb_matricula WHERE id_usuario = 13;
-GO
 
+<<<<<<< HEAD
 -- Verificación del detalle de matrícula
 SELECT * FROM tb_detalle_matricula WHERE id_matricula = 
     (SELECT id_matricula FROM tb_matricula WHERE id_usuario = 13);
@@ -945,3 +1009,12 @@ SELECT * FROM tb_seccion_horario
 exec usp_listarMatricula @Id_usuario = 8
 insert into tb_menu values('Listado de Matricula','listadoMatricula','Matricula',10,1)
 insert into tb_menu_rol values (10,3)
+=======
+SELECT * FROM tb_matricula
+SELECT * FROM tb_usuario
+SELECT * FROM tb_detalle_matricula
+SELECT * FROM tb_seccion_curso
+SELECT * FROM tb_seccion_horario
+select * from tb_menu_rol
+exec usp_listarMatricula @Id_matricula = 1002
+>>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
