@@ -30,5 +30,13 @@ namespace MatriculasMODELS
         public int IdAula { get; set; }
         [DisplayName("CODIGO AULA")]
         public string? CodAula { get; set; }
+        [DisplayName("DIA")]
+        public string nomDiaSemana { get; set; }
+        [DisplayName("HORA INICIO")]
+        public TimeSpan horaInicio { get; set; }
+        [DisplayName("HORA FIN")]
+        public TimeSpan horaFin { get; set; }
+        [DisplayName("TIPO CLASE")]
+        public string tipoHorario { get; set; }
     }
 }

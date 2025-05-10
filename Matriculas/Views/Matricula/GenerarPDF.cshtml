@@ -1,0 +1,165 @@
+﻿@model IEnumerable<MatriculasMODELS.Matriculas>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Relacion de Matricula</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            width: 100%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+
+        #titulo {
+            text-align: center;
+            font-size: 18pt;
+            color: #2a5d84;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #fechahora {
+            text-align: right;
+            font-size: 9pt;
+            color: #777;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        hr {
+            border: 1px solid #d6950a;
+            margin: 10px 0;
+        }
+
+        table.tbMatricula {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+            table.tbMatricula thead {
+                background-color: #2a5d84;
+                color: white;
+            }
+
+            table.tbMatricula th, table.tbMatricula td {
+                padding: 8px;
+                text-align: left;
+                font-size: 9pt;
+                border-bottom: 1px solid #ddd;
+            }
+
+            table.tbMatricula th {
+                background-color: #1a4570;
+            }
+
+            table.tbMatricula tr:hover {
+                background-color: #f5f5f5;
+            }
+
+            table.tbMatricula tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+        .total {
+            text-align: right;
+            font-size: 10pt;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+            .total strong {
+                color: #2a5d84;
+            }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div>
+            <hr>
+            <table style="width:100%">
+                <tr>
+                    <td>
+                        <img class="logo" src="../Material/img/logo.png" />
+                    </td>
+                    <td>
+                        <p id="titulo">
+                            RELACION DE MATRICULA <br />
+                            Reporte de matrícula
+                        </p>
+                    </td>
+                    <td>
+                        <p id="fechahora">
+                            @DateTime.Now.Date.ToShortDateString()<br />
+                            @DateTime.Now.ToString("HH:mm:ss")
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+        </div>
+        <div>
+            <table class="tbMatricula">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>USUARIO</th>
+                        <th>PERIODO</th>
+                        <th>CARRERA</th>
+                        <th>CURSO</th>
+                        <th>CREDITOS</th>
+                        <th>SECCION</th>
+                        <th>COD AULA</th>
+                        <th>DIA</th>
+                        <th>HORA INICIO</th>
+                        <th>HORA FIN</th>
+                        <th>TIPO CLASE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.IdMatricula</td>
+                            <td>@item.NombreCompleto</td>
+                            <td>@item.CodigoPeriodo</td>
+                            <td>@item.NomCarrera</td>
+                            <td>@item.NomCurso</td>
+                            <td>@item.CreditosCurso</td>
+                            <td>@item.CodSeccion</td>
+                            <td>@item.CodAula</td>
+                            <td>@item.nomDiaSemana</td>
+                            <td>@item.horaInicio.ToString(@"hh\:mm")</td>
+                            <td>@item.horaFin.ToString(@"hh\:mm")</td>
+                            <td>@item.tipoHorario</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="total">
+                <strong>Total: </strong>@Model.Count() Matrículas registradas
+            </div>
+        </div>
+    </div>
+</body>
+</html>

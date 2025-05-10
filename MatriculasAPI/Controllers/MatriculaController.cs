@@ -9,10 +9,10 @@ namespace MatriculasAPI.Controllers
     [ApiController]
     public class MatriculaController : ControllerBase
     {
-        [HttpGet("ListadoMatricula")]
-        public async Task<ActionResult<List<Matriculas>>> ListadoMatricula(int id_matricula)
+        [HttpGet("ListadoMatricula/{idUsuario}")]
+        public async Task<ActionResult<List<Matriculas>>> ListadoMatricula(int idUsuario)
         {
-            var lista = await Task.Run(() => new MatriculaDAO().aMatricula(id_matricula));
+            var lista = await Task.Run(() => new MatriculaDAO().aMatricula(idUsuario));
             return Ok(lista);
         }
     }

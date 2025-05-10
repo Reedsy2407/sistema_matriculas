@@ -255,3 +255,5 @@ C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\refi
 C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.pdb
 C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\MatriculasAPI.genruntimeconfig.cache
 C:\Users\marku\Escritorio\servicios-web-main\MatriculasAPI\obj\Debug\net8.0\ref\MatriculasAPI.dll
+C:\Users\marku\Escritorio\servicios-web\MatriculasAPI\bin\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\marku\Escritorio\servicios-web\MatriculasAPI\bin\Debug\net8.0\MatriculasMODELS.pdb

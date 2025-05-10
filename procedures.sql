@@ -72,7 +72,7 @@ GO
 
 --LOGIN
 
-CREATE PROCEDURE sp_LoginUsuario 
+CREATE OR ALTER PROCEDURE sp_LoginUsuario 
     @correo VARCHAR(100),
     @contrasena VARCHAR(30),
     @login_exitoso BIT OUTPUT,
@@ -123,7 +123,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE sp_ObtenerMenusPorRol
+CREATE OR ALTER PROCEDURE sp_ObtenerMenusPorRol
     @id_rol INT
 AS
 BEGIN
@@ -359,7 +359,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE usp_BuscarPeriodoActual
+CREATE OR ALTER PROCEDURE usp_BuscarPeriodoActual
 AS
 BEGIN
     SELECT 
@@ -392,7 +392,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspListarCarrerasPorUsuario
+CREATE OR ALTER PROCEDURE uspListarCarrerasPorUsuario
     @id_usuario INT
 AS
 BEGIN
@@ -410,7 +410,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspListarCursosPorCarrera
+CREATE OR ALTER PROCEDURE uspListarCursosPorCarrera
     @id_carrera INT
 AS
 BEGIN
@@ -436,7 +436,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE uspBuscarCarreraPorId
+CREATE or ALTER PROCEDURE uspBuscarCarreraPorId
     @id_carrera INT
 AS
 BEGIN
@@ -889,3 +889,59 @@ select * From tb_Detalle_matricula
 
 SELECT * FROM tb_usuario_carrera WHERE id_usuario = 8
 GO*/
+
+CREATE OR ALTER PROCEDURE usp_listarMatricula
+    @Id_usuario INT
+AS
+BEGIN
+    SELECT 
+        M.id_matricula as id_matricula,
+        U.id_usuario as id_usuario, 
+        U.nom_usuario + ' ' + U.ape_usuario AS nombre_completo,
+        P.codigo_periodo as codigo_periodo,
+        C.id_carrera as id_carrera,
+        C.nom_carrera as nom_carrera,
+        CU.id_curso as id_curso,
+        CU.nom_curso as nom_curso,
+        CU.creditos_curso as creditos_curso,
+        S.id_seccion as id_seccion,
+        S.cod_seccion as cod_seccion,
+        A.id_aula as id_aula,
+        A.cod_aula as cod_aula,
+        H.hora_inicio as hora_inicio,
+        H.hora_fin as hora_fin,
+        H.tipo_horario as tipo_horario,
+		CASE H.dia_semana
+            WHEN 1 THEN 'Lunes'
+            WHEN 2 THEN 'Martes'
+            WHEN 3 THEN 'Miércoles'
+            WHEN 4 THEN 'Jueves'
+            WHEN 5 THEN 'Viernes'
+            WHEN 6 THEN 'Sábado'
+            ELSE 'Domingo'
+        END AS nomDiaSemana
+    FROM tb_matricula M
+    INNER JOIN tb_usuario             U   ON M.id_usuario = U.id_usuario
+    INNER JOIN tb_periodo            P   ON M.id_periodo = P.id_periodo
+    INNER JOIN tb_detalle_matricula  DM  ON M.id_matricula = DM.id_matricula
+    INNER JOIN tb_seccion            S   ON DM.id_seccion = S.id_seccion
+    INNER JOIN tb_aula               A   ON S.id_aula = A.id_aula
+    INNER JOIN tb_curso              CU  ON DM.id_curso = CU.id_curso
+    INNER JOIN tb_carrera            C   ON CU.id_carrera = C.id_carrera
+    INNER JOIN tb_seccion_horario    H   ON S.id_seccion = H.id_seccion
+    WHERE U.id_usuario = @Id_usuario
+    ORDER BY CU.nom_curso, H.dia_semana, H.hora_inicio;
+END
+GO
+
+
+SELECT * FROM tb_matricula
+SELECT * FROM tb_usuario
+select * from tb_menu
+select * from tb_menu_rol
+SELECT * FROM tb_detalle_matricula
+SELECT * FROM tb_seccion_curso
+SELECT * FROM tb_seccion_horario
+exec usp_listarMatricula @Id_usuario = 8
+insert into tb_menu values('Listado de Matricula','listadoMatricula','Matricula',10,1)
+insert into tb_menu_rol values (10,3)

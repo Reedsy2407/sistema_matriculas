@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MatriculasMODELS.Matriculas>
+
+@{
+    ViewData["Title"] = "Horario de Clase";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var dias = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+    var diasRegistrados = Model?
+        .GroupBy(m => m.nomDiaSemana)
+        .Where(g => g.Any())
+        .OrderBy(g => Array.IndexOf(dias, g.Key));
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary m-0">Horario de Clase</h2>
+    <a href="@Url.Action("ExportarMatricula", "Matricula")" class="btn btn-danger">
+        Exportar Relación Matrícula
+    </a>
+</div>
+
+@if (diasRegistrados != null && diasRegistrados.Any())
+{
+    <div class="container">
+        @foreach (var grupo in diasRegistrados)
+        {
+            <h4 class="mt-4">@grupo.Key.ToUpper()</h4>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="bg-warning text-dark text-center">
+                        <tr>
+                            <th>Curso</th>
+                            <th>Seccion</th>
+                            <th>Tipo de Clase</th>
+                            <th>Aula</th>
+                            <th colspan="2">Hora de Clase</th>
+                            <th>Periodo</th>
+                        </tr>
+                        <tr class="bg-light text-center">
+                            <th colspan="4"></th>
+                            <th>Desde</th>
+                            <th>Hasta</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in grupo)
+                        {
+                            <tr>
+                                <td>@item.NomCurso</td>
+                                <td class="text-center">@item.CodSeccion</td>
+                                <td class="text-center">@item.tipoHorario</td>
+                                <td class="text-center">@item.CodAula</td>
+                                <td class="text-center">@item.horaInicio.ToString(@"hh\:mm")</td>
+                                <td class="text-center">@item.horaFin.ToString(@"hh\:mm")</td>
+                                <td>@item.CodigoPeriodo</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+}

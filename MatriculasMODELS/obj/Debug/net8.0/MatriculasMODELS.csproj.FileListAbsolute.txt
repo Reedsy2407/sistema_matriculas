@@ -45,3 +45,15 @@ C:\Users\marku\Escritorio\servicios-web-main\MatriculasMODELS\obj\Debug\net8.0\M
 C:\Users\marku\Escritorio\servicios-web-main\MatriculasMODELS\obj\Debug\net8.0\refint\MatriculasMODELS.dll
 C:\Users\marku\Escritorio\servicios-web-main\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.pdb
 C:\Users\marku\Escritorio\servicios-web-main\MatriculasMODELS\obj\Debug\net8.0\ref\MatriculasMODELS.dll
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\bin\Debug\net8.0\MatriculasMODELS.deps.json
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\bin\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\bin\Debug\net8.0\MatriculasMODELS.pdb
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.AssemblyInfoInputs.cache
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.AssemblyInfo.cs
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.csproj.CoreCompileInputs.cache
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.sourcelink.json
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\refint\MatriculasMODELS.dll
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.pdb
+C:\Users\marku\Escritorio\servicios-web\MatriculasMODELS\obj\Debug\net8.0\ref\MatriculasMODELS.dll

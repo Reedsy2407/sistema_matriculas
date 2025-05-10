@@ -23,7 +23,7 @@ namespace MatriculasAPI.Repository.DAO
             {
                 SqlCommand cmd = new SqlCommand("usp_listarMatricula", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id_matricula", id_matricula);
+                cmd.Parameters.AddWithValue("@Id_usuario", id_matricula);
 
                 con.Open();
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -44,7 +44,11 @@ namespace MatriculasAPI.Repository.DAO
                             IdSeccion = Convert.ToInt32(dr["id_seccion"]),
                             CodSeccion = dr["cod_seccion"].ToString(),
                             IdAula = Convert.ToInt32(dr["id_aula"]),
-                            CodAula = dr["cod_aula"].ToString()
+                            CodAula = dr["cod_aula"].ToString(),                           
+                            horaInicio = (TimeSpan)dr["hora_inicio"],
+                            horaFin = (TimeSpan)dr["hora_fin"],
+                            tipoHorario = dr["tipo_horario"].ToString(),
+                            nomDiaSemana = dr["nomDiaSemana"].ToString(),
                         });
                     }
                 }
