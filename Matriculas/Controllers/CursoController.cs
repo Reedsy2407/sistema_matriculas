@@ -3,25 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Text;
 
 namespace Matriculas.Controllers
 {
     public class CursoController : Controller
     {
-        Uri direccion = new Uri("https://localhost:7117/Curso/");
         private readonly HttpClient httpClient;
 
         public CursoController()
         {
-            httpClient = new HttpClient();
-            httpClient.BaseAddress = direccion;
+            httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("https://localhost:7117/")
+            };
         }
+
 
         public List<Curso> aCurso()
         {
             List<Curso> lista = new List<Curso>();
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "ListadoCursos").Result;
+            HttpResponseMessage response = httpClient.GetAsync("Curso/ListadoCursos").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             lista = JsonConvert.DeserializeObject<List<Curso>>(data);
             return lista;
@@ -29,7 +32,7 @@ namespace Matriculas.Controllers
 
         public List<Curso> aCursoApi()
         {
-            HttpResponseMessage response = httpClient.GetAsync(httpClient.BaseAddress + "ListadoCursos").Result;
+            HttpResponseMessage response = httpClient.GetAsync("Curso/ListadoCursos").Result;
             var data = response.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<List<Curso>>(data)!;
         }
@@ -65,7 +68,7 @@ namespace Matriculas.Controllers
 
             var json = JsonConvert.SerializeObject(objC);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("RegistrarCursos", content);
+            var response = await httpClient.PostAsync("Curso/RegistrarCursos", content);
 
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Curso registrado correctamente"
@@ -78,7 +81,7 @@ namespace Matriculas.Controllers
         [HttpGet]
         public async Task<IActionResult> editarCurso(int id)
         {
-            var response = await httpClient.GetAsync($"BuscarCursos/{id}");
+            var response = await httpClient.GetAsync($"Curso/BuscarCursos/{id}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -118,8 +121,8 @@ namespace Matriculas.Controllers
             }
             var json = JsonConvert.SerializeObject(objC);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient
-                .PutAsync("ActualizarCursos", content);
+            var response = await httpClient.PutAsync("Curso/ActualizarCursos", content);
+
             ViewBag.Mensaje = response.IsSuccessStatusCode
                 ? "Curso modificado correctamente"
                 : "Error al modificar curso";
@@ -128,6 +131,85 @@ namespace Matriculas.Controllers
             );
 
             return View(objC);
+        }
+
+        [HttpGet]
+        public IActionResult AsignarHorarioCurso(int idCurso)
+        {
+            // Rellenar todos los ViewBag necesarios
+            CargarViewBags(idCurso);
+
+            // Crear modelo inicial
+            var model = new HorarioCursoNuevo { id_curso = idCurso };
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult AsignarHorarioCurso(HorarioCursoNuevo horario)
+        {
+            if (horario.id_seccion == null && string.IsNullOrWhiteSpace(horario.cod_seccion))
+            {
+                ModelState.AddModelError(nameof(horario.id_seccion),
+                    "Debes escoger una sección existente o indicar un código de sección nuevo.");
+                ModelState.AddModelError(nameof(horario.cod_seccion), "");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                CargarViewBags(horario.id_curso);
+                return View(horario);
+            }
+
+            var json = JsonConvert.SerializeObject(horario);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var resp = httpClient.PostAsync("Curso/AsignarHorarioCurso", content).Result;
+
+            var jObj = JObject.Parse(resp.Content.ReadAsStringAsync().Result);
+            TempData["InfoMessage"] = jObj["mensaje"]?.ToString() ?? "Respuesta inválida";
+
+            return RedirectToAction("AsignarHorarioCurso", new { idCurso = horario.id_curso });
+        }
+
+        private void CargarViewBags(int idCurso)
+        {
+            // Cursos
+            var cursosJson = httpClient.GetAsync("Curso/ListadoCursos").Result
+                                    .Content.ReadAsStringAsync().Result;
+            var cursos = JsonConvert.DeserializeObject<List<Curso>>(cursosJson) ?? new List<Curso>();
+            // Nombre de curso
+            var cursoActual = cursos.FirstOrDefault(c => c.id_curso == idCurso);
+            ViewBag.CursoNombre = cursoActual?.nom_curso ?? "—";
+
+            // Docentes
+            var docJson = httpClient.GetAsync("Docente/ListadoDocentes").Result
+                                   .Content.ReadAsStringAsync().Result;
+            var docentes = JsonConvert.DeserializeObject<List<Docente>>(docJson) ?? new List<Docente>();
+            ViewBag.Docentes = new SelectList(docentes, "id_docente", "nom_docente");
+
+            // Aulas
+            var aulaJson = httpClient.GetAsync("Aula/ListadoAulas").Result
+                                   .Content.ReadAsStringAsync().Result;
+            var aulas = JsonConvert.DeserializeObject<List<Aula>>(aulaJson) ?? new List<Aula>();
+            ViewBag.Aulas = new SelectList(aulas, "id_aula", "cod_aula");
+
+            // Secciones
+            var secJson = httpClient.GetAsync($"Curso/SeccionesPorCurso/{idCurso}").Result
+                                   .Content.ReadAsStringAsync().Result;
+            var secciones = JsonConvert.DeserializeObject<List<Seccion>>(secJson) ?? new List<Seccion>();
+            ViewBag.Secciones = new SelectList(secciones, "id_seccion", "cod_seccion");
+
+            // Días
+            ViewBag.Dias = new SelectList(new[]
+            {
+                new { Value = 1, Text = "Lunes" },
+                new { Value = 2, Text = "Martes" },
+                new { Value = 3, Text = "Miércoles" },
+                new { Value = 4, Text = "Jueves" },
+                new { Value = 5, Text = "Viernes" },
+                new { Value = 6, Text = "Sábado" },
+                new { Value = 7, Text = "Domingo" }
+            }, "Value", "Text");
         }
 
 

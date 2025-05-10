@@ -1007,6 +1007,124 @@
         }
       }
     },
+    "/Curso/AsignarHorarioCurso": {
+      "post": {
+        "tags": [
+          "Curso"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HorarioCursoNuevo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HorarioCursoNuevo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HorarioCursoNuevo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/Curso/CursosSinHorario": {
+      "get": {
+        "tags": [
+          "Curso"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Curso/SeccionesPorCurso/{idCurso}": {
+      "get": {
+        "tags": [
+          "Curso"
+        ],
+        "parameters": [
+          {
+            "name": "idCurso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Seccion"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Seccion"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Seccion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Docente/ListadoDocentes": {
       "get": {
         "tags": [
@@ -1305,15 +1423,16 @@
         }
       }
     },
-    "/api/Matricula/ListadoMatricula": {
+    "/api/Matricula/ListadoMatricula/{idUsuario}": {
       "get": {
         "tags": [
           "Matricula"
         ],
         "parameters": [
           {
-            "name": "id_matricula",
-            "in": "query",
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -1629,6 +1748,63 @@
         },
         "additionalProperties": false
       },
+      "HorarioCursoNuevo": {
+        "required": [
+          "cupos_maximos",
+          "dia_semana",
+          "hora_fin",
+          "hora_inicio",
+          "id_aula",
+          "id_curso",
+          "id_docente",
+          "tipo_horario"
+        ],
+        "type": "object",
+        "properties": {
+          "id_curso": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_seccion": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cod_seccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "id_aula": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_docente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cupos_maximos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipo_horario": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hora_inicio": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hora_fin": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dia_semana": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "HorarioPorCurso": {
         "type": "object",
         "properties": {
@@ -1812,6 +1988,20 @@
           "codAula": {
             "type": "string",
             "nullable": true
+          },
+          "nomDiaSemana": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaInicio": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "horaFin": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "tipoHorario": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1860,6 +2050,100 @@
           "fcha_fin": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Seccion": {
+        "type": "object",
+        "properties": {
+          "id_seccion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cod_seccion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "microseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "nanoseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMicroseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalNanoseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "totalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
           }
         },
         "additionalProperties": false

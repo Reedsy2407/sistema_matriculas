@@ -57,6 +57,7 @@
                             </td>
                             <td>
                                 @Html.ActionLink("Editar", "editarCurso", new { id = item.id_curso }, new { @class = "me-2" })
+                                @Html.ActionLink("Asignar Horario", "AsignarHorarioCurso", new { idCurso = item.id_curso }, new { @class = "btn btn-sm btn-outline-primary" })
                             </td>
                         </tr>
                     }

@@ -39,7 +39,8 @@ INSERT INTO tb_menu (titulo_menu, url_menu, controlador, orden, es_activo) VALUE
 ('Registrar Aulas',       'registrarAula',   'Aula',   6, 1),
 ('Listado de Alumnos',    'listadoAlumnos',  'Alumno', 7, 1),
 ('Registrar Alumno',      'registrarAlumno', 'Alumno', 8, 1),
-('Inscribirse a Clases',  'seleccionCarrera',     'Clase',  9, 1);
+('Inscribirse a Clases',  'seleccionCarrera', 'Clase',  9, 1),
+('Información de Inscripción',  'listadoMatricula', 'Matricula',  10, 1);
 GO
 
 create table tb_menu_rol(
@@ -56,6 +57,10 @@ GO
 
 INSERT INTO tb_menu_rol (id_menu, id_rol)
 VALUES (9, 3);
+GO
+
+INSERT INTO tb_menu_rol (id_menu, id_rol)
+VALUES (10, 3);
 GO
 
 create table tb_especialidad

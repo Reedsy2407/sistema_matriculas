@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "PSAqJkxQ0C6rIsfguqKojk8IwCftokvoZwjT1aWJGq0=",
+  "Hash": "VsNSJaXCd55JyFl+V0TLxbZYzE9dvOayBPFAjZHNBWg=",
   "Source": "MatriculasAPI",
   "BasePath": "_content/MatriculasAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

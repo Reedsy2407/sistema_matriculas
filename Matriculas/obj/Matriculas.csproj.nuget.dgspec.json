@@ -1,19 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\Matriculas.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
-        "projectName": "MatriculasMODELS",
-        "projectPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
-        "packagesPath": "C:\\Users\\marku\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\obj\\",
-=======
     "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj": {}
   },
   "projects": {
@@ -25,15 +12,13 @@
         "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj",
         "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\obj\\",
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-<<<<<<< HEAD
-          "C:\\Users\\marku\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
           "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,14 +42,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-<<<<<<< HEAD
-          "auditMode": "direct"
-        }
-=======
           "auditMode": "all"
         },
         "SdkAnalysisLevel": "9.0.100"
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
       },
       "frameworks": {
         "net8.0": {
@@ -85,20 +65,6 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\Matriculas.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\Matriculas.csproj",
-        "projectName": "Matriculas",
-        "projectPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\Matriculas.csproj",
-        "packagesPath": "C:\\Users\\marku\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\Matriculas\\obj\\",
-=======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
@@ -111,15 +77,13 @@
         "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\Matriculas.csproj",
         "packagesPath": "C:\\Users\\uset\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\uset\\Desktop\\servicios-web\\Matriculas\\obj\\",
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-<<<<<<< HEAD
-          "C:\\Users\\marku\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
           "C:\\Users\\uset\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -133,13 +97,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-<<<<<<< HEAD
-              "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
-                "projectPath": "C:\\Users\\marku\\Escritorio\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
-=======
               "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj": {
                 "projectPath": "C:\\Users\\uset\\Desktop\\servicios-web\\MatriculasMODELS\\MatriculasMODELS.csproj"
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
               }
             }
           }
@@ -152,14 +111,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-<<<<<<< HEAD
-          "auditMode": "direct"
-        }
-=======
           "auditMode": "all"
         },
         "SdkAnalysisLevel": "9.0.100"
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
       },
       "frameworks": {
         "net8.0": {
@@ -197,11 +151,7 @@
               "privateAssets": "all"
             }
           },
-<<<<<<< HEAD
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
-=======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
         }
       }
     }

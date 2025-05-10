@@ -37,5 +37,29 @@ namespace MatriculasAPI.Controllers
             var lista = await Task.Run(() => new CursoDAO().actualizarCurso(objC));
             return Ok(lista);
         }
+
+        [HttpPost("AsignarHorarioCurso")]
+        public ActionResult AsignarHorarioCurso([FromBody] HorarioCursoNuevo model)
+        {
+            var dao = new CursoDAO();
+            if (dao.AsignarHorarioConProcedure(model, out string mensaje))
+                return Ok(new { success = true, mensaje });
+            else
+                return BadRequest(new { success = false, mensaje });
+        }
+
+        [HttpGet("CursosSinHorario")]
+        public ActionResult<List<Curso>> CursosSinHorario()
+        {
+            var lista = new CursoDAO().ListarCursosSinHorario();
+            return Ok(lista);
+        }
+
+        [HttpGet("SeccionesPorCurso/{idCurso}")]
+        public ActionResult<List<Seccion>> SeccionesPorCurso(int idCurso)
+        {
+            var lista = new CursoDAO().ListarSeccionesPorCurso(idCurso).ToList();
+            return Ok(lista);
+        }
     }
 }

@@ -1,0 +1,131 @@
+﻿@model MatriculasMODELS.HorarioCursoNuevo
+
+@{
+    ViewData["Title"] = "Asignar Horario a Curso";
+    Layout = "_Layout";
+}
+
+<h2>Asignar Horario a Curso</h2>
+
+<form asp-action="AsignarHorarioCurso" method="post">
+    <div class="mb-3">
+        <label>Curso</label>
+        <input type="text" class="form-control" value="@ViewBag.CursoNombre" readonly />
+        <input asp-for="id_curso" type="hidden" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="id_seccion">Sección existente (opcional)</label>
+        <select asp-for="id_seccion" asp-items="ViewBag.Secciones" class="form-select">
+            <option value="">-- Crear nueva sección --</option>
+        </select>
+        <span asp-validation-for="id_seccion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="cod_seccion">Código Sección (solo si es nueva)</label>
+        <input asp-for="cod_seccion" class="form-control" maxlength="4" />
+        <span asp-validation-for="cod_seccion" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="id_docente">Docente</label>
+            <select asp-for="id_docente" asp-items="ViewBag.Docentes" class="form-select"></select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="id_aula">Aula</label>
+            <select asp-for="id_aula" asp-items="ViewBag.Aulas" class="form-select"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="dia_semana">Día</label>
+            <select asp-for="dia_semana" asp-items="ViewBag.Dias" class="form-select"></select>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="hora_inicio">Hora Inicio</label>
+            <input asp-for="hora_inicio" type="time" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="hora_fin">Hora Fin</label>
+            <input asp-for="hora_fin" type="time" class="form-control" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="tipo_horario">Tipo de Horario</label>
+        <input asp-for="tipo_horario" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="cupos_maximos">Cupos Máximos</label>
+        <input asp-for="cupos_maximos" type="number" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="ListadoCursos" class="btn btn-secondary ms-2">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectSec  = document.getElementById('id_seccion');
+            const inputCod   = document.getElementById('cod_seccion');
+            const form       = document.querySelector('form');
+
+            const existingCodes = Array.from(selectSec.options)
+                .map(o => o.text.trim())
+                .filter(t => t && t !== '-- Crear nueva sección --');
+
+            function toggleFields() {
+                if (selectSec.value) {
+                    inputCod.value = '';
+                    inputCod.disabled = true;
+                } else {
+                    inputCod.disabled = false;
+                }
+            }
+
+            selectSec.addEventListener('change', toggleFields);
+            inputCod.addEventListener('input', () => {
+                if (inputCod.value.trim()) selectSec.value = '';
+                toggleFields();
+            });
+
+            form.addEventListener('submit', function (e) {
+                const code = inputCod.value.trim();
+                if (!selectSec.value && code && existingCodes.includes(code)) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Información',
+                        text: `La sección "${code}" ya existe.`
+                    });
+                }
+            });
+
+            toggleFields();
+        });
+    </script>
+
+    <script>
+        @if (TempData["InfoMessage"] != null)
+        {
+            // ¡OJO! Aquí envolvemos el mensaje entre comillas para que sea un string JS válido
+            <text>
+                const mensaje = '@Html.Raw(TempData["InfoMessage"])';
+
+                Swal.fire({
+                    title: mensaje,
+                    icon: mensaje.toLowerCase().includes('exitosamente') ? 'success' : 'error',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            </text>
+        }
+    </script>
+}

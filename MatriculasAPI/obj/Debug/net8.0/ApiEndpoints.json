@@ -131,15 +131,15 @@
   {
     "ContainingType": "MatriculasAPI.Controllers.MatriculaController",
     "Method": "ListadoMatricula",
-    "RelativePath": "api/Matricula/ListadoMatricula",
+    "RelativePath": "api/Matricula/ListadoMatricula/{idUsuario}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id_matricula",
+        "Name": "idUsuario",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -518,6 +518,22 @@
   },
   {
     "ContainingType": "MatriculasAPI.Controllers.CursoController",
+    "Method": "AsignarHorarioCurso",
+    "RelativePath": "Curso/AsignarHorarioCurso",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "MatriculasMODELS.HorarioCursoNuevo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
     "Method": "BuscarCursos",
     "RelativePath": "Curso/BuscarCursos/{id}",
     "HttpMethod": "GET",
@@ -533,6 +549,26 @@
     "ReturnTypes": [
       {
         "Type": "MatriculasMODELS.Curso",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
+    "Method": "CursosSinHorario",
+    "RelativePath": "Curso/CursosSinHorario",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Curso, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -579,6 +615,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MatriculasAPI.Controllers.CursoController",
+    "Method": "SeccionesPorCurso",
+    "RelativePath": "Curso/SeccionesPorCurso/{idCurso}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCurso",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[MatriculasMODELS.Seccion, MatriculasMODELS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
