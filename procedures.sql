@@ -72,7 +72,7 @@ GO
 
 --LOGIN
 
-CREATE OR ALTER PROCEDURE sp_LoginUsuario 
+CREATE PROCEDURE sp_LoginUsuario 
     @correo VARCHAR(100),
     @contrasena VARCHAR(30),
     @login_exitoso BIT OUTPUT,
@@ -123,7 +123,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE sp_ObtenerMenusPorRol
+CREATE PROCEDURE sp_ObtenerMenusPorRol
     @id_rol INT
 AS
 BEGIN
@@ -211,7 +211,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE usp_buscarDocente
+CREATE PROCEDURE usp_buscarDocente
     @id_docente INT
 AS
 BEGIN
@@ -403,9 +403,6 @@ BEGIN
 END
 GO
 
-<<<<<<< HEAD
-CREATE OR ALTER PROCEDURE uspListarCursosPorCarrera
-=======
 CREATE OR ALTER PROCEDURE usp_asignarCarreraUsuario
     @id_usuario  INT,
     @id_carrera  INT
@@ -427,7 +424,6 @@ GO
 
 
 CREATE PROCEDURE uspListarCursosPorCarrera
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
     @id_carrera INT
 AS
 BEGIN
@@ -919,8 +915,7 @@ BEGIN
 END
 GO
 
-
-<<<<<<< HEAD
+/*
 -- Verificación del detalle de matrícula
 SELECT * FROM tb_detalle_matricula WHERE id_matricula = 
     (SELECT id_matricula FROM tb_matricula WHERE id_usuario = 13);
@@ -998,7 +993,7 @@ BEGIN
 END
 GO
 
-
+/*
 SELECT * FROM tb_matricula
 SELECT * FROM tb_usuario
 select * from tb_menu
@@ -1017,4 +1012,5 @@ SELECT * FROM tb_seccion_curso
 SELECT * FROM tb_seccion_horario
 select * from tb_menu_rol
 exec usp_listarMatricula @Id_matricula = 1002
->>>>>>> 9631a1d3e31c67c0467ae03b209585936ae77638
+
+*/
