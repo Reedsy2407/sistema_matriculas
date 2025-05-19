@@ -379,13 +379,18 @@
   {
     "ContainingType": "MatriculasAPI.Controllers.ClaseController",
     "Method": "GetHorariosPorCurso",
-    "RelativePath": "Clase/Horario/ListarHorarioPorCurso/{idCurso}",
+    "RelativePath": "Clase/Horario/ListarHorarioPorCurso/{idCurso}/{idPeriodo}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "idCurso",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idPeriodo",
         "Type": "System.Int32",
         "IsRequired": true
       }

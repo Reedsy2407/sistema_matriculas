@@ -121,78 +121,76 @@ namespace Matriculas.Controllers
             return RedirectToAction("seleccionarHorarios", new { idCurso, idCarrera });
         }
 
-
         [HttpGet]
         public async Task<IActionResult> seleccionarHorarios(int idCurso, int idCarrera)
         {
-            try
+            // 1) ID de alumno
+            var idUsuario = int.Parse(Request.Cookies["id_usuario"]);
+            ViewBag.IdUsuario = idUsuario;
+
+            // 2) Obtener periodo actual
+            int idPeriodo = 0;
+            var perResp = await httpClient.GetAsync("Periodo/ObtenerPeriodoActual");
+            if (perResp.IsSuccessStatusCode)
             {
-                // Obtener ID de usuario
-                var idUsuario = int.Parse(Request.Cookies["id_usuario"]);
-                ViewBag.IdUsuario = idUsuario;
-
-                // Obtener periodo actual
-                var periodoResponse = await httpClient.GetAsync("Periodo/ObtenerPeriodoActual");
-                if (periodoResponse.IsSuccessStatusCode)
-                {
-                    var periodoContent = await periodoResponse.Content.ReadAsStringAsync();
-                    var periodo = JsonConvert.DeserializeObject<Periodo>(periodoContent);
-                    ViewBag.CodigoPeriodoActual = periodo?.id_periodo;
-                }
-
-                idCarrera = idCarrera != 0 ? idCarrera : (TempData["idCarrera"] as int?) ?? 0;
-                TempData["idCarrera"] = idCarrera;
-
-                // Obtener horarios
-                var response = await httpClient.GetAsync($"Horario/ListarHorarioPorCurso/{idCurso}");
-                if (!response.IsSuccessStatusCode)
-                {
-                    ViewBag.ErrorMessage = "No se pudieron cargar los horarios";
-                    return View(new List<HorarioPorCurso>());
-                }
-
-                var content = await response.Content.ReadAsStringAsync();
-                var horarios = JsonConvert.DeserializeObject<List<HorarioPorCurso>>(content);
-
-                if (horarios == null || !horarios.Any())
-                {
-                    ViewBag.ErrorMessage = "No se encontraron horarios para este curso";
-                    return View(new List<HorarioPorCurso>());
-                }
-
-                // Verificar matrículas
-                var matriculados = new Dictionary<int, bool>();
-                foreach (var horario in horarios)
-                {
-                    var matriculaResponse = await httpClient.GetAsync(
-                        $"Matricula/VerificarMatricula/{idUsuario}/{horario.id_seccion}/{ViewBag.CodigoPeriodoActual}");
-
-                    if (matriculaResponse.IsSuccessStatusCode)
-                    {
-                        var matriculaContent = await matriculaResponse.Content.ReadAsStringAsync();
-                        matriculados[horario.id_seccion] = JsonConvert.DeserializeObject<bool>(matriculaContent);
-                    }
-                }
-
-                ViewBag.HorariosAgrupados = horarios.GroupBy(h => h.id_seccion)
-                                                  .ToDictionary(g => g.Key, g => g.ToList());
-                ViewBag.Matriculados = matriculados;
-                ViewBag.NombreCurso = horarios.First().nom_curso;
-                ViewBag.IdCarrera = idCarrera;
-                ViewBag.IdCurso = idCurso;
-
-                return View(horarios);
+                var perJson = await perResp.Content.ReadAsStringAsync();
+                idPeriodo = JsonConvert.DeserializeObject<Periodo>(perJson)!.id_periodo;
             }
-            catch (Exception ex)
+
+            // Mantenemos idCarrera en TempData
+            idCarrera = idCarrera != 0
+                ? idCarrera
+                : (TempData["idCarrera"] as int?) ?? 0;
+            TempData["idCarrera"] = idCarrera;
+
+            // 3) Llamada al API con periodo
+            var response = await httpClient
+                .GetAsync($"Horario/ListarHorarioPorCurso/{idCurso}/{idPeriodo}");
+            if (!response.IsSuccessStatusCode)
             {
-                ViewBag.ErrorMessage = $"Error: {ex.Message}";
+                ViewBag.ErrorMessage = "No se pudieron cargar los horarios";
                 return View(new List<HorarioPorCurso>());
             }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var horarios = JsonConvert.DeserializeObject<List<HorarioPorCurso>>(content);
+
+            if (horarios == null || !horarios.Any())
+            {
+                ViewBag.ErrorMessage = "No se encontraron horarios para este curso";
+                return View(new List<HorarioPorCurso>());
+            }
+
+            // 4) Verificar matrículas
+            var matriculados = new Dictionary<int, bool>();
+            foreach (var h in horarios)
+            {
+                var matriculaResp = await httpClient.GetAsync(
+                    $"Matricula/VerificarMatricula/{idUsuario}/{h.id_seccion}/{idPeriodo}");
+                if (matriculaResp.IsSuccessStatusCode)
+                {
+                    var mJson = await matriculaResp.Content.ReadAsStringAsync();
+                    matriculados[h.id_seccion] = JsonConvert.DeserializeObject<bool>(mJson);
+                }
+            }
+
+            ViewBag.HorariosAgrupados = horarios
+                .GroupBy(h => h.id_seccion)
+                .ToDictionary(g => g.Key, g => g.ToList());
+            ViewBag.Matriculados = matriculados;
+            ViewBag.NombreCurso = horarios.First().nom_curso;
+            ViewBag.IdCarrera = idCarrera;
+            ViewBag.IdCurso = idCurso;
+            ViewBag.CodigoPeriodoActual = idPeriodo;
+
+            return View(horarios);
         }
+
+
         [HttpPost]
         public async Task<IActionResult> MatricularseHorario(
             [FromForm] int idAlumno,
-            [FromForm] int idCarrera,
+            [FromForm] int idCarrera,   
             [FromForm] int idCurso,
             [FromForm] int idSeccion,
             [FromForm] int idPeriodo)

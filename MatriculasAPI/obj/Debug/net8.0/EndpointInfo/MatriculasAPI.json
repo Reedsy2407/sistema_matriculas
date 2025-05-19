@@ -655,7 +655,7 @@
         }
       }
     },
-    "/Clase/Horario/ListarHorarioPorCurso/{idCurso}": {
+    "/Clase/Horario/ListarHorarioPorCurso/{idCurso}/{idPeriodo}": {
       "get": {
         "tags": [
           "Clase"
@@ -663,6 +663,15 @@
         "parameters": [
           {
             "name": "idCurso",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idPeriodo",
             "in": "path",
             "required": true,
             "schema": {
@@ -1886,6 +1895,11 @@
           "id_rol": {
             "type": "integer",
             "format": "int32"
+          },
+          "ultimo_acceso": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false

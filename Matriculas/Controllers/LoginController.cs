@@ -52,6 +52,13 @@ namespace Matriculas.Controllers
 
                         Response.Cookies.Append("id_usuario", loginResponse.id_usuario.ToString(), cookieOptions);
                         Response.Cookies.Append("id_rol", loginResponse.id_rol.ToString(), cookieOptions);
+
+
+                        if (loginResponse.ultimo_acceso.HasValue)
+                        {
+                            string iso = loginResponse.ultimo_acceso.Value.ToString("o");
+                            Response.Cookies.Append("ultimo_acceso", iso, cookieOptions);
+                        }
                         return RedirectToAction("Index", "Home");
                     }
                 }

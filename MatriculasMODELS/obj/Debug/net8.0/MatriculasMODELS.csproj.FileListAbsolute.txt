@@ -22,3 +22,15 @@ C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasMODELS\obj\
 C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasMODELS\obj\Debug\net8.0\refint\MatriculasMODELS.dll
 C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.pdb
 C:\Users\Carlos - Sistemas\Desktop\Proyectos\servicios-web\MatriculasMODELS\obj\Debug\net8.0\ref\MatriculasMODELS.dll
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\bin\Debug\net8.0\MatriculasMODELS.deps.json
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\bin\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\bin\Debug\net8.0\MatriculasMODELS.pdb
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.AssemblyInfoInputs.cache
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.AssemblyInfo.cs
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.csproj.CoreCompileInputs.cache
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.sourcelink.json
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.dll
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\refint\MatriculasMODELS.dll
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\MatriculasMODELS.pdb
+C:\Users\uset\Desktop\sistema_matricula\MatriculasMODELS\obj\Debug\net8.0\ref\MatriculasMODELS.dll

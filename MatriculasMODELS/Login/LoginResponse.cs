@@ -6,5 +6,7 @@
         public string? mensaje { get; set; }
         public int id_usuario { get; set; }
         public int id_rol { get; set; }
+        public DateTime? ultimo_acceso { get; set; } 
+
     }
 }

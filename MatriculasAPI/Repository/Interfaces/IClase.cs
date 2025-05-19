@@ -9,7 +9,7 @@ namespace MatriculasAPI.Repository.Interfaces
         IEnumerable<Carrera> listarCarrerasPorUsuario(int idUsuario);
         IEnumerable<Curso> listarCursosPorCarrera(int idCarrera);
         Carrera buscarCarreraPorId(int idCarrera);
-        IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso);
+        IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso, int id_periodo);
 
         MatriculaResponse InsertarMatriculaAlumno(MatriculaRequest request);
         MatriculaResponse EliminarMatriculaAlumno(MatriculaDeleteRequest request);

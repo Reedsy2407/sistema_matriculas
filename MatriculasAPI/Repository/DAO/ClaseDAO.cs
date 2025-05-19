@@ -130,7 +130,7 @@ namespace MatriculasAPI.Repository.DAO
             return null;
         }
 
-        public IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso)
+        public IEnumerable<HorarioPorCurso> ListarHorariosPorCurso(int id_curso, int id_periodo)
         {
             var horarios = new List<HorarioPorCurso>();
 
@@ -140,6 +140,7 @@ namespace MatriculasAPI.Repository.DAO
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id_curso", id_curso);
+                    cmd.Parameters.AddWithValue("@id_periodo", id_periodo);
 
                     con.Open();
                     using (var dr = cmd.ExecuteReader())

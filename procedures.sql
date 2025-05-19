@@ -1,5 +1,3 @@
-use matriculas_bd
-select * from tb_usuario
 create or alter procedure usp_listarEspecialidad
 as
 	Select * from tb_especialidad
@@ -21,6 +19,33 @@ go
 			tb_carrera ca ON c.id_carrera = ca.id_carrera
 	END
 	GO
+
+CREATE OR ALTER PROCEDURE usp_listarCursosSinHorario
+AS
+BEGIN
+    SELECT 
+        c.id_curso,
+        c.nom_curso,
+        c.creditos_curso,
+        c.id_carrera,
+        ca.nom_carrera
+    FROM tb_curso c
+    INNER JOIN tb_carrera ca ON c.id_carrera = ca.id_carrera
+    WHERE NOT EXISTS (
+        SELECT 1 FROM tb_seccion_curso sc WHERE sc.id_curso = c.id_curso
+    );
+END
+GO
+
+CREATE OR ALTER PROCEDURE usp_ListarSeccionesPorCurso
+  @id_curso INT
+AS
+BEGIN
+  SELECT id_seccion, cod_seccion
+  FROM tb_seccion
+  WHERE id_curso = @id_curso;
+END
+GO
 
 CREATE OR ALTER PROCEDURE usp_registrarCurso
     @nom_curso       VARCHAR(50),
@@ -68,6 +93,68 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE uspAsignarHorarioCurso
+    @id_curso       INT,
+    @id_seccion     INT           = NULL,
+    @cod_seccion    CHAR(4)       = NULL,
+    @id_aula        INT,
+    @id_docente     INT,
+    @cupos_maximos  SMALLINT,
+    @tipo_horario   VARCHAR(50),
+    @hora_inicio    TIME,
+    @hora_fin       TIME,
+    @dia_semana     TINYINT,
+    @resultado      BIT OUTPUT,
+    @mensaje        VARCHAR(200) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        DECLARE @sec INT;
+
+        IF @id_seccion IS NOT NULL
+        BEGIN
+            -- Usamos la sección existente
+			SET @sec = @id_seccion;
+			-- ACTUALIZAR el aula si cambió
+			UPDATE tb_seccion
+			SET cupos_maximos = @cupos_maximos
+			WHERE id_seccion = @sec;
+        END
+        ELSE
+        BEGIN
+            -- Creamos una nueva sección
+            INSERT INTO tb_seccion
+                (cod_seccion, cupos_disponible, cupos_maximos, id_usuario, id_aula, id_curso)
+            VALUES
+                (@cod_seccion, @cupos_maximos, @cupos_maximos, @id_docente, @id_aula, @id_curso);
+
+            SET @sec = SCOPE_IDENTITY();
+
+            -- Relacionamos la nueva sección con el curso
+            INSERT INTO tb_seccion_curso (id_seccion, id_curso)
+            VALUES (@sec, @id_curso);
+        END
+
+        -- Insertamos el horario para @sec
+        INSERT INTO tb_seccion_horario
+            (id_seccion, dia_semana, hora_inicio, hora_fin, tipo_horario, id_aula, id_docente)
+        VALUES
+            (@sec, @dia_semana, @hora_inicio, @hora_fin, @tipo_horario, @id_aula, @id_docente);
+
+        COMMIT TRANSACTION;
+        SET @resultado = 1;
+        SET @mensaje   = 'Horario asignado exitosamente.';
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        SET @resultado = 0;
+        SET @mensaje   = 'Error al asignar horario: ' + ERROR_MESSAGE();
+    END CATCH
+END
+GO
+
 
 
 --LOGIN
@@ -78,7 +165,8 @@ CREATE PROCEDURE sp_LoginUsuario
     @login_exitoso BIT OUTPUT,
     @mensaje VARCHAR(100) OUTPUT,
     @id_usuario INT OUTPUT,
-    @id_rol INT OUTPUT
+    @id_rol INT OUTPUT,
+	@ultimo_acceso  DATETIME OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -87,6 +175,7 @@ BEGIN
     SET @mensaje = '';
     SET @id_usuario = 0;
     SET @id_rol = 0;
+	SET @ultimo_acceso = NULL;
     
     IF EXISTS (
         SELECT 1 FROM tb_usuario 
@@ -112,7 +201,15 @@ BEGIN
         END
         ELSE
         BEGIN
-            SET @mensaje = 'Login exitoso';
+            DECLARE @h DATETIME = GETDATE();
+
+            UPDATE tb_usuario
+            SET ultimo_acceso = @h
+            WHERE id_usuario = @id_usuario;
+
+            SET @ultimo_acceso = @h;
+
+            SET @mensaje       = 'Login exitoso';
             SET @login_exitoso = 1;
         END
     END
@@ -211,7 +308,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE usp_buscarDocente
+CREATE OR ALTER PROCEDURE usp_buscarDocente
     @id_docente INT
 AS
 BEGIN
@@ -423,7 +520,7 @@ END
 GO
 
 
-CREATE PROCEDURE uspListarCursosPorCarrera
+CREATE OR ALTER PROCEDURE uspListarCursosPorCarrera
     @id_carrera INT
 AS
 BEGIN
@@ -465,7 +562,8 @@ GO
 
 
 create or alter procedure uspListarHorariosPorCurso
-	@id_curso int
+	@id_curso int,
+	@id_periodo  INT
 as begin
 SELECT 
         s.id_seccion,
@@ -484,7 +582,15 @@ SELECT
         sh.tipo_horario,
         a.cod_aula,
         u.nom_usuario + ' ' + u.ape_usuario AS nombre_docente,
-        s.cupos_disponible,
+        s.cupos_maximos
+          - ISNULL((
+              SELECT COUNT(*)
+                FROM tb_matricula     m
+                JOIN tb_detalle_matricula dm 
+                  ON m.id_matricula = dm.id_matricula
+               WHERE dm.id_seccion = s.id_seccion
+                 AND m.id_periodo = @id_periodo
+            ), 0) AS cupos_disponible,
         s.cupos_maximos,
         c.nom_curso
     FROM 
@@ -492,9 +598,9 @@ SELECT
     INNER JOIN 
         tb_seccion_horario sh ON s.id_seccion = sh.id_seccion
     INNER JOIN 
-        tb_aula a ON s.id_aula = a.id_aula
+        tb_aula a ON sh.id_aula = a.id_aula
     INNER JOIN 
-        tb_usuario u ON s.id_usuario = u.id_usuario
+        tb_usuario u ON sh.id_docente = u.id_usuario
     INNER JOIN 
         tb_curso c ON s.id_curso = c.id_curso
     WHERE 
@@ -872,7 +978,7 @@ END;
 GO
 
 CREATE OR ALTER PROCEDURE usp_listarMatricula
-    @Id_matricula INT
+    @Id_usuario INT
 AS
 BEGIN
     SELECT 
@@ -900,7 +1006,7 @@ BEGIN
             WHEN 5 THEN 'Viernes'
             WHEN 6 THEN 'Sábado'
             ELSE 'Domingo'
-        END AS dia_semana
+        END AS nomDiaSemana
     FROM tb_matricula M
     INNER JOIN tb_usuario             U   ON M.id_usuario = U.id_usuario
     INNER JOIN tb_periodo            P   ON M.id_periodo = P.id_periodo
@@ -910,11 +1016,10 @@ BEGIN
     INNER JOIN tb_curso              CU  ON DM.id_curso = CU.id_curso
     INNER JOIN tb_carrera            C   ON CU.id_carrera = C.id_carrera
     INNER JOIN tb_seccion_horario    H   ON S.id_seccion = H.id_seccion
-    WHERE M.id_matricula = @Id_matricula
+    WHERE M.id_usuario = @Id_usuario
     ORDER BY CU.nom_curso, H.dia_semana, H.hora_inicio;
 END
 GO
-
 /*
 -- Verificación del detalle de matrícula
 SELECT * FROM tb_detalle_matricula WHERE id_matricula = 
@@ -949,50 +1054,6 @@ select * From tb_Detalle_matricula
 SELECT * FROM tb_usuario_carrera WHERE id_usuario = 8
 GO*/
 
-CREATE OR ALTER PROCEDURE usp_listarMatricula
-    @Id_usuario INT
-AS
-BEGIN
-    SELECT 
-        M.id_matricula as id_matricula,
-        U.id_usuario as id_usuario, 
-        U.nom_usuario + ' ' + U.ape_usuario AS nombre_completo,
-        P.codigo_periodo as codigo_periodo,
-        C.id_carrera as id_carrera,
-        C.nom_carrera as nom_carrera,
-        CU.id_curso as id_curso,
-        CU.nom_curso as nom_curso,
-        CU.creditos_curso as creditos_curso,
-        S.id_seccion as id_seccion,
-        S.cod_seccion as cod_seccion,
-        A.id_aula as id_aula,
-        A.cod_aula as cod_aula,
-        H.hora_inicio as hora_inicio,
-        H.hora_fin as hora_fin,
-        H.tipo_horario as tipo_horario,
-		CASE H.dia_semana
-            WHEN 1 THEN 'Lunes'
-            WHEN 2 THEN 'Martes'
-            WHEN 3 THEN 'Miércoles'
-            WHEN 4 THEN 'Jueves'
-            WHEN 5 THEN 'Viernes'
-            WHEN 6 THEN 'Sábado'
-            ELSE 'Domingo'
-        END AS nomDiaSemana
-    FROM tb_matricula M
-    INNER JOIN tb_usuario             U   ON M.id_usuario = U.id_usuario
-    INNER JOIN tb_periodo            P   ON M.id_periodo = P.id_periodo
-    INNER JOIN tb_detalle_matricula  DM  ON M.id_matricula = DM.id_matricula
-    INNER JOIN tb_seccion            S   ON DM.id_seccion = S.id_seccion
-    INNER JOIN tb_aula               A   ON S.id_aula = A.id_aula
-    INNER JOIN tb_curso              CU  ON DM.id_curso = CU.id_curso
-    INNER JOIN tb_carrera            C   ON CU.id_carrera = C.id_carrera
-    INNER JOIN tb_seccion_horario    H   ON S.id_seccion = H.id_seccion
-    WHERE U.id_usuario = @Id_usuario
-    ORDER BY CU.nom_curso, H.dia_semana, H.hora_inicio;
-END
-GO
-
 /*
 SELECT * FROM tb_matricula
 SELECT * FROM tb_usuario
@@ -1011,6 +1072,7 @@ SELECT * FROM tb_detalle_matricula
 SELECT * FROM tb_seccion_curso
 SELECT * FROM tb_seccion_horario
 select * from tb_menu_rol
-exec usp_listarMatricula @Id_matricula = 1002
+exec usp_listarMatricula @Id_usuario  = 8
 
 */
+

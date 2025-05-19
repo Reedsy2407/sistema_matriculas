@@ -3,6 +3,13 @@
 @{
     ViewData["Title"] = "Asignar Horario a Curso";
     Layout = "_Layout";
+    var tipos = ViewBag.TiposHorario as List<SelectListItem>
+               ?? new List<SelectListItem>
+                {
+                   new SelectListItem("Teoría",      "Teoría"),
+                   new SelectListItem("Laboratorio", "Laboratorio")
+                };
+}
 }
 
 <h2>Asignar Horario a Curso</h2>
@@ -56,7 +63,8 @@
 
     <div class="mb-3">
         <label asp-for="tipo_horario">Tipo de Horario</label>
-        <input asp-for="tipo_horario" class="form-control" />
+        <select asp-for="tipo_horario" asp-items="tipos" class="form-select"></select>
+        <span asp-validation-for="tipo_horario" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label asp-for="cupos_maximos">Cupos Máximos</label>
@@ -113,18 +121,41 @@
     </script>
 
     <script>
-        @if (TempData["InfoMessage"] != null)
+        // Mostrar mensajes desde TempData o ModelState
+        @* ModelState Errors *@
+        var errors = [];
+        @foreach (var entry in ViewData.ModelState.Values)
         {
-            // ¡OJO! Aquí envolvemos el mensaje entre comillas para que sea un string JS válido
-            <text>
-                const mensaje = '@Html.Raw(TempData["InfoMessage"])';
+            foreach (var err in entry.Errors)
+            {
+                <text>errors.push('@err.ErrorMessage');</text>
+            }
+        }
+        if (errors.length) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de validación',
+                html: errors.join('<br/>')
+            });
+        }
 
-                Swal.fire({
-                    title: mensaje,
-                    icon: mensaje.toLowerCase().includes('exitosamente') ? 'success' : 'error',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+        @* TempData Messages *@
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                Swal.fire('Error','@Html.Raw(TempData["ErrorMessage"])','error');
+            </text>
+        }
+        else if (TempData["InfoMessage"] != null)
+        {
+            <text>
+                Swal.fire('Info','@Html.Raw(TempData["InfoMessage"])','info');
+            </text>
+        }
+        else if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire('¡Éxito!','@Html.Raw(TempData["SuccessMessage"])','success');
             </text>
         }
     </script>

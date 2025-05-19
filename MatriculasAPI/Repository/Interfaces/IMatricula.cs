@@ -3,6 +3,6 @@ namespace MatriculasAPI.Repository.Interfaces
 {
     public interface IMatricula
     {
-        IEnumerable<Matriculas> aMatricula(int id_matricula);
+        IEnumerable<Matriculas> aMatricula(int id_usuario);
     }
 }

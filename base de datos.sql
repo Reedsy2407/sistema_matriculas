@@ -1,4 +1,4 @@
-use master
+锘縰se master
 go
 
 create database matriculas_bd
@@ -40,7 +40,7 @@ INSERT INTO tb_menu (titulo_menu, url_menu, controlador, orden, es_activo) VALUE
 ('Listado de Alumnos',    'listadoAlumnos',  'Alumno', 7, 1),
 ('Registrar Alumno',      'registrarAlumno', 'Alumno', 8, 1),
 ('Inscribirse a Clases',  'seleccionCarrera', 'Clase',  9, 1),
-('Informaci髇 de Inscripci髇',  'listadoMatricula', 'Matricula',  10, 1);
+('Informaci贸n de Inscripci贸n',  'listadoMatricula', 'Matricula',  10, 1);
 GO
 
 create table tb_menu_rol(
@@ -71,11 +71,11 @@ create table tb_especialidad
 go
 
 INSERT INTO tb_especialidad (nom_especialidad) VALUES
-('Ingenier韆 de Software'),
-('Matem醫icas Avanzadas'),
+('Ingenier铆a de Software'),
+('Matem谩ticas Avanzadas'),
 ('Derecho Corporativo'),
-('Administraci髇 de Empresas'),
-('Ciencias de la Computaci髇')
+('Administraci贸n de Empresas'),
+('Ciencias de la Computaci贸n')
 GO
 
 
@@ -87,10 +87,10 @@ create table tb_carrera
 go
 
 INSERT INTO tb_carrera (nom_carrera) VALUES
-('Ingenier韆 de Sistemas'),
-('Administraci髇 de Empresas'),
+('Ingenier铆a de Sistemas'),
+('Administraci贸n de Empresas'),
 ('Derecho'),
-('Econom韆'),
+('Econom铆a'),
 ('Ciencia de Datos')
 GO
 
@@ -104,6 +104,7 @@ create table tb_usuario
 	cod_especialidad int null, --Docente
 	id_rol int not null, 
 	estado bit not null,
+	ultimo_acceso Datetime null,
 	foreign key (id_rol) references tb_rol(id_rol),
 	foreign key (cod_especialidad) references tb_especialidad(cod_especialidad),
 )
@@ -122,37 +123,37 @@ GO
 -- Crear usuarios Administradores
 INSERT INTO tb_usuario (nom_usuario, ape_usuario, contrasena, correo, cod_especialidad, id_rol, estado)
 VALUES 
-('Roberto', 'Gonz醠ez', 'Admin2025!', 'r.gonzalez@universidad.edu', NULL, 1, 1),
-('Luc韆', 'Fern醤dez', 'Soporte$2025', 'l.fernandez@universidad.edu', NULL, 1, 1)
+('Roberto', 'Gonz谩lez', 'Admin2025!', 'r.gonzalez@universidad.edu', NULL, 1, 1),
+('Luc铆a', 'Fern谩ndez', 'Soporte$2025', 'l.fernandez@universidad.edu', NULL, 1, 1)
 GO
 
 -- Crear usuarios Docentes (asociados a especialidades)
 INSERT INTO tb_usuario (nom_usuario, ape_usuario, contrasena, correo,cod_especialidad, id_rol, estado)
 VALUES 
 ('Carlos', 'Mendoza', 'admin123', 'admin1@mail.com', 1, 2, 1),  
-('Laura', 'Garc韆', 'L4ur4G@rc1a', 'l.garcia@universidad.edu', 2, 2, 1),    
-('Pedro', 'Mart韓ez', 'P3dr0M@rt', 'p.martinez@universidad.edu', 4, 2, 1),
+('Laura', 'Garc铆a', 'L4ur4G@rc1a', 'l.garcia@universidad.edu', 2, 2, 1),    
+('Pedro', 'Mart铆nez', 'P3dr0M@rt', 'p.martinez@universidad.edu', 4, 2, 1),
 ('Ana', 'Silva', 'S1lv4A54', 'a.silva@universidad.edu', 3, 2, 1),
-('Jorge', 'Ram韗ez', 'J0rg3R@m', 'j.ramirez@universidad.edu', 5, 2, 1)  
+('Jorge', 'Ram铆rez', 'J0rg3R@m', 'j.ramirez@universidad.edu', 5, 2, 1)  
 GO
 
 -- Crear usuarios Alumnos (asociados a carreras)
 INSERT INTO tb_usuario (nom_usuario, ape_usuario, contrasena, correo, cod_especialidad, id_rol, estado)
 VALUES 
-('Juan', 'P閞ez', 'alumno123', 'alumno1@mail.com',NULL, 3, 1), 
-('Mar韆', 'L髉ez', 'M@r1aL0p3z', 'm.lopez@universidad.edu', NULL, 3, 1), 
-('Ana', 'G髆ez', 'An4G0m3z', 'a.gomez@universidad.edu', NULL, 3, 1),
+('Juan', 'P茅rez', 'alumno123', 'alumno1@mail.com',NULL, 3, 1), 
+('Mar铆a', 'L贸pez', 'M@r1aL0p3z', 'm.lopez@universidad.edu', NULL, 3, 1), 
+('Ana', 'G贸mez', 'An4G0m3z', 'a.gomez@universidad.edu', NULL, 3, 1),
 ('Luis', 'Torres', 'L4u1sT0rr3s', 'l.torres@universidad.edu', NULL, 3, 1),
-('Sof韆', 'Vargas', 'S0f1@V4rg', 's.vargas@universidad.edu', NULL, 3, 1)    
+('Sof铆a', 'Vargas', 'S0f1@V4rg', 's.vargas@universidad.edu', NULL, 3, 1)    
 GO
 
 INSERT INTO tb_usuario_carrera (id_usuario, id_carrera)
 VALUES
-(6, 1), (6, 5), -- Juan P閞ez en Sistemas y Ciencia de Datos
-(7, 2), (7, 4), -- Mar韆 L髉ez en Administraci髇 y Econom韆
-(8, 1), -- Ana G髆ez en Sistemas
+(6, 1), (6, 5), -- Juan P茅rez en Sistemas y Ciencia de Datos
+(7, 2), (7, 4), -- Mar铆a L贸pez en Administraci贸n y Econom铆a
+(8, 1), -- Ana G贸mez en Sistemas
 (9, 3), -- Luis Torres en Derecho
-(10, 5); -- Sof韆 Vargas en Ciencia de Datos
+(10, 5); -- Sof铆a Vargas en Ciencia de Datos
 GO
 
 create table tb_curso
@@ -166,12 +167,12 @@ create table tb_curso
 go
 
 INSERT INTO tb_curso (nom_curso, creditos_curso, id_carrera) VALUES
-('Programaci髇 I', 4, 1),
-('C醠culo I', 4, 1),
-('Introducci髇 a la Administraci髇', 3, 2),
+('Programaci贸n I', 4, 1),
+('C谩lculo I', 4, 1),
+('Introducci贸n a la Administraci贸n', 3, 2),
 ('Derecho Civil', 5, 3),
 ('Bases de Datos', 4, 1),
-('Estad韘tica Avanzada', 4, 4),
+('Estad铆stica Avanzada', 4, 4),
 ('Machine Learning', 5, 5),
 ('Derecho Laboral', 4, 3),
 ('Finanzas Corporativas', 4, 2),
@@ -213,34 +214,34 @@ create table tb_seccion
 	foreign key (id_aula) references tb_aula(id_aula)
 )
 go
-
+	
 INSERT INTO tb_seccion (cod_seccion, cupos_disponible, cupos_maximos, id_usuario, id_aula, id_curso) VALUES
--- Programaci髇 I
-('P1TA', 15, 30, 3, 1, 1),   -- Teor韆 A
+-- Programaci贸n I
+('P1TA', 15, 30, 3, 1, 1),   -- Teor铆a A
 ('P1LB', 15, 30, 3, 2, 1),   -- Laboratorio B
 
--- C醠culo I
-('C1TC', 20, 25, 4, 3, 2),   -- Teor韆 C
-('C1PD', 20, 25, 4, 4, 2),   -- Pr醕tica D
+-- C谩lculo I
+('C1TC', 20, 25, 4, 3, 2),   -- Teor铆a C
+('C1PD', 20, 25, 4, 4, 2),   -- Pr谩ctica D
 
 -- Derecho Civil
-('D1TE', 12, 20, 5, 5, 4),   -- Teor韆 E
+('D1TE', 12, 20, 5, 5, 4),   -- Teor铆a E
 ('D1CF', 12, 20, 5, 6, 4),   -- Casos F
 
 -- Bases de Datos
-('B1TG', 18, 30, 6, 7, 5),   -- Teor韆 G
+('B1TG', 18, 30, 6, 7, 5),   -- Teor铆a G
 ('B1LH', 18, 30, 6, 1, 5),   -- Laboratorio H
 
 -- Machine Learning
-('M1TI', 10, 25, 7, 2, 7),   -- Teor韆 I
+('M1TI', 10, 25, 7, 2, 7),   -- Teor铆a I
 ('M1PJ', 10, 25, 7, 3, 7),   -- Proyectos J
 
 -- Algoritmos Avanzados
-('A1TK', 8, 20, 3, 4, 10),   -- Teor韆 K
+('A1TK', 8, 20, 3, 4, 10),   -- Teor铆a K
 ('A1LL', 8, 20, 3, 5, 10),   -- Laboratorio L
 
--- Estad韘tica Avanzada
-('E1TM', 15, 30, 4, 6, 6),   -- Teor韆 M
+-- Estad铆stica Avanzada
+('E1TM', 15, 30, 4, 6, 6),   -- Teor铆a M
 ('E1WN', 15, 30, 4, 7, 6)    -- Taller N
 GO
 
@@ -251,39 +252,46 @@ CREATE TABLE tb_seccion_horario
     hora_inicio    TIME        NOT NULL,
     hora_fin       TIME        NOT NULL,
     tipo_horario   VARCHAR(50) NOT NULL, 
+	id_aula      INT         NOT NULL,
+	id_docente     INT         NOT NULL,
     PRIMARY KEY    (id_seccion, dia_semana, hora_inicio),
-    FOREIGN KEY    (id_seccion) REFERENCES tb_seccion(id_seccion)
+    FOREIGN KEY    (id_seccion) REFERENCES tb_seccion(id_seccion),
+	FOREIGN KEY	   (id_aula)    REFERENCES tb_aula(id_aula),
+	FOREIGN KEY    (id_docente) REFERENCES tb_usuario(id_usuario)
+
 );
 GO
-INSERT INTO tb_seccion_horario (id_seccion, dia_semana, hora_inicio, hora_fin, tipo_horario)
+
+INSERT INTO tb_seccion_horario
+    (id_seccion, dia_semana, hora_inicio, hora_fin, tipo_horario, id_aula, id_docente)
 VALUES
--- Programaci髇 I
-(1, 1, '08:00', '10:00', 'Teor韆'),      -- PROG1-T
-(2, 3, '08:00', '10:00', 'Laboratorio'),  -- PROG1-L
+-- Programaci贸n I (secci贸n 1鈫抎ocente 3, secci贸n 2鈫抎ocente 3)
+( 1, 1, '08:00', '10:00', 'Teor铆a',      1,  3),  
+( 2, 3, '08:00', '10:00', 'Laboratorio',  2,  3),
 
--- C醠culo I
-(3, 2, '09:00', '11:00', 'Teor韆'),      -- CALC1-T
-(4, 4, '09:00', '11:00', 'Pr醕tica'),    -- CALC1-P
+-- C谩lculo I (secci贸n 3鈫抎ocente 4, secci贸n 4鈫抎ocente 4)
+( 3, 2, '09:00', '11:00', 'Teor铆a',      3,  4),
+( 4, 4, '09:00', '11:00', 'Pr谩ctica',    4,  4),
 
--- Derecho Civil
-(5, 1, '14:00', '16:00', 'Teor韆'),      -- DER1-T
-(6, 3, '14:00', '16:00', 'Casos'),       -- DER1-C
+-- Derecho Civil (secci贸n 5鈫抎ocente 5, secci贸n 6鈫抎ocente 5)
+( 5, 1, '14:00', '16:00', 'Teor铆a',      5,  5),
+( 6, 3, '14:00', '16:00', 'Casos',       6,  5),
 
--- Bases de Datos
-(7, 2, '14:00', '16:00', 'Teor韆'),      -- BD1-T
-(8, 4, '14:00', '16:00', 'Laboratorio'), -- BD1-L
+-- Bases de Datos (secci贸n 7鈫抎ocente 6, secci贸n 8鈫抎ocente 6)
+( 7, 2, '14:00', '16:00', 'Teor铆a',      7,  6),
+( 8, 4, '14:00', '16:00', 'Laboratorio', 1,  6),
 
--- Machine Learning
-(9, 3, '16:00', '18:00', 'Teor韆'),      -- ML1-T
-(10, 5, '16:00', '18:00', 'Proyectos'),  -- ML1-P
+-- Machine Learning (secci贸n 9鈫抎ocente 7, secci贸n 10鈫抎ocente 7)
+( 9, 3, '16:00', '18:00', 'Teor铆a',      2,  7),
+(10, 5, '16:00', '18:00', 'Proyectos',   3,  7),
 
--- Algoritmos Avanzados
-(11, 4, '08:00', '10:00', 'Teor韆'),     -- ALG1-T
-(12, 5, '08:00', '10:00', 'Laboratorio'),-- ALG1-L
+-- Algoritmos Avanzados (secci贸n 11鈫抎ocente 3, secci贸n 12鈫抎ocente 3)
+(11, 4, '08:00', '10:00', 'Teor铆a',      4,  3),
+(12, 5, '08:00', '10:00', 'Laboratorio', 5,  3),
 
--- Estad韘tica Avanzada
-(13, 5, '10:00', '12:00', 'Teor韆'),     -- EST1-T
-(14, 2, '10:00', '12:00', 'Taller')      -- EST1-W
+-- Estad铆stica Avanzada (secci贸n 13鈫抎ocente 4, secci贸n 14鈫抎ocente 4)
+(13, 5, '10:00', '12:00', 'Teor铆a',      6,  4),
+(14, 2, '10:00', '12:00', 'Taller',      7,  4);
 GO
 
 create table tb_periodo
@@ -310,14 +318,14 @@ create table tb_matricula
 go
 
 INSERT INTO tb_matricula (id_usuario, id_periodo) VALUES
-(6, 1), -- Juan P閞ez en periodo 2025-1
-(7, 1), -- Mar韆 L髉ez en periodo 2025-1
-(8, 1), -- Ana G髆ez en periodo 2025-1
+(6, 1), -- Juan P茅rez en periodo 2025-1
+(7, 1), -- Mar铆a L贸pez en periodo 2025-1
+(8, 1), -- Ana G贸mez en periodo 2025-1
 (9, 1), -- Luis Torres en periodo 2025-1
-(10, 1), -- Sof韆 Vargas en periodo 2025-1
-(6, 2), -- Juan P閞ez tambi閚 en periodo 2025-2
-(8, 2), -- Ana G髆ez en periodo 2025-2
-(10, 2) -- Sof韆 Vargas en periodo 2025-2
+(10, 1), -- Sof铆a Vargas en periodo 2025-1
+(6, 2), -- Juan P茅rez tambi茅n en periodo 2025-2
+(8, 2), -- Ana G贸mez en periodo 2025-2
+(10, 2) -- Sof铆a Vargas en periodo 2025-2
 GO
 
 create table tb_detalle_matricula
@@ -333,16 +341,16 @@ GO
 
 INSERT INTO tb_detalle_matricula (id_matricula, id_seccion, id_curso) VALUES
 -- Periodo 2025-1
-(1000, 1, 1),  -- Juan P閞ez en PROG1-T (Teor韆)
-(1000, 2, 1),  -- Juan P閞ez en PROG1-L (Laboratorio)
-(1000, 3, 2),  -- Juan P閞ez en CALC1-T (Teor韆)
-(1001, 5, 4),  -- Mar韆 L髉ez en DER1-T (Teor韆)
-(1001, 14, 6), -- Mar韆 L髉ez en EST1-W (Taller)
-(1002, 1, 1),  -- Ana G髆ez en PROG1-T (Teor韆)
-(1002, 7, 5),  -- Ana G髆ez en BD1-T (Teor韆)
-(1003, 5, 4),  -- Luis Torres en DER1-T (Teor韆)
-(1004, 9, 7),  -- Sof韆 Vargas en ML1-T (Teor韆)
-(1004, 11,10) -- Sof韆 Vargas en ALG1-T (Teor韆)
+(1000, 1, 1),  -- Juan P茅rez en PROG1-T (Teor铆a)
+(1000, 2, 1),  -- Juan P茅rez en PROG1-L (Laboratorio)
+(1000, 3, 2),  -- Juan P茅rez en CALC1-T (Teor铆a)
+(1001, 5, 4),  -- Mar铆a L贸pez en DER1-T (Teor铆a)
+(1001, 14, 6), -- Mar铆a L贸pez en EST1-W (Taller)
+(1002, 1, 1),  -- Ana G贸mez en PROG1-T (Teor铆a)
+(1002, 7, 5),  -- Ana G贸mez en BD1-T (Teor铆a)
+(1003, 5, 4),  -- Luis Torres en DER1-T (Teor铆a)
+(1004, 9, 7),  -- Sof铆a Vargas en ML1-T (Teor铆a)
+(1004, 11,10) -- Sof铆a Vargas en ALG1-T (Teor铆a)
 go
 
 CREATE TABLE tb_seccion_curso (
@@ -355,11 +363,11 @@ CREATE TABLE tb_seccion_curso (
 GO
 
 INSERT INTO tb_seccion_curso (id_seccion, id_curso) VALUES
-(1,1), (2,1),   -- Programaci髇 I
-(3,2), (4,2),   -- C醠culo I
+(1,1), (2,1),   -- Programaci贸n I
+(3,2), (4,2),   -- C谩lculo I
 (5,4), (6,4),   -- Derecho Civil
 (7,5), (8,5),   -- Bases de Datos
 (9,7), (10,7),  -- Machine Learning
 (11,10),(12,10),-- Algoritmos Avanzados
-(13,6),(14,6);  -- Estad韘tica Avanzada
+(13,6),(14,6);  -- Estad铆stica Avanzada
 GO

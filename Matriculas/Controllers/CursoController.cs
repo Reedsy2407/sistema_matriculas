@@ -136,23 +136,35 @@ namespace Matriculas.Controllers
         [HttpGet]
         public IActionResult AsignarHorarioCurso(int idCurso)
         {
-            // Rellenar todos los ViewBag necesarios
             CargarViewBags(idCurso);
+            // Sólo dos tipos
+            ViewBag.TiposHorario = new List<SelectListItem>
+            {
+                new SelectListItem("Teoría",      "Teoría"),
+                new SelectListItem("Laboratorio", "Laboratorio")
+            };
 
-            // Crear modelo inicial
             var model = new HorarioCursoNuevo { id_curso = idCurso };
             return View(model);
         }
 
 
         [HttpPost]
-        public IActionResult AsignarHorarioCurso(HorarioCursoNuevo horario)
+        public async Task<IActionResult> AsignarHorarioCurso(HorarioCursoNuevo horario)
         {
+            // 1) Validaciones de sección vs. código (tu código original)
             if (horario.id_seccion == null && string.IsNullOrWhiteSpace(horario.cod_seccion))
             {
                 ModelState.AddModelError(nameof(horario.id_seccion),
                     "Debes escoger una sección existente o indicar un código de sección nuevo.");
                 ModelState.AddModelError(nameof(horario.cod_seccion), "");
+            }
+
+            // 2) Validar que tipo_horario sea solo Teoría o Laboratorio
+            if (horario.tipo_horario != "Teoría" && horario.tipo_horario != "Laboratorio")
+            {
+                ModelState.AddModelError(nameof(horario.tipo_horario),
+                    "El tipo de horario debe ser “Teoría” o “Laboratorio”");
             }
 
             if (!ModelState.IsValid)
@@ -161,15 +173,73 @@ namespace Matriculas.Controllers
                 return View(horario);
             }
 
-            var json = JsonConvert.SerializeObject(horario);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var resp = httpClient.PostAsync("Curso/AsignarHorarioCurso", content).Result;
+            // —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+            // NUEVO: 3) Obtener el período actual
+            int idPeriodo = 0;
+            var perResp = await httpClient.GetAsync("Clase/Periodo/ObtenerPeriodoActual");
+            if (perResp.IsSuccessStatusCode)
+            {
+                var perJson = await perResp.Content.ReadAsStringAsync();
+                idPeriodo = JsonConvert.DeserializeObject<Periodo>(perJson)!.id_periodo;
+            }
 
-            var jObj = JObject.Parse(resp.Content.ReadAsStringAsync().Result);
-            TempData["InfoMessage"] = jObj["mensaje"]?.ToString() ?? "Respuesta inválida";
+            // 4) Validaciones de negocio: máximo 2 turnos y distinto tipo si ya hay 1
+            if (horario.id_seccion.HasValue)
+            {
+                // Llamada con idPeriodo para recalcular cupos_disponible
+                var respHorarios = await httpClient
+                    .GetAsync($"Clase/Horario/ListarHorarioPorCurso/{horario.id_curso}/{idPeriodo}");
 
-            return RedirectToAction("AsignarHorarioCurso", new { idCurso = horario.id_curso });
+                if (!respHorarios.IsSuccessStatusCode)
+                {
+                    // Mensaje ampliado con código y body
+                    var cuerpo = await respHorarios.Content.ReadAsStringAsync();
+                    TempData["ErrorMessage"] =
+                        $"Error validando turnos ({(int)respHorarios.StatusCode}): {cuerpo}";
+                    return RedirectToAction("AsignarHorarioCurso",
+                                             new { idCurso = horario.id_curso });
+                }
+
+                var jsonHor = await respHorarios.Content.ReadAsStringAsync();
+                var todos = JsonConvert
+                    .DeserializeObject<List<HorarioPorCurso>>(jsonHor)!
+                    .Where(h => h.id_seccion == horario.id_seccion.Value)
+                    .Select(h => h.tipo_horario)
+                    .ToList();
+
+                if (todos.Count >= 2)
+                {
+                    TempData["ErrorMessage"] = "Ya existen 2 turnos para esta sección";
+                    return RedirectToAction("AsignarHorarioCurso",
+                                             new { idCurso = horario.id_curso });
+                }
+
+                if (todos.Count == 1 && todos[0] == horario.tipo_horario)
+                {
+                    var otro = horario.tipo_horario == "Teoría" ? "Laboratorio" : "Teoría";
+                    TempData["ErrorMessage"] = $"El segundo turno debe ser “{otro}”";
+                    return RedirectToAction("AsignarHorarioCurso",
+                                             new { idCurso = horario.id_curso });
+                }
+            }
+
+            // 5) Llamada final al API de Curso para asignar
+            var payload = JsonConvert.SerializeObject(horario);
+            var contentPost = new StringContent(payload, Encoding.UTF8, "application/json");
+            var respPost = await httpClient.PostAsync("Curso/AsignarHorarioCurso", contentPost);
+
+            // 6) Leer respuesta
+            var body = await respPost.Content.ReadAsStringAsync();
+            var jobj = JObject.Parse(body);
+            if (respPost.IsSuccessStatusCode && (bool)jobj["success"]!)
+                TempData["SuccessMessage"] = jobj["mensaje"]!.ToString();
+            else
+                TempData["ErrorMessage"] = jobj["mensaje"]!.ToString();
+
+            return RedirectToAction("AsignarHorarioCurso",
+                                     new { idCurso = horario.id_curso });
         }
+
 
         private void CargarViewBags(int idCurso)
         {

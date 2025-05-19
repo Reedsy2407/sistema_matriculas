@@ -1,8 +1,18 @@
 ﻿@model List<MatriculasMODELS.HorarioPorCurso>
 @{
     ViewData["Title"] = "Horarios del Curso";
-    var idUsuario = ViewBag.IdUsuario;
-    var matriculados = ViewBag.Matriculados as Dictionary<int, bool>;
+    var idUsuario = ViewBag.IdUsuario as int? ?? 0;
+    var idCarrera = ViewBag.IdCarrera as int? ?? 0;
+    var idCurso = ViewBag.IdCurso as int? ?? 0;
+    var idPeriodo = ViewBag.CodigoPeriodoActual as int? ?? 0;
+    // Diccionario sección → ya matriculado?
+    var matriculados = ViewBag.Matriculados
+                        as Dictionary<int, bool>
+                      ?? new Dictionary<int, bool>();
+    // Agrupamiento sección → lista de turnos
+    var agrup = ViewBag.HorariosAgrupados
+               as Dictionary<int, List<MatriculasMODELS.HorarioPorCurso>>
+               ?? new Dictionary<int, List<MatriculasMODELS.HorarioPorCurso>>();
 }
 
 <div class="container">
@@ -13,7 +23,7 @@
         <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
     }
 
-    @if (Model != null && Model.Any())
+    @if (agrup.Any())
     {
         <div class="card mb-4">
             <div class="card-body">
@@ -21,47 +31,61 @@
                     <thead>
                         <tr>
                             <th>Sección</th>
-                            <th>Día</th>
-                            <th>Hora</th>
-                            <th>Tipo</th>
-                            <th>Aula</th>
+                            <th>Turnos</th>
                             <th>Disponibilidad</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var horario in Model.OrderBy(h => h.cod_seccion))
+                        @foreach (var kvp in agrup)
                         {
-                            var estaMatriculado = matriculados != null && matriculados.ContainsKey(horario.id_seccion) && matriculados[horario.id_seccion];
-
+                            var idSeccion = kvp.Key;
+                            var sesiones = kvp.Value;
+                            var ejemplo = sesiones.First();
+                            var yaMatric = matriculados.ContainsKey(idSeccion)
+                            && matriculados[idSeccion];
                             <tr>
-                                <td>@horario.cod_seccion</td>
-                                <td>@horario.dia_semana</td>
-                                <td>@horario.hora_inicio - @horario.hora_fin</td>
-                                <td>@horario.tipo_horario</td>
-                                <td>@horario.cod_aula</td>
-                                <td>@horario.cupos_disponible/@horario.cupos_maximos</td>
+                                <td>@ejemplo.cod_seccion</td>
                                 <td>
-                                    @if (!estaMatriculado)
+                                    @foreach (var s in sesiones)
                                     {
-                                        <form asp-action="MatricularseHorario" method="post" style="display: inline;">
+                                        <div class="mb-2 border rounded p-2 bg-light">
+                                            <div><strong>Día:</strong> @s.dia_semana</div>
+                                            <div><strong>Horario:</strong> @s.hora_inicio – @s.hora_fin</div>
+                                            <div><strong>Tipo:</strong> @s.tipo_horario</div>
+                                            <div><strong>Aula:</strong> @s.cod_aula</div>
+                                            <div><strong>Docente:</strong> @s.nombre_docente</div>
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    @ejemplo.cupos_disponible/@ejemplo.cupos_maximos
+                                </td>
+                                <td>
+                                    @if (!yaMatric)
+                                    {
+                                        <form asp-action="MatricularseHorario" method="post" class="d-inline">
                                             <input type="hidden" name="idAlumno" value="@idUsuario" />
-                                            <input type="hidden" name="idCarrera" value="@ViewBag.IdCarrera" />
-                                            <input type="hidden" name="idCurso" value="@ViewBag.IdCurso" />
-                                            <input type="hidden" name="idSeccion" value="@horario.id_seccion" />
-                                            <input type="hidden" name="idPeriodo" value="@ViewBag.CodigoPeriodoActual" />
-                                            <button type="submit" class="btn btn-success">Escoger horario</button>
+                                            <input type="hidden" name="idCarrera" value="@idCarrera" />
+                                            <input type="hidden" name="idCurso" value="@idCurso" />
+                                            <input type="hidden" name="idSeccion" value="@idSeccion" />
+                                            <input type="hidden" name="idPeriodo" value="@idPeriodo" />
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Escoger horario
+                                            </button>
                                         </form>
                                     }
                                     else
                                     {
-                                        <form asp-action="EliminarMatriculaPost" method="post" style="display: inline; margin-left: 5px;">
+                                        <form asp-action="EliminarMatriculaPost" method="post" class="d-inline ms-1">
                                             <input type="hidden" name="idAlumno" value="@idUsuario" />
-                                            <input type="hidden" name="idSeccion" value="@horario.id_seccion" />
-                                            <input type="hidden" name="idPeriodo" value="@ViewBag.CodigoPeriodoActual" />
-                                            <input type="hidden" name="idCurso" value="@ViewBag.IdCurso" />
-                                            <input type="hidden" name="idCarrera" value="@ViewBag.IdCarrera" />
-                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                            <input type="hidden" name="idSeccion" value="@idSeccion" />
+                                            <input type="hidden" name="idPeriodo" value="@idPeriodo" />
+                                            <input type="hidden" name="idCurso" value="@idCurso" />
+                                            <input type="hidden" name="idCarrera" value="@idCarrera" />
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Eliminar
+                                            </button>
                                         </form>
                                     }
                                 </td>
@@ -79,7 +103,7 @@
 
     <div class="mt-3">
         <a asp-action="seleccionarCursos"
-           asp-route-idCarrera="@ViewBag.IdCarrera"
+           asp-route-idCarrera="@idCarrera"
            class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> Volver a cursos
         </a>
@@ -90,57 +114,57 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @* Mensajes con SweetAlert *@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+            Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: '@Html.Raw(TempData["SuccessMessage"])'
+            });
+        </text>
+    }
+    else if (TempData["InfoMessage"] != null)
+    {
+        <text>
+            Swal.fire({
+            icon: 'info',
+            title: 'Información',
+            text: '@Html.Raw(TempData["InfoMessage"])'
+            });
+        </text>
+    }
+    else if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+            Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '@Html.Raw(TempData["ErrorMessage"])'
+            });
+        </text>
+    }
+
+    @* Confirmación antes de eliminar *@
     <script>
-        // Mostrar mensajes de éxito/error
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <text>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('form[action*="EliminarMatriculaPost"]').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
                     Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: '@Html.Raw(TempData["SuccessMessage"])'
+                        title: '¿Estás seguro?',
+                        text: "¡Esta acción eliminará tu matrícula en este horario!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) form.submit();
                     });
-            </text>
-        }
-        else if (TempData["InfoMessage"] != null)
-        {
-            <text>
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Información',
-                        text: '@Html.Raw(TempData["InfoMessage"])'
-                    });
-            </text>
-        }
-        else if (TempData["ErrorMessage"] != null)
-        {
-            <text>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: '@Html.Raw(TempData["ErrorMessage"])'
-                    });
-            </text>
-        }
-
-        // Confirmación para eliminar
-        $(document).ready(function() {
-            $('form[action*="EliminarMatriculaPost"]').submit(function(e) {
-                e.preventDefault();
-
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¡Esta acción eliminará tu matrícula en este horario!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $(this).unbind('submit').submit();
-                    }
                 });
             });
         });

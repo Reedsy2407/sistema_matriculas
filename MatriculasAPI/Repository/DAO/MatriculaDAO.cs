@@ -16,14 +16,14 @@ namespace MatriculasAPI.Repository.DAO
                 .GetConnectionString("cn");
         }
 
-        public IEnumerable<Matriculas> aMatricula(int id_matricula)
+        public IEnumerable<Matriculas> aMatricula(int id_usuario)
         {
             List<Matriculas> lista = new List<Matriculas>();
             using (SqlConnection con = new SqlConnection(cadena))
             {
                 SqlCommand cmd = new SqlCommand("usp_listarMatricula", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id_usuario", id_matricula);
+                cmd.Parameters.AddWithValue("@Id_usuario", id_usuario);
 
                 con.Open();
                 using (SqlDataReader dr = cmd.ExecuteReader())

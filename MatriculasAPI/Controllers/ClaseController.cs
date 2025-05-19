@@ -39,16 +39,16 @@ namespace MatriculasAPI.Controllers
             return Ok(cursos);
         }
 
-        [HttpGet("Horario/ListarHorarioPorCurso/{idCurso}")]
-        public async Task<ActionResult<List<HorarioPorCurso>>> GetHorariosPorCurso(int idCurso)
+        [HttpGet("Horario/ListarHorarioPorCurso/{idCurso}/{idPeriodo}")]
+        public async Task<ActionResult<List<HorarioPorCurso>>> GetHorariosPorCurso(int idCurso, int idPeriodo)
         {
-            var horarios = await Task.Run(() => new ClaseDAO().ListarHorariosPorCurso(idCurso));
+            var horarios = await Task.Run(() => new ClaseDAO().ListarHorariosPorCurso(idCurso, idPeriodo));
 
             if (horarios == null || !horarios.Any())
                 return NotFound("No se encontraron horarios para el curso seleccionado");
 
             return Ok(horarios); 
-        }
+        }   
 
         [HttpPost("Matricula/MatricularseHorario")]
         public IActionResult InsertarMatricula([FromBody] MatriculaRequest request)

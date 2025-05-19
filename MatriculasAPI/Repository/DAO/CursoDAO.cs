@@ -138,7 +138,7 @@ namespace MatriculasAPI.Repository.DAO
             cmd.Parameters.AddWithValue("@id_curso", objH.id_curso);
 
             // Si no hay sección existente, pasamos DBNull
-            cmd.Parameters.Add("@id_seccion", SqlDbType.Int)
+            cmd.Parameters.Add("@id_seccion", SqlDbType.Int)    
                .Value = objH.id_seccion.HasValue ? (object)objH.id_seccion.Value : DBNull.Value;
 
             // Si no hay código de sección, pasamos DBNull

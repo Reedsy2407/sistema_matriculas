@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
+@using System.Globalization                              
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     var idRol = HttpContextAccessor.HttpContext.Request.Cookies["id_rol"] != null
@@ -17,6 +18,16 @@
             var content = await response.Content.ReadAsStringAsync();
             menus = JsonConvert.DeserializeObject<List<Menu>>(content);
         }
+    }
+
+    string? raw = HttpContextAccessor.HttpContext.Request.Cookies["ultimo_acceso"];
+    string lastAccess = "—";
+    const string formato = "dd MMM yyyy HH:mm";
+
+    if (!string.IsNullOrEmpty(raw)
+        && DateTimeOffset.TryParse(raw, null, DateTimeStyles.RoundtripKind, out var dto))
+    {
+        lastAccess = dto.ToLocalTime().ToString(formato, CultureInfo.CreateSpecificCulture("es-ES"));
     }
 }
 
@@ -58,12 +69,13 @@
                     </button>
                     <a class="navbar-brand" href="index.html">Usuario</a>
                 </div>
-                <div style="color: white;
-                    padding: 15px 50px 5px 50px;
-                    float: right;
-                    font-size: 16px;">
-                Last access : 30 May 2014 &nbsp; <a href="@Url.Action("Logout", "Login")" class="btn btn-danger">Cerrar Sesión</a>
-                </div>
+            <div style="color: white;
+                padding: 15px 50px 5px 50px;
+                float: right;
+                font-size: 16px;">
+                Último acceso: @lastAccess &nbsp;
+                <a href="@Url.Action("Logout", "Login")" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
             </nav>
             <!-- /. NAV TOP  -->
             <nav class="navbar-default navbar-side" role="navigation">
