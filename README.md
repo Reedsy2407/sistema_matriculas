@@ -6,7 +6,7 @@
 [![.NET](https://img.shields.io/badge/.NET-7.0-blue.svg)](https://dotnet.microsoft.com/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2019-blue.svg)](https://www.microsoft.com/en-us/sql-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Last commit](https://img.shields.io/github/last-commit/tu-usuario/tu-repositorio.svg)](https://github.com/tu-usuario/tu-repositorio/commits/main)
+[![Last commit](https://img.shields.io/github/last-commit/Reedsy2407/sistema_matriculas.svg)](https://github.com/Reedsy2407/sistema_matriculas/commits/main)
 
 ---
 
