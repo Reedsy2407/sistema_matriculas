@@ -39,11 +39,8 @@ Este repositorio incluye **todo** lo conversado y desarrollado durante el proyec
 ├── README.md
 ├── LICENSE
 ├── scripts/                       ← Todos los scripts SQL
-│   ├── 01_CreateDB.sql
-│   ├── 02_Tables.sql
-│   ├── 03_Inserts.sql
-│   ├── 04_StoredProcedures.sql
-│   └── 05_Views.sql               ← (opcional, si se crearon vistas)
+│   ├── 01_base de datos.sql
+│   ├── 02_procedures.sql
 │
 ├── src/
 │   ├── MatriculasAPI/             ← Proyecto ASP.NET Core Web API
@@ -78,3 +75,31 @@ Este repositorio incluye **todo** lo conversado y desarrollado durante el proyec
     ├── Alumno/                     ← Alumno
     ├── Matricula/                  ← MatriculaRequest, MatriculaDeleteRequest, MatriculaResponse, Matriculas (para consulta de horaria)
     └── Periodo/                    ← Periodo
+
+
+
+
+## 3. Requisitos Previos
+
+1. **Instalar .NET 7.0 SDK**
+
+   - Descarga e instalación desde:
+     ```bash
+     https://dotnet.microsoft.com/download/dotnet/7.0
+     ```
+
+2. **SQL Server 2019+ y SQL Server Management Studio (SSMS)**
+
+   - Necesario para ejecutar los scripts de creación de base de datos y procedimientos almacenados.
+
+3. **Visual Studio 2022**  
+   (o **VS Code** con la extensión C#)
+
+4. **Rotativa.AspNetCore**  
+   - Se instalará automáticamente vía NuGet al restaurar paquetes del proyecto MVC.
+
+5. **Git**  
+   - Para clonar este repositorio:
+     ```bash
+     git clone https://github.com/tu-usuario/tu-repositorio.git
+     ```
